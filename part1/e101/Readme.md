@@ -6,7 +6,7 @@ https://github.com/rvl-q/hashapp
 Docker image:
 https://hub.docker.com/repository/docker/rvlq/hasher/general
 
-Log of deployment [here](./e101.txt)
+Log of deployment [here](./e101.txt).
 
 Beginning of the output log also below:
 ```

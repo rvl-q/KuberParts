@@ -1,0 +1,26 @@
+rvl@eb: Project $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-664f47fd49-bkg8d   1/1     Running   0          12h
+hasher-dep-6595b9dffc-lf75w   1/1     Running   0          103m
+rvl@eb: Project $ git pull
+Already up to date.
+rvl@eb: Project $ kubectl delete deployment proj01-dep 
+deployment.apps "proj01-dep" deleted
+rvl@eb: Project $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+hasher-dep-6595b9dffc-lf75w   1/1     Running   0          106m
+rvl@eb: Project $ kubectl apply -f ./deployment.yaml
+error: the path "./deployment.yaml" does not exist
+rvl@eb: Project $ kubectl apply -f manifests/deployment.yaml
+deployment.apps/proj01-dep created
+rvl@eb: Project $ kubectl get pods
+NAME                          READY   STATUS              RESTARTS   AGE
+hasher-dep-6595b9dffc-lf75w   1/1     Running             0          107m
+proj01-dep-5586855756-qj82n   0/1     ContainerCreating   0          4s
+rvl@eb: Project $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+hasher-dep-6595b9dffc-lf75w   1/1     Running   0          107m
+proj01-dep-5586855756-qj82n   1/1     Running   0          8s
+rvl@eb: Project $ kubectl logs proj01-dep-5586855756-qj82n 
+Server started in port 9999
+rvl@eb: Project $ 

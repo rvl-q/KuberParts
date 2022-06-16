@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: proj01-dep
+  name: proj01-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proj01-dep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: proj01-dep
+    spec:
+      containers:
+      - image: rvlq/project:0.1
+        name: project
+        resources: {}
+        imagePullPolicy: Always
+status: {}

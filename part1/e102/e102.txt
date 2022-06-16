@@ -1,0 +1,73 @@
+rvl@eb: project $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-65549bd98d-556wk   1/1     Running   0          54s
+rvl@eb: project $ kubectl delete deploy proj01-dep 
+deployment.apps "proj01-dep" deleted
+rvl@eb: project $ kubectl create deployment proj01-dep --image=rvlq/project:v0.1
+deployment.apps/proj01-dep created
+rvl@eb: project $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-664f47fd49-bkg8d   1/1     Running   0          5s
+rvl@eb: project $ kubectl logs proj01-dep-664f47fd49-bkg8d 
+Server started in port 9999
+rvl@eb: project $ 
+
+
+$ docker-compose build --no-cache
+Building app
+Sending build context to Docker daemon  3.584kB
+Step 1/8 : FROM denoland/deno:alpine-1.17.2
+ ---> ccc840e0ca5a
+Step 2/8 : ENV PORT=9999
+ ---> Running in 23faabd92c77
+Removing intermediate container 23faabd92c77
+ ---> 3092077f0e76
+Step 3/8 : EXPOSE ${PORT}
+ ---> Running in 99ca3eda7695
+Removing intermediate container 99ca3eda7695
+ ---> 40058761b9eb
+Step 4/8 : WORKDIR /app
+ ---> Running in 50c04e42c1a7
+Removing intermediate container 50c04e42c1a7
+ ---> b8f769db0c75
+Step 5/8 : USER deno
+ ---> Running in e56f817d3a58
+Removing intermediate container e56f817d3a58
+ ---> 7622c4844847
+Step 6/8 : COPY app.js /app
+ ---> 26d7057dac9b
+Step 7/8 : RUN deno cache app.js
+ ---> Running in b6edd95ee9cb
+Download https://deno.land/std@0.120.0/http/server.ts
+Download https://deno.land/std@0.120.0/async/mod.ts
+Download https://deno.land/std@0.120.0/async/deadline.ts
+Download https://deno.land/std@0.120.0/async/debounce.ts
+Download https://deno.land/std@0.120.0/async/deferred.ts
+Download https://deno.land/std@0.120.0/async/delay.ts
+Download https://deno.land/std@0.120.0/async/mux_async_iterator.ts
+Download https://deno.land/std@0.120.0/async/pool.ts
+Download https://deno.land/std@0.120.0/async/tee.ts
+Check file:///app/app.js
+Removing intermediate container b6edd95ee9cb
+ ---> b8dc61b45979
+Step 8/8 : CMD [ "run", "--unstable", "--allow-net", "--allow-read", "--allow-env", "--no-check", "app.js" ]
+ ---> Running in 9fddb728ccc9
+Removing intermediate container 9fddb728ccc9
+ ---> 4bae955bcca3
+Successfully built 4bae955bcca3
+Successfully tagged app:latest
+
+
+$ docker tag app:latest rvlq/project:v0.1; docker push rvlq/project:v0.1
+The push refers to repository [docker.io/rvlq/project]
+cca35c81a7db: Layer already exists 
+e52c335b9566: Layer already exists 
+082275b83339: Layer already exists 
+5a1e2d5e83f4: Layer already exists 
+11cfeba7648c: Layer already exists 
+62836982e6c2: Layer already exists 
+516917cb39fd: Layer already exists 
+6365d1463b65: Layer already exists 
+c68db0906e2c: Layer already exists 
+f1dd685eb59e: Layer already exists 
+v0.1: digest: sha256:13c4268761f730b98fa6bc92e5f61c40bc1b71e3afe117274de8af4730740acd size: 2404

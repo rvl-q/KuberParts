@@ -1,0 +1,24 @@
+rvl@eb: e105 $ kubectl port-forward proj01-dep-5586855756-qj82n 3003:9999
+Forwarding from 127.0.0.1:3003 -> 9999
+Forwarding from [::1]:3003 -> 9999
+Handling connection for 3003
+Handling connection for 3003
+
+
+$ curl -v http://localhost:3003
+*   Trying 127.0.0.1:3003...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 3003 (#0)
+> GET / HTTP/1.1
+> Host: localhost:3003
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< content-type: text/plain;charset=UTF-8
+< content-length: 27
+< date: Thu, 16 Jun 2022 19:30:48 GMT
+< 
+* Connection #0 to host localhost left intact
+Hello world from port: 9999

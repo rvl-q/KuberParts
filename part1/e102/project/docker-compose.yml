@@ -13,8 +13,8 @@ services:
       #- ./app/:/app
       #- ./app-cache/:/app-cache
     ports:
-      - 9999:9999
-      #- ${PORT:?err}:${PORT:?err}
+      #- 9999:9999
+      - ${PORT:?err}:${PORT:?err}
       #- $PORT:$PORT
       #- ${PORT:-6666}:${PORT:-6666}
       #- 6666:6666

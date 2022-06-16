@@ -1,0 +1,35 @@
+rvl@eb: manifests $ kubectl apply -f ./deployment.yaml
+deployment.apps/hasher-dep created
+rvl@eb: manifests $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-664f47fd49-bkg8d   1/1     Running   0          10h
+hasher-dep-6595b9dffc-fvqpd   1/1     Running   0          7s
+rvl@eb: manifests $ kubectl logs hasher-dep-6595b9dffc-fvqpd 
+2022-06-16T11:17:32,226030295+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:17:37,227126682+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:17:42,228836256+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:17:47,230672679+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:17:52,231495372+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:17:57,232365785+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:18:02,234400449+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+2022-06-16T11:18:07,235982068+00:00 cffc8dd1ff3d229e9ba3ae1d2f83eb0d
+rvl@eb: manifests $ kubectl delete -f ./deployment.yaml
+deployment.apps "hasher-dep" deleted
+rvl@eb: manifests $ kubectl get pods
+NAME                          READY   STATUS        RESTARTS   AGE
+proj01-dep-664f47fd49-bkg8d   1/1     Running       0          10h
+hasher-dep-6595b9dffc-fvqpd   1/1     Terminating   0          113s
+
+
+rvl@eb: e103 $ kubectl apply -f https://raw.githubusercontent.com/rvl-q/hashapp/main/mainfests/deployment.yaml
+deployment.apps/hasher-dep created
+rvl@eb: e103 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-664f47fd49-bkg8d   1/1     Running   0          11h
+hasher-dep-6595b9dffc-lf75w   1/1     Running   0          4s
+rvl@eb: e103 $ kubectl logs hasher-dep-6595b9dffc-lf75w 
+2022-06-16T11:28:36,932987951+00:00 c91233e469cdda90172b45f5a65638ad
+2022-06-16T11:28:41,935341025+00:00 c91233e469cdda90172b45f5a65638ad
+2022-06-16T11:28:46,937811014+00:00 c91233e469cdda90172b45f5a65638ad
+2022-06-16T11:28:51,939924290+00:00 c91233e469cdda90172b45f5a65638ad
+2022-06-16T11:28:56,942121397+00:00 c91233e469cdda90172b45f5a65638ad

@@ -1,0 +1,45 @@
+rvl@eb: Project $ git pull
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (7/7), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 4 (delta 2), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (4/4), 385 bytes | 96.00 KiB/s, done.
+From version.aalto.fi:rvl/project
+   d551004..ed0ff3d  main       -> origin/main
+Updating d551004..ed0ff3d
+Fast-forward
+ manifests/deployment.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+rvl@eb: Project $ kubectl apply -f manifests/
+deployment.apps/proj01-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/proj01-svc unchanged
+rvl@eb: Project $ kubectl get svc,ing
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/kubernetes   ClusterIP   10.43.0.1       <none>        443/TCP    105m
+service/proj01-svc   ClusterIP   10.43.179.179   <none>        2345/TCP   14m
+
+NAME                                             CLASS    HOSTS   ADDRESS                            PORTS   AGE
+ingress.networking.k8s.io/dwk-material-ingress   <none>   *       172.27.0.2,172.27.0.3,172.27.0.4   80      10m
+rvl@eb: Project $ kubectl get pod
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-6c7f9c7b84-24wxs   1/1     Running   0          79s
+rvl@eb: Project $ curl http://localhost:8081
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo application!</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <h1>Exercise 1.08: Project v0.5</h1>
+
+<p>Switch to using Ingress instead of NodePort to access the project.
+You can delete the ingress of the "Log output" application so they don't interfere with this exercise.
+We'll look more into paths and routing in the next exercise and at that point you can configure project
+to run with the "Log output" application side by side.</p>
+
+<h2>Test</h2>
+
+<p>Hello world! @p9999</p>  </body>
+</html>rvl@eb: Project $ 

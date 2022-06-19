@@ -15,3 +15,7 @@ spec:
       containers:
         - name: ping-pong
           image: rvlq/ping-pong:latest
+          resources:
+              limits:
+                memory: "64Mi"
+                cpu: "100m"

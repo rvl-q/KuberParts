@@ -1,0 +1,133 @@
+rvl@eb: hashapp $ 
+rvl@eb: hashapp $ kubectl apply -f manifests/
+deployment.apps/hasher-dep created
+ingress.networking.k8s.io/dwk-material-ingress created
+service/hasher-svc created
+rvl@eb: hashapp $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+hasher-dep-6548989fd6-jxpzz   1/1     Running   0          16s
+rvl@eb: hashapp $ curl 127.0.0.1:8081
+2022-06-19 17:23:1curl localhost:8081/eb: hashapp $ kubectl apply -f manifests/
+2022-06-19 17:23:58.554302+00:00 78c1581100c4b91013c58b88e601b086rvl@eb: hashapp $ curl localhost:8081/
+2022-06-19 17:24:03.554409+00:00 78c1581100c4b91013c58b88e601b086rvl@eb: hashapp $ curl localhost:8081/
+2022-06-19 17:24:0
+rvl@eb: hashapp $ 
+rvl@eb: hashapp $ 
+rvl@eb: hashapp $ docker-compose build
+ERROR: build path /home/rvl/kod/kuber/apps/hashapp/hasher either does not exist, is not accessible, or is not a valid URL.
+rvl@eb: hashapp $ docker-compose build
+Building app
+Sending build context to Docker daemon  149.5kB
+Step 1/7 : FROM python:3.9
+ ---> d0ce03c9330c
+Step 2/7 : WORKDIR /code
+ ---> Using cache
+ ---> 0b7f2f816513
+Step 3/7 : COPY ./requirements.txt /code/requirements.txt
+ ---> Using cache
+ ---> e4336344cbbf
+Step 4/7 : RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+ ---> Using cache
+ ---> 91e1ac28671b
+Step 5/7 : COPY ./app /code/app
+ ---> Using cache
+ ---> c1a70dd9d0ca
+Step 6/7 : COPY ./code /code
+ ---> 0b94f7779fca
+Step 7/7 : CMD [ "sh", "start.sh"]
+ ---> Running in 31d104de9677
+Removing intermediate container 31d104de9677
+ ---> 3b93929fc81f
+Successfully built 3b93929fc81f
+Successfully tagged hasher:latest
+rvl@eb: hashapp $ 
+rvl@eb: hashapp $ docker-compose build --no-cache
+Building app
+Sending build context to Docker daemon  149.5kB
+Step 1/7 : FROM python:3.9
+ ---> d0ce03c9330c
+Step 2/7 : WORKDIR /code
+ ---> Running in c683581879bc
+Removing intermediate container c683581879bc
+ ---> 391cf8fba152
+Step 3/7 : COPY ./requirements.txt /code/requirements.txt
+ ---> 13725741e217
+Step 4/7 : RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+ ---> Running in 4b4471876a69
+Collecting fastapi<0.69.0,>=0.68.0
+  Downloading fastapi-0.68.2-py3-none-any.whl (52 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.4/52.4 KB 2.1 MB/s eta 0:00:00
+Collecting pydantic<2.0.0,>=1.8.0
+  Downloading pydantic-1.9.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.4/12.4 MB 11.0 MB/s eta 0:00:00
+Collecting uvicorn<0.16.0,>=0.15.0
+  Downloading uvicorn-0.15.0-py3-none-any.whl (54 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 54.4/54.4 KB 91.1 MB/s eta 0:00:00
+Collecting starlette==0.14.2
+  Downloading starlette-0.14.2-py3-none-any.whl (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 KB 43.3 MB/s eta 0:00:00
+Collecting typing-extensions>=3.7.4.3
+  Downloading typing_extensions-4.2.0-py3-none-any.whl (24 kB)
+Collecting click>=7.0
+  Downloading click-8.1.3-py3-none-any.whl (96 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.6/96.6 KB 16.0 MB/s eta 0:00:00
+Collecting h11>=0.8
+  Downloading h11-0.13.0-py3-none-any.whl (58 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 58.2/58.2 KB 23.8 MB/s eta 0:00:00
+Collecting asgiref>=3.4.0
+  Downloading asgiref-3.5.2-py3-none-any.whl (22 kB)
+Installing collected packages: typing-extensions, starlette, h11, click, asgiref, uvicorn, pydantic, fastapi
+Successfully installed asgiref-3.5.2 click-8.1.3 fastapi-0.68.2 h11-0.13.0 pydantic-1.9.1 starlette-0.14.2 typing-extensions-4.2.0 uvicorn-0.15.0
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+WARNING: You are using pip version 22.0.4; however, version 22.1.2 is available.
+You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+Removing intermediate container 4b4471876a69
+ ---> c26c6b512d03
+Step 5/7 : COPY ./app /code/app
+ ---> b40d66fa2820
+Step 6/7 : COPY ./code /code
+ ---> a051dc2eca06
+Step 7/7 : CMD [ "sh", "start.sh"]
+ ---> Running in 4d85df8d2f87
+Removing intermediate container 4d85df8d2f87
+ ---> f84017643402
+Successfully built f84017643402
+Successfully tagged hasher:latest
+rvl@eb: hashapp $ docker tag hasher:latest rvlq/hasher:1.07; docker push rvlq/hasher:1.07
+The push refers to repository [docker.io/rvlq/hasher]
+82ac0e24455e: Pushed 
+2aa949c76128: Pushed 
+07e6fb651064: Pushed 
+a60a835d3ee4: Pushed 
+7823838cb2ff: Pushed 
+c6679bcc482d: Layer already exists 
+aedb4b362167: Layer already exists 
+285c8ba236e9: Layer already exists 
+13b045a1dfd2: Layer already exists 
+2fbabeba902e: Layer already exists 
+ee509ed6e976: Layer already exists 
+9177197c67d0: Layer already exists 
+7dbadf2b9bd8: Layer already exists 
+e7597c345c2e: Layer already exists 
+1.07: digest: sha256:818495b5e466b7dc871f2b04e59a43aba6ebd7032b2de26802f2f529d197b5f8 size: 3258
+rvl@eb: hashapp $ kubectl apply -f manifests/
+deployment.apps/hasher-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/hasher-svc unchanged
+rvl@eb: hashapp $ kubectl get pods
+NAME                          READY   STATUS        RESTARTS   AGE
+hasher-dep-77cc6c9895-vsmc5   1/1     Running       0          15s
+hasher-dep-6548989fd6-jxpzz   1/1     Terminating   0          10m
+rvl@eb: hashapp $ kubectl get pods
+NAME                          READY   STATUS        RESTARTS   AGE
+hasher-dep-77cc6c9895-vsmc5   1/1     Running       0          35s
+hasher-dep-6548989fd6-jxpzz   1/1     Terminating   0          10m
+rvl@eb: hashapp $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+hasher-dep-77cc6c9895-vsmc5   1/1     Running   0          77s
+rvl@eb: hashapp $ curl localhost:8081/
+2022-06-19 17:34:29.904308+00:00 ec2fec14d4225b4e5a45194d37ce7006rvl@eb: hashapp $ curl localhost:8081/
+2022-06-19 17:34:34.904542+00:00 ec2fec14d4225b4e5a45194d37ce7006rvl@eb: hashapp $ curl localhost:8081/
+2022-06-19 17:34:44.904891+00:00 ec2fec14d4225b4e5a45194d37ce7006rvl@eb: hashapp $ curl localhost:8081/
+2022-06-19 18:39:14.904386+00:00 ec2fec14d4225b4e5a45194d37ce7006rvl@eb: hashapp $ 
+rvl@eb: hashapp $ 

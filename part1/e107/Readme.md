@@ -2,7 +2,7 @@
 
 Accessing "Log output" using Ingress.
 
-Application source (trying out Python this times):
+Application source (trying out Python this time):
 https://github.com/rvl-q/hashapp
 
 Docker image:
@@ -15,7 +15,7 @@ k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
 
 Command used to deploy the application:
 ```
-x
+kubectl apply -f manifests/
 ```
 logs:
 [here](./e107.txt).

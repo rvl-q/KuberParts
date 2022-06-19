@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: proj01-dep
+  name: ping-pong-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: proj01
+      app: ping-pong
   template:
     metadata:
       labels:
-        app: proj01
+        app: ping-pong
     spec:
       containers:
-        - name: proj01
-          image: rvlq/project:v0.5
+        - name: ping-pong
+          image: rvlq/ping-pong:latest

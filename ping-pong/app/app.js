@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
-import { configure } from "https://deno.land/x/eta@v1.12.3/mod.ts";
+// import { configure } from "https://deno.land/x/eta@v1.12.3/mod.ts";
 
 
 const PORT = Deno.env.get("PORT");

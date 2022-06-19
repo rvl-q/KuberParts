@@ -1,0 +1,57 @@
+rvl@eb: ping-pong $ docker-compose build
+Building app
+Sending build context to Docker daemon  3.584kB
+Step 1/8 : FROM denoland/deno:alpine-1.17.2
+ ---> ccc840e0ca5a
+Step 2/8 : ENV PORT=8888
+ ---> Using cache
+ ---> 221e347cf16a
+Step 3/8 : EXPOSE ${PORT}
+ ---> Using cache
+ ---> 54f7b496f3ca
+Step 4/8 : WORKDIR /app
+ ---> Using cache
+ ---> 4bb50afab959
+Step 5/8 : USER deno
+ ---> Using cache
+ ---> 23b6b46988a5
+Step 6/8 : COPY . /app
+ ---> Using cache
+ ---> 63c3db140683
+Step 7/8 : RUN deno cache app.js
+ ---> Using cache
+ ---> 965684c4661b
+Step 8/8 : CMD [ "run", "--unstable", "--allow-net", "--allow-read", "--allow-env", "--no-check", "app.js" ]
+ ---> Using cache
+ ---> acd88769430c
+Successfully built acd88769430c
+Successfully tagged ping-pong:latest
+rvl@eb: ping-pong $ docker tag ping-pong:latest rvlq/ping-pong:1.09; docker push rvlq/ping-pong:1.09
+The push refers to repository [docker.io/rvlq/ping-pong]
+6d56dd9a2996: Layer already exists 
+9c31d59e9c29: Layer already exists 
+fd32f10961c5: Layer already exists 
+5a1e2d5e83f4: Layer already exists 
+11cfeba7648c: Layer already exists 
+62836982e6c2: Layer already exists 
+516917cb39fd: Layer already exists 
+6365d1463b65: Layer already exists 
+c68db0906e2c: Layer already exists 
+f1dd685eb59e: Layer already exists 
+1.09: digest: sha256:3836081ed2f262467ae0d4a8197eccd3205c0916dc13c40ce239fe9fd49acfda size: 2404
+rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 15rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 16rvl@eb: ping-kubectl apply -f manifests/
+deployment.apps/ping-pong-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/ping-pong-svc unchanged
+rvl@eb: ping-pong $ kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+ping-pong-dep-c8d98b684-fzgnr   1/1     Running   0          9s
+rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 0rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 1rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 2rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 3rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 4rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ 

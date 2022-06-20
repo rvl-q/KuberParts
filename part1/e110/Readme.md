@@ -5,8 +5,11 @@ https://github.com/rvl-q/hashapp
 
 ["Log output"](../e107/) now splitted into two containers.
 
-Docker images:
- (tag: 1.10)
+Docker images (tag: 1.10):
+
+https://hub.docker.com/r/rvlq/hasher/tags
+
+https://hub.docker.com/r/rvlq/log-output/tags
 
 Command used to start the cluster:
 ```

@@ -1,0 +1,84 @@
+rvl@eb: hashapp $ docker-compose build
+Building logger
+Sending build context to Docker daemon  4.096kB
+Step 1/5 : FROM alpine:3.16
+ ---> e66264b98777
+Step 2/5 : RUN apk add --update coreutils && rm -rf /var/cache/apk/*
+ ---> Using cache
+ ---> cdaae8f40cf0
+Step 3/5 : WORKDIR /code
+ ---> Using cache
+ ---> d90e8a4bb5d6
+Step 4/5 : COPY . /code
+ ---> 18ada41a7367
+Step 5/5 : CMD [ "sh", "start.sh"]
+ ---> Running in b52d308e3585
+Removing intermediate container b52d308e3585
+ ---> 5da758cd8116
+Successfully built 5da758cd8116
+Successfully tagged hasher:latest
+Building server
+Sending build context to Docker daemon  6.656kB
+Step 1/6 : FROM python:3.9
+ ---> d0ce03c9330c
+Step 2/6 : WORKDIR /code
+ ---> Using cache
+ ---> 0e35efd5aca0
+Step 3/6 : COPY requirements.txt /code/requirements.txt
+ ---> Using cache
+ ---> 96a6ef4a717b
+Step 4/6 : RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+ ---> Using cache
+ ---> 90932ff28562
+Step 5/6 : COPY . /code/app
+ ---> 587d47effc55
+Step 6/6 : CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "7777"]
+ ---> Running in 72a560091b99
+Removing intermediate container 72a560091b99
+ ---> e08ee44e4a24
+Successfully built e08ee44e4a24
+Successfully tagged log-output:latest
+rvl@eb: hashapp $ docker tag log-output:latest rvlq/log-output:1.10; docker push rvlq/log-output:1.10
+The push refers to repository [docker.io/rvlq/log-output]
+289e13ea8baa: Pushed 
+7889dfe7d86f: Layer already exists 
+7dce0a5c181a: Layer already exists 
+7472ac16be16: Layer already exists 
+c6679bcc482d: Layer already exists 
+aedb4b362167: Layer already exists 
+285c8ba236e9: Layer already exists 
+13b045a1dfd2: Layer already exists 
+2fbabeba902e: Layer already exists 
+ee509ed6e976: Layer already exists 
+9177197c67d0: Layer already exists 
+7dbadf2b9bd8: Layer already exists 
+e7597c345c2e: Layer already exists 
+1.10: digest: sha256:254024377462a60f64c300cb6b2228f308b11f4c49016b940bfd7c5365f14f04 size: 3052
+rvl@eb: hashapp $ docker tag hasher:latest rvlq/hasher:1.10; docker push rvlq/hasher:1.10
+The push refers to repository [docker.io/rvlq/hasher]
+256ed94f3f9d: Pushed 
+73aa80b4dcb6: Layer already exists 
+e0ff3fe769cb: Layer already exists 
+24302eb7d908: Layer already exists 
+1.10: digest: sha256:dab5ed50896a6c2b33ef63411765cd5da0b097e5c902d46dd6a1a81e72385e28 size: 1152
+rvl@eb: hashapp $ kubectl apply -f manifests/
+deployment.apps/log-output-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/log-output-svc unchanged
+rvl@eb: hashapp $ kubectl get pods
+NAME                              READY   STATUS              RESTARTS   AGE
+log-output-dep-658c446c6f-jcdmp   2/2     Running             0          5h13m
+log-output-dep-6c5f55b767-qdh5q   0/2     ContainerCreating   0          6s
+rvl@eb: hashapp $ kubectl get pods
+NAME                              READY   STATUS        RESTARTS   AGE
+log-output-dep-6c5f55b767-qdh5q   2/2     Running       0          10s
+log-output-dep-658c446c6f-jcdmp   2/2     Terminating   0          5h13m
+rvl@eb: hashapp $ curl localhost:8081
+2022-06-20T18:36:10,606883511+00:00 8df4de41576be02efcdcd615904d396a
+rvl@eb: hashapp $ curl localhost:8081
+2022-06-20T18:36:15,609369498+00:00 8df4de41576be02efcdcd615904d396a
+rvl@eb: hashapp $ curl localhost:8081
+2022-06-20T18:36:15,609369498+00:00 8df4de41576be02efcdcd615904d396a
+rvl@eb: hashapp $ curl localhost:8081
+2022-06-20T18:36:25,614119293+00:00 8df4de41576be02efcdcd615904d396a
+rvl@eb: hashapp $ 

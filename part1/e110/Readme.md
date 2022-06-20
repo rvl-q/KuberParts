@@ -1,7 +1,9 @@
 # Exercise 1.10: Even more services
 
 Application source:
+https://github.com/rvl-q/hashapp
 
+["Log output"](../e107/) now splitted into two containers.
 
 Docker image:
  (tag: 1.10)

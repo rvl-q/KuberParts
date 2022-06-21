@@ -1,0 +1,64 @@
+rvl@eb: Project $ 
+rvl@eb: Project $ date
+ti 21.6.2022 21.36.12 +0300
+rvl@eb: Project $ kubectl apply -f manifests/
+deployment.apps/proj01-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/proj01-svc unchanged
+rvl@eb: Project $ kubectl get pod
+NAME                         READY   STATUS    RESTARTS   AGE
+proj01-dep-c9cf496ff-k429n   1/1     Running   0          11s
+rvl@eb: Project $ curl localhost:8081
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo application!</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <h1>Exercise 1.12: Project v0.6</h1>
+
+<center><img src="/images/image.jpg" loading="lazy"></center>
+
+<p>Since the project looks really boring right now, let's add a picture!
+
+The goal is to add a daily image to the project. And every day a new image is fetched on the first request.
+
+Get a random picture from Lorem Picsum like https://picsum.photos/1200 and display it in the project. 
+Find a way to store the image so it stays the same for an entire day.
+
+Make sure to cache the image into a volume so that the API isn't needed for new images every time we access 
+the application or the container crashes.
+
+Best way to test what happens when your container shuts down is likely by shutting down the container, 
+so you can add logic for that as well, for testing purposes.</p>
+
+<h2>Test</h2>
+
+<p>Hello world! @p9999</p>  </body>
+</html>rvl@eb: Project $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 44210  100 44210    0     0  3924k      0 --:--:-- --:--:-- --:--:-- 3924k
+3d9afee81f874cf929a2a7dc2aab651e  -
+rvl@eb: Project $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 44210  100 44210    0     0  7195k      0 --:--:-- --:--:-- --:--:-- 7195k
+3d9afee81f874cf929a2a7dc2aab651e  -
+rvl@eb: Project $ kubectl get pod
+NAME                         READY   STATUS    RESTARTS   AGE
+proj01-dep-c9cf496ff-k429n   1/1     Running   0          2m22s
+rvl@eb: Project $ kubectl delete pod proj01-dep-c9cf496ff-k429n 
+pod "proj01-dep-c9cf496ff-k429n" deleted
+rvl@eb: Project $ kubectl get pod
+NAME                         READY   STATUS    RESTARTS   AGE
+proj01-dep-c9cf496ff-q8kd4   1/1     Running   0          3s
+rvl@eb: Project $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 44210  100 44210    0     0  3597k      0 --:--:-- --:--:-- --:--:-- 3597k
+3d9afee81f874cf929a2a7dc2aab651e  -
+rvl@eb: Project $ date
+ti 21.6.2022 21.40.41 +0300
+rvl@eb: Project $ 

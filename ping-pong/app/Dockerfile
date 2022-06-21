@@ -8,9 +8,10 @@ EXPOSE ${PORT}
 WORKDIR /app
 
 # test before persistent claim
-RUN mkdir shared && chown deno shared
+# RUN mkdir shared && chown deno shared
 
-USER deno
+# NOT allowed to write in the persistent volume
+# USER deno
 
 COPY . /app
 

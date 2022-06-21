@@ -7,6 +7,7 @@ EXPOSE ${PORT}
 
 WORKDIR /app
 
+# test before persistent claim
 RUN mkdir shared && chown deno shared
 
 USER deno

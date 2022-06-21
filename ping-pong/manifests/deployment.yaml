@@ -12,9 +12,16 @@ spec:
       labels:
         app: ping-pong
     spec:
+      volumes:
+        - name: shared-image
+          persistentVolumeClaim:
+            claimName: image-claim
       containers:
         - name: ping-pong
-          image: rvlq/ping-pong:0945
+          image: rvlq/ping-pong:0946
+          volumeMounts:
+          - name: shared-image
+            mountPath: /app/shared
           resources:
               limits:
                 memory: "64Mi"

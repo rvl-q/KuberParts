@@ -5,6 +5,7 @@ import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 const PORT = Deno.env.get("PORT");
 
 let _ping_num = 0
+Deno.writeTextFile("./shared/pongs.txt", _ping_num);
 
 const handleRequest = (request) => {
   console.log(`Request to ${request.url}`);

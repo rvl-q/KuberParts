@@ -9,9 +9,10 @@ https://hub.docker.com/r/rvlq/ping-pong/tags
 
 (tag: 1.11)
 
-Command used to start the cluster:
+Command used to start the cluster and set up the persistent volume:
 ```
 k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+kubectl apply -f https://raw.githubusercontent.com/rvl-q/KuberParts/main/part1/e111/persistentvolume.yaml
 ```
 
 Command used to deploy the application:

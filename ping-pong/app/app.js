@@ -4,17 +4,19 @@ import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 
 const PORT = Deno.env.get("PORT");
 
-let _ping_num = -1
+let _ping_num = 0
 
 const handleRequest = (request) => {
   console.log(`Request to ${request.url}`);
   const url = new URL(request.url);
   if (url.pathname === "/pingpong" && request.method === "GET") {
     _ping_num += 1;
+    Deno.writeTextFile("./shared/pongs.txt", _ping_num);
     return new Response("pong " + _ping_num);
-  } else {
-    return new Response("Not found", { status: 404 });
   }
+  //  else {
+  //   return new Response("Not found", { status: 404 });
+  // }
 };
 
 console.log("Server started in port " + PORT);

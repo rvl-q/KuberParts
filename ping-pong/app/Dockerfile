@@ -7,6 +7,8 @@ EXPOSE ${PORT}
 
 WORKDIR /app
 
+RUN mkdir shared && chown deno shared
+
 USER deno
 
 COPY . /app
@@ -14,4 +16,4 @@ COPY . /app
 # Update the cache while we still have internet
 RUN deno cache app.js
 
-CMD [ "run", "--unstable", "--allow-net", "--allow-read", "--allow-env", "--no-check", "app.js" ]
+CMD [ "run", "--unstable", "--allow-net", "--allow-read", "--allow-write", "--allow-env", "--no-check", "app.js" ]

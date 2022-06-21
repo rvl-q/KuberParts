@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: rvlq/ping-pong:1.09
+          image: rvlq/ping-pong:0945
           resources:
               limits:
                 memory: "64Mi"

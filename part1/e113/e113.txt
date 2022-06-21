@@ -1,0 +1,13 @@
+FROM Ex 1.12:
+rvl@eb: Project $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 44210  100 44210    0     0  3597k      0 --:--:-- --:--:-- --:--:-- 3597k
+3d9afee81f874cf929a2a7dc2aab651e  -
+rvl@eb: Project $ date
+ti 21.6.2022 21.40.41 +0300
+rvl@eb: Project $ 
+
+
+
+Ex 1.13:

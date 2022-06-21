@@ -1,0 +1,26 @@
+# Exercise 1.13: Project v0.7
+
+Preparing project for coming parts.
+
+Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
+(based on: https://github.com/avihavai/wsd-walking-skeleton by avihavai)
+
+Docker image:
+https://hub.docker.com/r/rvlq/project/tags
+(tag: v0.7)
+
+Command used to start the cluster and set up and claim the persistent volume:
+```
+k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
+kubectl apply -f https://raw.githubusercontent.com/rvl-q/KuberParts/main/part1/e111/persistentvolume.yaml
+kubectl apply -f https://raw.githubusercontent.com/rvl-q/KuberParts/main/part1/e111/persistentvolumeclaim.yaml
+```
+
+
+Command used to deploy the application(s):
+```
+kubectl apply -f manifests/
+```
+
+logs:
+[here](./e113.txt).

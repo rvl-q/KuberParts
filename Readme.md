@@ -1,1 +1,1 @@
-Excersise submissions for Kubernetes course
+Exercise submissions for Kubernetes course

@@ -1,0 +1,72 @@
+rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ kubectl apply -f manifests/
+deployment.apps/ping-pong-dep configured
+ingress.networking.k8s.io/dwk-material-ingress configured
+service/ping-pong-svc unchanged
+rvl@eb: ping-pong $ 
+
+
+
+rvl@eb: log-output $ kubectl apply -f manifests/
+deployment.apps/log-output-dep configured
+ingress.networking.k8s.io/dwk-material-ingress configured
+service/log-output-svc unchanged
+rvl@eb: log-output $ kubectl describe ingress
+Name:             dwk-material-ingress
+Labels:           <none>
+Namespace:        default
+Address:          172.28.0.2,172.28.0.3,172.28.0.4
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /   log-output-svc:2345 (10.42.1.17:7777)
+Annotations:  <none>
+Events:       <none>
+rvl@eb: log-output $ git pull
+remote: Enumerating objects: 25, done.
+remote: Counting objects: 100% (25/25), done.
+remote: Compressing objects: 100% (11/11), done.
+remote: Total 19 (delta 11), reused 16 (delta 8), pack-reused 0
+Unpacking objects: 100% (19/19), 1.99 KiB | 290.00 KiB/s, done.
+From github.com:rvl-q/hashapp
+   9a6fca6..f14ed4f  main       -> origin/main
+Updating 9a6fca6..f14ed4f
+Fast-forward
+ app/main.py               |  7 +++++--
+ manifests/deployment.yaml | 33 ++++++++++++++++++++++-----------
+ manifests/ingress.yaml    |  9 ++++++++-
+ 3 files changed, 35 insertions(+), 14 deletions(-)
+rvl@eb: log-output $ kubectl apply -f manifests/
+deployment.apps/log-output-dep configured
+ingress.networking.k8s.io/dwk-material-ingress configured
+service/log-output-svc unchanged
+rvl@eb: log-output $ kubectl describe ingress
+Name:             dwk-material-ingress
+Labels:           <none>
+Namespace:        default
+Address:          172.28.0.2,172.28.0.3,172.28.0.4
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /           log-output-svc:2345 (10.42.2.34:7777)
+              /pingpong   ping-pong-svc:1234 (10.42.2.33:8888)
+Annotations:  <none>
+Events:       <none>
+rvl@eb: log-output $ curl localhost:8081
+2022-06-21 11:29:59.096756+00:00 a3b88949ef4367665a49dc8e6296d186.
+Ping / Pongs: 0rvl@eb: log-output $ curl localhost:8081
+2022-06-21 11:30:04.097048+00:00 a3b88949ef4367665a49dc8e6296d186.
+Ping / Pongs: 0rvl@ebcurl localhost:8081/pingpong
+pong 1rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 2rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 3rvl@eb: log-outcurl localhost:8081
+2022-06-21 11:30:34.097504+00:00 a3b88949ef4367665a49dc8e6296d186.
+Ping / Pongs: 3rvl@eb: log-output $ curl localhost:8081
+2022-06-21 11:30:39.097276+00:00 a3b88949ef4367665a49dc8e6296d186.
+Ping / Pongs: 3rvl@eb: log-output $ 

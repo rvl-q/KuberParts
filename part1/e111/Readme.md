@@ -1,6 +1,9 @@
 # Exercise 1.11: Persisting data
 
 Application sources:
+
+[log-output](../../log-output/)
+
 [ping-pong](../../ping-pong/)
 
 Docker images:

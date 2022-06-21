@@ -2,7 +2,7 @@
 
 Application sources:
 
-[log-output](../../log-output/)
+[log-output](https://github.com/rvl-q/hashapp)
 
 [ping-pong](../../ping-pong/)
 

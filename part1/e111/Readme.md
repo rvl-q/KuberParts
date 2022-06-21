@@ -5,6 +5,8 @@ Application sources:
 
 Docker images:
 
+https://hub.docker.com/r/rvlq/log-output/tags
+
 https://hub.docker.com/r/rvlq/ping-pong/tags
 
 (tag: 1.11)

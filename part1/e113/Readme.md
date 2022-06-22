@@ -2,6 +2,8 @@
 
 Preparing project for coming parts.
 
+![screenshot](Screenshot%20from%202022-06-22%2014-43-29.png)
+
 Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 (based on: https://github.com/avihavai/wsd-walking-skeleton by avihavai)
 

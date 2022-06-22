@@ -17,6 +17,9 @@ kubectl apply -f https://raw.githubusercontent.com/rvl-q/KuberParts/main/part1/e
 ```
 
 The [imageController.js file](imageController.js) used to serve and update the image:
+<details>
+  <summary>Click to expand!</summary>
+
 ```
 import { dayOfYear } from "https://deno.land/std@0.144.0/datetime/mod.ts";
 import { writableStreamFromWriter } from "https://deno.land/std@0.144.0/streams/mod.ts";
@@ -71,11 +74,14 @@ const serveImage = async (request) => {
 
 export { serveImage };
 ```
+</details>
+
 
 Command used to deploy the application(s):
 ```
 kubectl apply -f manifests/
 ```
+[The manifests folder.](./manifests/)
 
 logs:
 [here](./e112.txt).

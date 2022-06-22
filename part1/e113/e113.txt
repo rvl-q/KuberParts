@@ -11,3 +11,158 @@ rvl@eb: Project $
 
 
 Ex 1.13:
+rvl@eb: Project.v0.7 $ 
+rvl@eb: Project.v0.7 $ date
+ke 22.6.2022 15.00.21 +0300
+rvl@eb: Project.v0.7 $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   99k  100   99k    0     0  10.7M      0 --:--:-- --:--:-- --:--:-- 10.7M
+2eea68f014c28d78869b5ea875a622e4  -
+rvl@eb: Project.v0.7 $ docker-compose build
+Building app
+Sending build context to Docker daemon  53.25kB
+Step 1/7 : FROM denoland/deno:alpine-1.17.2
+ ---> ccc840e0ca5a
+Step 2/7 : ENV PORT=9999
+ ---> Using cache
+ ---> 142caf2f0e69
+Step 3/7 : EXPOSE ${PORT}
+ ---> Using cache
+ ---> 009cdfe044ba
+Step 4/7 : WORKDIR /app
+ ---> Using cache
+ ---> dded67798dd4
+Step 5/7 : COPY . /app
+ ---> 43e928f10ebf
+Step 6/7 : RUN deno cache app.js
+ ---> Running in cff7617323cc
+Download https://deno.land/std@0.120.0/http/server.ts
+Download https://deno.land/x/eta@v1.12.3/mod.ts
+Download https://deno.land/std@0.144.0/datetime/mod.ts
+Download https://deno.land/std@0.144.0/streams/mod.ts
+Download https://deno.land/x/eta@v1.12.3/compile-string.ts
+Download https://deno.land/x/eta@v1.12.3/compile.ts
+Download https://deno.land/x/eta@v1.12.3/config.ts
+Download https://deno.land/x/eta@v1.12.3/containers.ts
+Download https://deno.land/x/eta@v1.12.3/file-handlers.ts
+Download https://deno.land/x/eta@v1.12.3/file-helpers.ts
+Download https://deno.land/x/eta@v1.12.3/parse.ts
+Download https://deno.land/x/eta@v1.12.3/render.ts
+Download https://deno.land/std@0.144.0/streams/buffer.ts
+Download https://deno.land/std@0.144.0/streams/conversion.ts
+Download https://deno.land/std@0.144.0/streams/delimiter.ts
+Download https://deno.land/std@0.144.0/streams/merge.ts
+Download https://deno.land/std@0.120.0/async/mod.ts
+Download https://deno.land/std@0.144.0/datetime/formatter.ts
+Download https://deno.land/x/eta@v1.12.3/err.ts
+Download https://deno.land/x/eta@v1.12.3/storage.ts
+Download https://deno.land/x/eta@v1.12.3/utils.ts
+Download https://deno.land/x/eta@v1.12.3/file-utils.ts
+Download https://deno.land/x/eta@v1.12.3/polyfills.ts
+Download https://deno.land/std@0.144.0/_util/assert.ts
+Download https://deno.land/std@0.144.0/bytes/mod.ts
+Download https://deno.land/std@0.144.0/datetime/tokenizer.ts
+Download https://deno.land/std@0.144.0/async/deferred.ts
+Download https://deno.land/std@0.120.0/async/deadline.ts
+Download https://deno.land/std@0.120.0/async/debounce.ts
+Download https://deno.land/std@0.120.0/async/deferred.ts
+Download https://deno.land/std@0.120.0/async/delay.ts
+Download https://deno.land/std@0.120.0/async/mux_async_iterator.ts
+Download https://deno.land/std@0.120.0/async/pool.ts
+Download https://deno.land/std@0.120.0/async/tee.ts
+Download https://deno.land/std@0.144.0/bytes/bytes_list.ts
+Download https://deno.land/x/eta@v1.12.3/file-methods.ts
+Download https://deno.land/std@0.144.0/io/buffer.ts
+Download https://deno.land/std@0.144.0/bytes/equals.ts
+Download https://deno.land/std@0.97.0/fs/exists.ts
+Download https://deno.land/std@0.97.0/path/mod.ts
+Download https://deno.land/std@0.144.0/io/types.d.ts
+Download https://deno.land/std@0.97.0/_util/os.ts
+Download https://deno.land/std@0.97.0/path/_interface.ts
+Download https://deno.land/std@0.97.0/path/common.ts
+Download https://deno.land/std@0.97.0/path/glob.ts
+Download https://deno.land/std@0.97.0/path/posix.ts
+Download https://deno.land/std@0.97.0/path/separator.ts
+Download https://deno.land/std@0.97.0/path/win32.ts
+Download https://deno.land/std@0.97.0/path/_constants.ts
+Download https://deno.land/std@0.97.0/path/_util.ts
+Download https://deno.land/std@0.97.0/_util/assert.ts
+Check file:///app/app.js
+Removing intermediate container cff7617323cc
+ ---> 890087065158
+Step 7/7 : CMD [ "run", "--unstable", "--allow-net", "--allow-read", "--allow-write", "--allow-env", "--no-check", "app.js" ]
+ ---> Running in e03f2487e994
+Removing intermediate container e03f2487e994
+ ---> 40e3c7407b4c
+Successfully built 40e3c7407b4c
+Successfully tagged app:latest
+rvl@eb: Project.v0.7 $ docker tag app:latest rvlq/project:v0.7; docker push rvlq/project:v0.7
+The push refers to repository [docker.io/rvlq/project]
+4acc1e37d926: Pushed 
+addac741a56d: Pushed 
+684f8e9fb7f7: Layer already exists 
+5a1e2d5e83f4: Layer already exists 
+11cfeba7648c: Layer already exists 
+62836982e6c2: Layer already exists 
+516917cb39fd: Layer already exists 
+6365d1463b65: Layer already exists 
+c68db0906e2c: Layer already exists 
+f1dd685eb59e: Layer already exists 
+v0.7: digest: sha256:1c184ada58023a4ffef1cc8f7fd9acb0363731f8fd43747e4506f789743792ce size: 2407
+rvl@eb: Project.v0.7 $ kubectl get pod
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-7cbdfcf57d-j48fc   1/1     Running   0          5m37s
+rvl@eb: Project.v0.7 $ kubectl apply -f manifests/
+deployment.apps/proj01-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/proj01-svc unchanged
+rvl@eb: Project.v0.7 $ kubectl get pod
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-647c787d68-b5knh   1/1     Running   0          5s
+rvl@eb: Project.v0.7 $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   99k  100   99k    0     0  6611k      0 --:--:-- --:--:-- --:--:-- 6611k
+2eea68f014c28d78869b5ea875a622e4  -
+rvl@eb: Project.v0.7 $ curl localhost:8081
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo application!</title>
+    <meta charset="UTF-8">
+    <style>
+      IMG.displayed {
+      display: block;
+      margin-left: auto;
+      margin-right: auto }
+    </style>
+  </head>
+  <body>
+    <h1>Todos!</h1>
+<h2>Exercise 1.13: Project v0.7</h2>
+
+<IMG class="displayed" src="/images/image.jpg" alt="daily picture" width="400" height="400">
+
+<form method="POST">
+  <input type="text" name="todo" minlength="1" maxlength = "140"/>
+  <input type="submit" value="Create TODO" />
+</form>
+
+<ul>
+  <li>
+    Add an input field. The input should not take todos that are over 140 characters long.  </li>
+  <li>
+    Add a send button. It does not have to send the todo yet.  </li>
+  <li>
+    Add a list for the existing todos with some hardcoded todos.  </li>
+</ul>  </body>
+</html>rvl@eb: Project.v0.7 $ 
+rvl@eb: Project.v0.7 $ curl localhost:8081/images/image.jpg --output -|md5sum
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   99k  100   99k    0     0  13.8M      0 --:--:-- --:--:-- --:--:-- 13.8M
+2eea68f014c28d78869b5ea875a622e4  -
+rvl@eb: Project.v0.7 $ date
+ke 22.6.2022 15.04.31 +0300
+rvl@eb: Project.v0.7 $ 

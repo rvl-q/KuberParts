@@ -5,6 +5,8 @@ Preparing project for coming parts.
 Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 (based on: https://github.com/avihavai/wsd-walking-skeleton by avihavai)
 
+[Public checkout of the latest version here at end of part 1.](Project.v0.7/)
+
 Docker image:
 https://hub.docker.com/r/rvlq/project/tags
 (tag: v0.7)

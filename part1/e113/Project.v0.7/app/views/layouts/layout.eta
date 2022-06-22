@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo application!</title>
+    <meta charset="UTF-8">
+    <style>
+      IMG.displayed {
+      display: block;
+      margin-left: auto;
+      margin-right: auto }
+    </style>
+  </head>
+  <body>
+    <%~ it.body %>
+  </body>
+</html>

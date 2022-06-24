@@ -18,7 +18,7 @@ spec:
       #       claimName: share-claim
       containers:
         - name: ping-pong
-          image: rvlq/ping-pong:20840
+          image: rvlq/ping-pong:2.01
           # volumeMounts:
           # - name: shared-share
           #   mountPath: /app/shared

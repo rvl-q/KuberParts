@@ -117,4 +117,4 @@ Command used to deploy the application(s):
 kubectl apply -f manifests/
 ```
 logs:
-[here](./e2.01.txt).
+[here](./e201.txt).

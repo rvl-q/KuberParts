@@ -1,0 +1,90 @@
+rvl@eb: log-output $ 
+rvl@eb: log-output $ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-5dfd9884b8-tk7gr   1/1     Running   0          13m
+ping-pong-dep-68fd889fb4-9kfnh    1/1     Running   0          10m
+rvl@eb: log-output $ kubectl apply -f ./manifests/
+deployment.apps/log-output-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/log-output-svc unchanged
+rvl@eb: log-output $ kubectl logs log-output-dep-7798c6d855-52bwj 
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2022-06-24 09:01:02.136994+00:00 4679b1ea78ac26746f12c276d6b1358e
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:7777 (Press CTRL+C to quit)
+2022-06-24 09:01:07.136040+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:01:12.135835+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:01:17.136200+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:01:22.135984+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:01:27.136605+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:01:32.136116+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:01:37.136174+00:00 4679b1ea78ac26746f12c276d6b1358e
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:01:52.136434+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 17rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:02:07.136276+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 17rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 18rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 19rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 20rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 21rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 22rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 23rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:02:32.135900+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 23rvl@eb: log-output $ 
+rvl@eb: log-output $ kubectl apply -f ../ping-pong/manifests/
+deployment.apps/ping-pong-dep configured
+ingress.networking.k8s.io/dwk-material-ingress unchanged
+service/ping-pong-svc unchanged
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:03:57.136730+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 0rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:04:02.136945+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 0rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:04:07.136241+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 0rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 1rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 2rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 3rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 4rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 5rvl@eb: log-output $ 
+rvl@eb: log-output $ kubectl logs log-output-dep-7798c6d855-52bwj --since 2m
+2022-06-24 09:02:52.135833+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:02:57.136104+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:02.136320+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:07.136476+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:12.135949+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:17.135866+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:22.137585+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:27.135734+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:32.135664+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:37.135938+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:42.136187+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:47.135947+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:52.137425+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:03:57.136730+00:00 4679b1ea78ac26746f12c276d6b1358e
+INFO:     10.42.2.4:40652 - "GET / HTTP/1.1" 200 OK
+2022-06-24 09:04:02.136945+00:00 4679b1ea78ac26746f12c276d6b1358e
+INFO:     10.42.2.4:40652 - "GET / HTTP/1.1" 200 OK
+2022-06-24 09:04:07.136241+00:00 4679b1ea78ac26746f12c276d6b1358e
+INFO:     10.42.2.4:40652 - "GET / HTTP/1.1" 200 OK
+2022-06-24 09:04:12.135720+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:17.135846+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:22.135836+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:27.135615+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:32.135912+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:37.135767+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:42.136379+00:00 4679b1ea78ac26746f12c276d6b1358e
+2022-06-24 09:04:47.136294+00:00 4679b1ea78ac26746f12c276d6b1358e
+rvl@eb: log-output $ 
+rvl@eb: log-output $ curl localhost:8081/
+2022-06-24 09:09:02.135843+00:00 4679b1ea78ac26746f12c276d6b1358e.
+Ping / Pongs: 5rvl@eb: log-output $ 
+rvl@eb: log-output $ 

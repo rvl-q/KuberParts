@@ -1,0 +1,3 @@
+# Exercise 2.05: Secrets
+
+There's nothing specific to submit, all following submissions should follow the rule...

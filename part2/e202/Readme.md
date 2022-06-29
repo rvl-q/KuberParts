@@ -31,4 +31,4 @@ kubectl apply -f manifests/
 
 
 logs:
-[here](./e201.txt).
+[here](./e202.txt).

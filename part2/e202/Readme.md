@@ -28,5 +28,6 @@ Command used to deploy the application(s):
 kubectl apply -f manifests/
 ```
 [The manifest files are here.](./manifests/)
+
 logs:
 [here](./e201.txt).

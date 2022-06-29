@@ -1,6 +1,6 @@
 # Exercise 2.02: Project v1.0
 
-Separating the backend, or in my case more like adding a React fronend. Some error handling should be added, as the frontend is restarded a few seconds after deployment in this version, Apparentky because the backend isn't ready yet. I look more into it in next versions,
+Separating the backend, or in my case more like adding a React fronend. Some error handling should be added, as the frontend is restarded a few seconds after deployment in this version. Apparently because the backend isn't ready yet. I look more into it in next versions,
 
 Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 (based on: https://github.com/avihavai/wsd-walking-skeleton by avihavai)

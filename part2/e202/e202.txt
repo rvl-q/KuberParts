@@ -1,0 +1,139 @@
+rvl@eb: Project $ 
+rvl@eb: Project $ kubectl apply -f manifests/
+deployment.apps/proj01-dep configured
+ingress.networking.k8s.io/prj-back-ingress unchanged
+service/proj01-svc unchanged
+deployment.apps/proj02-dep configured
+ingress.networking.k8s.io/prj-front-ingress unchanged
+service/proj02-svc unchanged
+rvl@eb: Project $ kubectl get pods
+NAME                         READY   STATUS              RESTARTS      AGE
+proj02-dep-dcdd94f44-zgr9z   1/1     Running             1 (99m ago)   99m
+proj02-dep-99975896d-7kcqc   0/1     ContainerCreating   0             18s
+proj01-dep-6c75cd7dd-sznhg   1/1     Running             0             18s
+rvl@eb: Project $ kubectl get pods
+NAME                         READY   STATUS    RESTARTS      AGE
+proj01-dep-6c75cd7dd-sznhg   1/1     Running   0             50s
+proj02-dep-99975896d-7kcqc   1/1     Running   1 (22s ago)   50s
+rvl@eb: Project $ kubectl describe ingress
+Name:             prj-back-ingress
+Labels:           <none>
+Namespace:        default
+Address:          172.28.0.2,172.28.0.3,172.28.0.4
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos    proj01-svc:2345 (10.42.2.70:9999)
+              /images   proj01-svc:2345 (10.42.2.70:9999)
+Annotations:  <none>
+Events:       <none>
+
+
+Name:             prj-front-ingress
+Labels:           <none>
+Namespace:        default
+Address:          172.28.0.2,172.28.0.3,172.28.0.4
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /              proj02-svc:1234 (10.42.0.9:3000)
+              /static        proj02-svc:1234 (10.42.0.9:3000)
+              /sockjs-node   proj02-svc:1234 (10.42.0.9:3000)
+Annotations:  <none>
+Events:       <none>
+rvl@eb: Project $ curl -v localhost:8081
+*   Trying 127.0.0.1:8081...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8081 (#0)
+> GET / HTTP/1.1
+> Host: localhost:8081
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Accept-Ranges: bytes
+< Content-Type: text/html; charset=UTF-8
+< Date: Wed, 29 Jun 2022 15:36:23 GMT
+< Etag: W/"490-oOzqPsxbfo/frtrTdkwsp3E/NZw"
+< Vary: Accept-Encoding
+< X-Powered-By: Express
+< Transfer-Encoding: chunked
+< 
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!--
+      Notice the use of  in the tag above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start`.
+      To create a production bundle, use `npm run build`.
+    -->
+  <script type="text/javascript" src="/static/js/bundle.js"></script></body>
+</html>
+* Connection #0 to host localhost left intact
+rvl@eb: Project $ curl -v localhost:8081/todos
+*   Trying 127.0.0.1:8081...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8081 (#0)
+> GET /todos HTTP/1.1
+> Host: localhost:8081
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Origin: *
+< Content-Length: 375
+< Content-Type: application/json; charset=utf-8
+< Date: Wed, 29 Jun 2022 15:37:28 GMT
+< 
+* Connection #0 to host localhost left intact
+[{"id":2,"content":"Exercise 2.03: Keep them separated"},{"id":3,"content":"Exercise 2.04: Project v1.1"},{"id":4,"content":"Exercise 2.06: Documentation and ConfigMaps"},{"id":5,"content":"Exercise 2.07: Stateful applications"},{"id":6,"content":"Exercise 2.08: Project v1.2"},{"id":7,"content":"Exercise 2.09: Daily todos"},{"id":8,"content":"Exercise 2.10: Project v1.3"}]rvl@ervl@eb: Project $ 
+rvl@eb: Project $ echo new todo added from web gui
+new todo added from web gui
+rvl@eb: Project $ curl -v localhost:8081/todos
+*   Trying 127.0.0.1:8081...
+* TCP_NODELAY set
+* Connected to localhost (127.0.0.1) port 8081 (#0)
+> GET /todos HTTP/1.1
+> Host: localhost:8081
+> User-Agent: curl/7.68.0
+> Accept: */*
+> 
+* Mark bundle as not supporting multiuse
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Origin: *
+< Content-Length: 403
+< Content-Type: application/json; charset=utf-8
+< Date: Wed, 29 Jun 2022 15:40:46 GMT
+< 
+* Connection #0 to host localhost left intact
+[{"id":2,"content":"Exercise 2.03: Keep them separated"},{"id":3,"content":"Exercise 2.04: Project v1.1"},{"id":4,"content":"Exercise 2.06: Documentation and ConfigMaps"},{"id":5,"content":"Exercise 2.07: Stateful applications"},{"id":6,"content":"Exercise 2.08: Project v1.2"},{"id":7,"content":"Exercise 2.09: Daily todos"},{"id":8,"content":"Exercise 2.10: Project v1.3"},{"id":8,"content":"Part 3"}]rvl@eb: Project $ 
+rvl@eb: Project $ 

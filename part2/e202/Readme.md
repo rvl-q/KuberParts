@@ -1,6 +1,6 @@
 # Exercise 2.02: Project v1.0
 
-Separating the backend.
+Separating the backend, or in my case more like adding a React fronend. Some error handling should be added, as the frontend is restarded a few seconds after deployment in this version, Apparentky because the backend isn't ready yet. I look more into it in next versions,
 
 Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 (based on: https://github.com/avihavai/wsd-walking-skeleton by avihavai)
@@ -9,9 +9,11 @@ Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 
 Latest version will be publlishes one way or another before end of part 2.
 
-Docker image:
-https://hub.docker.com/r/rvlq/project/tags
-(tag: v1.0)
+Docker images (tag: v1.0):
+
+Back: https://hub.docker.com/r/rvlq/project/tags
+
+Front: https://hub.docker.com/r/rvlq/proj-front/tags
 
 Command used to start the cluster and set up and claim the persistent volume:
 ```
@@ -25,6 +27,6 @@ Command used to deploy the application(s):
 ```
 kubectl apply -f manifests/
 ```
-
+[The manifest files are here.](./manifests/)
 logs:
 [here](./e201.txt).

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prj-front-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: proj02-svc
+            port:
+              number: 1234
+      - path: /static
+        pathType: Prefix
+        backend:
+          service:
+            name: proj02-svc
+            port:
+              number: 1234
+      - path: /sockjs-node
+        pathType: Prefix
+        backend:
+          service:
+            name: proj02-svc
+            port:
+              number: 1234

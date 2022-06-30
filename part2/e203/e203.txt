@@ -1,0 +1,82 @@
+rvl@eb: log-output $ 
+rvl@eb: log-output $ kubectl apply -f namespace.yaml 
+namespace/exercises unchanged
+rvl@eb: log-output $ kubectl apply -f ../ping-pong/manifests/
+deployment.apps/ping-pong-dep created
+ingress.networking.k8s.io/ping-pong-ingress created
+service/ping-pong-svc created
+rvl@eb: log-output $ kubectl apply -f manifests/
+deployment.apps/log-output-dep created
+ingress.networking.k8s.io/log-output-ingress created
+service/log-output-svc created
+rvl@eb: log-output $ kubectl get all --namespace=exercises
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/ping-pong-dep-6c9bfcdb5c-k5b8t    1/1     Running   0          26s
+pod/log-output-dep-59b9698fb9-p62tn   1/1     Running   0          14s
+
+NAME                     TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/ping-pong-svc    ClusterIP   10.43.189.146   <none>        1234/TCP   26s
+service/log-output-svc   ClusterIP   10.43.47.204    <none>        2345/TCP   14s
+
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/ping-pong-dep    1/1     1            1           26s
+deployment.apps/log-output-dep   1/1     1            1           14s
+
+NAME                                        DESIRED   CURRENT   READY   AGE
+replicaset.apps/ping-pong-dep-6c9bfcdb5c    1         1         1       26s
+replicaset.apps/log-output-dep-59b9698fb9   1         1         1       14s
+rvl@eb: log-output $ kubectl get ingress --namespace=exercises
+NAME                 CLASS    HOSTS           ADDRESS                            PORTS   AGE
+ping-pong-ingress    <none>   *               172.28.0.2,172.28.0.3,172.28.0.4   80      38s
+log-output-ingress   <none>   log.localhost   172.28.0.2,172.28.0.3,172.28.0.4   80      26s
+rvl@eb: log-output $ kubectl get ingress
+NAME                CLASS    HOSTS   ADDRESS                            PORTS   AGE
+prj-back-ingress    <none>   *       172.28.0.2,172.28.0.3,172.28.0.4   80      19h
+prj-front-ingress   <none>   *       172.28.0.2,172.28.0.3,172.28.0.4   80      19h
+rvl@eb: log-output $ curl log.localhost:8081
+2022-06-30 14:50:07.602085+00:00 028294ffda0cec515fd296cceb283590.
+Ping / Pongs: 0rvl@eb: log-output $ curl log.localhost:8081
+2022-06-30 14:50:12.601665+00:00 028294ffda0cec515fd296cceb283590.
+Ping / Pongs: 0rvl@eb: log-output $ curl log.localhost:8081
+2022-06-30 14:50:27.603096+00:00 028294ffda0cec515fd296cceb283590.
+Ping / Pongs: 0rvl@eb: log-output $ curl localhost:8081
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!--
+      Notice the use of  in the tag above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start`.
+      To create a production bundle, use `npm run build`.
+    -->
+  <script type="text/javascript" src="/static/js/bundle.js"></script></body>
+</html>
+rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 1rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 2rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 3rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 4rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 5rvl@eb: log-output $ curl log.localhost:8081
+2022-06-30 14:51:07.601878+00:00 028294ffda0cec515fd296cceb283590.
+Ping / Pongs: 5rvl@eb: log-output $ 
+rvl@eb: log-output $ 

@@ -1,0 +1,104 @@
+rvl@eb: Project $ 
+rvl@eb: Project $ kubectl get pods --namespace project 
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-595f94b8d8-ctfkv   1/1     Running   0          13m
+proj02-dep-dcdd94f44-xbhhd    1/1     Running   0          13m
+rvl@eb: Project $ kubectl apply -f manifests/
+deployment.apps/proj01-dep configured
+ingress.networking.k8s.io/prj-back-ingress unchanged
+service/proj01-svc unchanged
+deployment.apps/proj02-dep configured
+ingress.networking.k8s.io/prj-front-ingress unchanged
+service/proj02-svc unchanged
+rvl@eb: Project $ kubectl get pods --namespace project 
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-f8f4f6cf5-zjtsp    1/1     Running   0          4s
+proj02-dep-6d9847bbc5-rl8s5   1/1     Running   0          4s
+rvl@eb: Project $ kubectl describe ingress --namespace project 
+Name:             prj-back-ingress
+Labels:           <none>
+Namespace:        project
+Address:          172.28.0.2,172.28.0.3,172.28.0.4
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos    proj01-svc:2345 (10.42.2.89:9999)
+              /images   proj01-svc:2345 (10.42.2.89:9999)
+Annotations:  <none>
+Events:       <none>
+
+
+Name:             prj-front-ingress
+Labels:           <none>
+Namespace:        project
+Address:          172.28.0.2,172.28.0.3,172.28.0.4
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /              proj02-svc:1234 (10.42.1.46:3000)
+              /static        proj02-svc:1234 (10.42.1.46:3000)
+              /sockjs-node   proj02-svc:1234 (10.42.1.46:3000)
+Annotations:  <none>
+Events:       <none>
+rvl@eb: Project $ curl localhost:8081
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!--
+      Notice the use of  in the tag above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start`.
+      To create a production bundle, use `npm run build`.
+    -->
+  <script type="text/javascript" src="/static/js/bundle.js"></script></body>
+</html>
+rvl@eb: Project $ curl localhost:8081/todos
+[{"id":4,"content":"Exercise 2.06: Documentation and ConfigMaps"},{"id":5,"content":"Exercise 2.07: Stateful applications"},{"id":6,"content":"Exercise 2.08: Project v1.2"},{"id":7,"content":"Exercise 2.09: Daily todos"},{"id":8,"content":"Exercise 2.10: Project v1.3"}]rvl@eb: Project $ 
+rvl@eb: Project $ 
+rvl@eb: Project $ curl localhost:8081/todos
+[{"id":4,"content":"Exercise 2.06: Documentation and ConfigMaps"},{"id":5,"content":"Exercise 2.07: Stateful applications"},{"id":6,"content":"Exercise 2.08: Project v1.2"},{"id":7,"content":"Exercise 2.09: Daily todos"},{"id":8,"content":"Exercise 2.10: Project v1.3"},{"id":9,"content":"Then there's Part 3..."}]rvl@eb: Project $ 
+rvl@eb: Project $ kubectl get all --namespace project 
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/proj01-dep-f8f4f6cf5-zjtsp    1/1     Running   0          2m19s
+pod/proj02-dep-6d9847bbc5-rl8s5   1/1     Running   0          2m19s
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/proj01-svc   ClusterIP   10.43.41.223    <none>        2345/TCP   16m
+service/proj02-svc   ClusterIP   10.43.183.157   <none>        1234/TCP   16m
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/proj02-dep   1/1     1            1           16m
+deployment.apps/proj01-dep   1/1     1            1           16m
+
+NAME                                    DESIRED   CURRENT   READY   AGE
+replicaset.apps/proj01-dep-f8f4f6cf5    1         1         1       2m19s
+replicaset.apps/proj02-dep-6d9847bbc5   1         1         1       2m19s
+replicaset.apps/proj02-dep-dcdd94f44    0         0         0       16m
+replicaset.apps/proj01-dep-595f94b8d8   0         0         0       16m
+rvl@eb: Project $ 

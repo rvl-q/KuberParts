@@ -1,0 +1,46 @@
+rvl@eb: log-output $ 
+rvl@eb: log-output $ kubectl get pods --namespace exercises 
+NAME                             READY   STATUS    RESTARTS      AGE
+ping-pong-dep-6c9bfcdb5c-k5b8t   1/1     Running   1 (19h ago)   27h
+rvl@eb: log-output $ kubectl apply -f manifests/
+deployment.apps/log-output-dep created
+ingress.networking.k8s.io/log-output-ingress created
+service/log-output-svc created
+rvl@eb: log-output $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS                       RESTARTS      AGE
+ping-pong-dep-6c9bfcdb5c-k5b8t    1/1     Running                      1 (19h ago)   27h
+log-output-dep-5666b57756-vb45q   0/1     CreateContainerConfigError   0             7s
+rvl@eb: log-output $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS                       RESTARTS      AGE
+ping-pong-dep-6c9bfcdb5c-k5b8t    1/1     Running                      1 (19h ago)   27h
+log-output-dep-5666b57756-vb45q   0/1     CreateContainerConfigError   0             19s
+rvl@eb: log-output $ kubectl apply -f configmap.yaml 
+configmap/log-pong created
+rvl@eb: log-output $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS                       RESTARTS      AGE
+ping-pong-dep-6c9bfcdb5c-k5b8t    1/1     Running                      1 (19h ago)   27h
+log-output-dep-5666b57756-vb45q   0/1     CreateContainerConfigError   0             49s
+rvl@eb: log-output $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS                       RESTARTS      AGE
+ping-pong-dep-6c9bfcdb5c-k5b8t    1/1     Running                      1 (19h ago)   27h
+log-output-dep-5666b57756-vb45q   0/1     CreateContainerConfigError   0             57s
+rvl@eb: log-output $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS    RESTARTS      AGE
+ping-pong-dep-6c9bfcdb5c-k5b8t    1/1     Running   1 (19h ago)   27h
+log-output-dep-5666b57756-vb45q   1/1     Running   0             64s
+rvl@eb: log-output $ curl log.localhost:8081
+Hello
+2022-07-01 18:18:03.231904+00:00 5e2a1c268599a57a94d4bd6a2c933af6.
+Ping / Pongs: 10rvl@eb: log-output $ 
+rvl@eb: log-output $ curl log.localhost:8081
+Hello
+2022-07-01 18:18:13.230785+00:00 5e2a1c268599a57a94d4bd6a2c933af6.
+Ping / Pongs: 10rvl@ecurl localhost:8081/pingpong
+pong 11rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 12rvl@eb: log-output $ curl localhost:8081/pingpong
+pong 13rvl@eb: log-output $ 
+rvl@eb: log-output $ curl log.localhost:8081
+Hello
+2022-07-01 18:19:28.230328+00:00 5e2a1c268599a57a94d4bd6a2c933af6.
+Ping / Pongs: 13rvl@eb: log-output $ 
+rvl@eb: log-output $ 

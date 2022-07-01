@@ -21,7 +21,7 @@ Command used to start the cluster:
 k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
 ```
 
-The used [yaml file](./) for the ConfigMap.
+The used [yaml file](./configmap.yaml) for the ConfigMap.
 ```
 apiVersion: v1
 kind: ConfigMap
@@ -68,8 +68,9 @@ spec:
 
 ```
 
-Command used to deploy the application(s):
+Command used to deploy the log-output application, (when the exercise namespace is already previously set up):
 ```
+kubectl apply -f configmap.yaml
 kubectl apply -f manifests/
 ```
 logs:

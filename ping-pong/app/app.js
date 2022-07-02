@@ -6,7 +6,7 @@ const PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
 console.log(PASSWORD.length)
 
 const client = new Client({
-  hostname: "postgres-ss-0",
+  hostname: "postgres-svc",
   database: "postgres",
   user: "posegres",
   password: PASSWORD,

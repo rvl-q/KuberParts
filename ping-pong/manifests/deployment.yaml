@@ -18,6 +18,10 @@ spec:
       containers:
         - name: ping-pong
           image: rvlq/ping-pong:2.03
+          # environment
+          envFrom:
+            - secretRef:
+                name: pg-secrets
           resources:
               limits:
                 memory: "64Mi"

@@ -21,7 +21,7 @@ Command used to start the cluster:
 k3d cluster create --port 8082:30080@agent:0 -p 8081:80@loadbalancer --agents 2
 ```
 
-The used [yaml file](./configmap.yaml) for the Postgres database service.
+The used [yaml file](./pg-service.yaml) for the Postgres database service.
 ```
 apiVersion: v1
 kind: Service
@@ -39,7 +39,7 @@ spec:
     app: postgres
 ```
 
-The used [stateful set yaml file](./) for the Postgres database.
+The used [stateful set yaml file](./pg-statefulset.yaml) for the Postgres database.
 ```
 apiVersion: apps/v1
 kind: StatefulSet
@@ -88,6 +88,8 @@ Command used to deploy the ping-pong application and database, (when the exercis
 sops --decrypt secret.enc.yaml | kubectl apply -f -
 kubectl apply -f manifests/
 ```
+[The encrypted secret.enc.yaml file](secret.enc.yaml)
+
 
 Log-output deployment as in previos exercise.
 

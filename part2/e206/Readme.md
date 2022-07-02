@@ -10,11 +10,9 @@ Docker images:
 
 https://hub.docker.com/r/rvlq/log-output/tags
 
-(tag: 2.06)
-
 https://hub.docker.com/r/rvlq/ping-pong/tags
 
-(tag: 2.03 - untouched since previous version)
+(tag: 2.06)
 
 Command used to start the cluster:
 ```

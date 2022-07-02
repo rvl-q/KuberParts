@@ -1,0 +1,98 @@
+rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-5666b57756-ttpw4   1/1     Running   0          24h
+rvl@eb: ping-pong $ kubectl delete -f ../
+.git/       log-output/ part1/      part2/      ping-pong/  Project/    
+rvl@eb: ping-pong $ kubectl delete -f ../log-output/manifests/
+deployment.apps "log-output-dep" deleted
+ingress.networking.k8s.io "log-output-ingress" deleted
+service "log-output-svc" deleted
+rvl@eb: ping-pong $ kubectl apply -f ../log-output/manifests/
+deployment.apps/log-output-dep created
+ingress.networking.k8s.io/log-output-ingress created
+service/log-output-svc created
+rvl@eb: ping-pong $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-5666b57756-4m85w   1/1     Running   0          8s
+rvl@eb: ping-pong $ kubectl apply -f secret.enc.yaml 
+error: error validating "secret.enc.yaml": error validating data: ValidationError(Secret): unknown field "sops" in io.k8s.api.core.v1.Secret; if you choose to ignore these errors, turn validation off with --validate=false
+rvl@eb: ping-pong $ sops --decrypt secret.enc.yaml | kubectl apply -f -
+secret/pg-secrets unchanged
+rvl@eb: ping-pong $ kubectl apply -f manifests/
+deployment.apps/ping-pong-dep created
+ingress.networking.k8s.io/ping-pong-ingress created
+service/postgres-svc created
+statefulset.apps/postgres-ss created
+service/ping-pong-svc created
+rvl@eb: ping-pong $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-5666b57756-4m85w   1/1     Running   0          3m19s
+postgres-ss-0                     1/1     Running   0          10s
+ping-pong-dep-666f688779-xhfjd    1/1     Running   0          10s
+rvl@eb: ping-pong $ kubectl logs ping-pong-dep-666f688779-xhfjd --namespace exercises 
+24
+Got PASSWORD
+NOTICE: relation "counters" already exists, skipping
+table created []
+inital pings  from database are: 1
+Server started in port 8888
+rvl@eb: ping-pong $ curl log.localhost:8081
+Hello
+2022-07-02 20:33:26.148003+00:00 303f0f98a9afe70431f1e8b10e1a4432.
+Ping / Pongs: 1rvl@eb: ping-pong $ curl log.localhost:8081
+Hello
+2022-07-02 20:33:36.147870+00:00 303f0f98a9afe70431f1e8b10e1a4432.
+Ping / Pongs: 1rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 2rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 3rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 4rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 5rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 6rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ curl log.localhost:8081
+Hello
+2022-07-02 20:35:41.148271+00:00 303f0f98a9afe70431f1e8b10e1a4432.
+Ping / Pongs: 6rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ kubectl delete -f manifests/
+deployment.apps "ping-pong-dep" deleted
+ingress.networking.k8s.io "ping-pong-ingress" deleted
+service "postgres-svc" deleted
+statefulset.apps "postgres-ss" deleted
+service "ping-pong-svc" deleted
+rvl@eb: ping-pong $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-5666b57756-4m85w   1/1     Running   0          8m40s
+rvl@eb: ping-pong $ kubectl apply -f manifests/
+deployment.apps/ping-pong-dep created
+ingress.networking.k8s.io/ping-pong-ingress created
+service/postgres-svc created
+statefulset.apps/postgres-ss created
+service/ping-pong-svc created
+rvl@eb: ping-pong $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS              RESTARTS   AGE
+log-output-dep-5666b57756-4m85w   1/1     Running             0          8m54s
+ping-pong-dep-666f688779-rg4xb    0/1     ContainerCreating   0          2s
+postgres-ss-0                     1/1     Running             0          2s
+rvl@eb: ping-pong $ kubectl get pods --namespace exercises 
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-5666b57756-4m85w   1/1     Running   0          9m2s
+postgres-ss-0                     1/1     Running   0          10s
+ping-pong-dep-666f688779-rg4xb    1/1     Running   0          10s
+rvl@eb: ping-pong $ kubectl logs ping-pong-dep-666f688779-rg4xb --namespace exercises 
+24
+Got PASSWORD
+NOTICE: relation "counters" already exists, skipping
+table created []
+inital pings  from database are: 6
+Server started in port 8888
+rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 7rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 8rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 9rvl@eb: ping-pong $ curl localhost:8081/pingpong
+pong 10rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ curl log.localhost:8081
+Hello
+2022-07-02 20:38:56.148300+00:00 303f0f98a9afe70431f1e8b10e1a4432.
+Ping / Pongs: 10rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ 

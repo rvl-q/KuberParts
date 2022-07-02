@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: rvlq/ping-pong:latest
+          image: rvlq/ping-pong:2.07
           # environment
           envFrom:
             - secretRef:

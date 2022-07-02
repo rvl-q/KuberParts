@@ -8,7 +8,7 @@ console.log(PASSWORD.length)
 const client = new Client({
   hostname: "postgres-svc",
   database: "postgres",
-  user: "posegres",
+  user: "postgres",
   password: PASSWORD,
   port: 5432,
 });

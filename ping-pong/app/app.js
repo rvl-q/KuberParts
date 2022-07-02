@@ -57,7 +57,7 @@ await client.end();
 // UPDATE counters SET value = ISNULL(value, 0) WHERE id = 1
 let _ping_num = result3.rows[0][2];
 // Deno.writeTextFile("./shared/pongs.txt", _ping_num);
-console.log('inital pins are:', _ping_num)
+console.log('inital pings  from database are:', _ping_num)
 
 const getNumPings = async () => {
   await client.connect();
@@ -71,13 +71,14 @@ const getNumPings = async () => {
 
 const incPings = async () => {
   await client.connect();
-  const result = await client.queryArray(
-    `UPDATE counters 
+  // const result = await client.queryArray(
+  await client.queryArray(
+      `UPDATE counters 
       SET value = value+1 
     WHERE id = 1`
   );
   await client.end();
-  console.log('result', result)
+  // console.log('result', result)
   return;
 };
 

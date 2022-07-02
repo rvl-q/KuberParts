@@ -72,7 +72,9 @@ const getNumPings = async () => {
 const incPings = async () => {
   await client.connect();
   const result = await client.queryArray(
-    `UPDATE counters SET value = ISNULL(value, 0)+1 WHERE id = 1`
+    `UPDATE counters 
+      SET value = value+1 
+    WHERE id = 1`
   );
   await client.end();
   console.log('result', result)
@@ -92,7 +94,7 @@ const incPings = async () => {
 //   }
 // };
 
-const handleRequest = (request) => {
+const handleRequest = async (request) => {
   console.log(`Request to ${request.url}`);
   const url = new URL(request.url);
   if (url.pathname === "/pingpong" && request.method === "GET") {

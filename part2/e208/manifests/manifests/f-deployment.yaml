@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proj02-dep
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proj02
+  template:
+    metadata:
+      labels:
+        app: proj02
+    spec:
+      # volumes:
+      #   - name: shared-share
+      #     persistentVolumeClaim:
+      #       claimName: share-claim
+      containers:
+        - name: proj02
+          imagePullPolicy: Always
+          # image: rvlq/proj-front:latest
+          image: rvlq/proj-front:v1.2
+          # volumeMounts: # Mount volume
+          # - name: shared-share
+          #   mountPath: /app/images
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

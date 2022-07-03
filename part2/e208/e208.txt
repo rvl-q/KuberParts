@@ -1,0 +1,260 @@
+rvl@eb: Project $ 
+rvl@eb: Project $ kubectl apply -f manifests/
+deployment.apps/proj01-dep created
+ingress.networking.k8s.io/prj-back-ingress created
+service/proj01-svc created
+deployment.apps/proj02-dep created
+ingress.networking.k8s.io/prj-front-ingress created
+service/proj02-svc created
+rvl@eb: Project $ kubectl get pods --namespace project 
+NAME                          READY   STATUS    RESTARTS   AGE
+postgres-ss-0                 1/1     Running   0          10h
+proj01-dep-5cbf6b8cb-s6jxx    1/1     Running   0          11s
+proj02-dep-56bffd49dd-5267l   1/1     Running   0          11s
+rvl@eb: Project $ kubectl logs proj01-dep-7b8988b786-s6jxx --namespace project 
+Error from server (NotFound): pods "proj01-dep-7b8988b786-s6jxx" not found
+rvl@eb: Project $ kubectl logs proj01-dep-5cbf6b8cb-s6jxx --namespace project 
+Server started in port 9999
+db setup response:
+ { rows: [] }
+number of rows... { rows: [ { count: 0n } ] }
+...Number of rows: 0
+item is: { id: 6, content: "Exercise 2.08: Project v1.2" }
+6  ,  Exercise 2.08: Project v1.2
+item is: { id: 7, content: "Exercise 2.09: Daily todos" }
+7  ,  Exercise 2.09: Daily todos
+item is: { id: 8, content: "Exercise 2.10: Project v1.3" }
+8  ,  Exercise 2.10: Project v1.3
+response was { rows: [] }
+response was { rows: [] }
+response was { rows: [] }
+AFTER!
+number of rows... { rows: [ { count: 2n } ] }
+...Number of rows: 2
+rvl@eb: Project $ curl localhost:8081/todos
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"}]rvl@eb: Project $ 
+rvl@eb: Project $ 
+rvl@eb: Project $ curl -X POST http://localhost:8081/todos    -H 'Content-Type: application/json'    -d '{"content": "todo or not todo", "id": "42"}'
+{"id":9,"content":"todo or not todo"}rvl@eb: Project $ 
+rvl@eb: Project $ 
+rvl@eb: Project $ kubectl logs proj01-dep-5cbf6b8cb-s6jxx --namespace project 
+Server started in port 9999
+db setup response:
+ { rows: [] }
+number of rows... { rows: [ { count: 0n } ] }
+...Number of rows: 0
+item is: { id: 6, content: "Exercise 2.08: Project v1.2" }
+6  ,  Exercise 2.08: Project v1.2
+item is: { id: 7, content: "Exercise 2.09: Daily todos" }
+7  ,  Exercise 2.09: Daily todos
+item is: { id: 8, content: "Exercise 2.10: Project v1.3" }
+8  ,  Exercise 2.10: Project v1.3
+response was { rows: [] }
+response was { rows: [] }
+response was { rows: [] }
+AFTER!
+number of rows... { rows: [ { count: 2n } ] }
+...Number of rows: 2
+remember curly braces!
+response all todos:
+ {
+  rows: [
+    { id: 1, content: "Exercise 2.08: Project v1.2" },
+    { id: 2, content: "Exercise 2.09: Daily todos" },
+    { id: 3, content: "Exercise 2.10: Project v1.3" }
+  ]
+}
+before new todo
+in todoctr.newTodo
+in todoctr.newTodo +1
+8 number
+in todoctr.newTodo +2 3
+Request:
+ Request {
+  hasBody: true,
+  headers: Headers {
+  accept: "*/*",
+  "accept-encoding": "gzip",
+  "content-length": "43",
+  "content-type": "application/json",
+  host: "localhost:8081",
+  "user-agent": "curl/7.68.0",
+  "x-forwarded-for": "10.42.0.0",
+  "x-forwarded-host": "localhost:8081",
+  "x-forwarded-port": "8081",
+  "x-forwarded-proto": "http",
+  "x-forwarded-server": "traefik-56c4b88c4b-2vbfq",
+  "x-real-ip": "10.42.0.0"
+},
+  ip: "10.42.2.91",
+  ips: [],
+  method: "POST",
+  secure: false,
+  url: "http://localhost:8081/todos"
+}
+Body:
+ { type: "json", value: [Getter] }
+The type of the request body is:
+json
+Params are as follows:
+{ content: "todo or not todo", id: "42" }
+Printing todo from params:
+todo or not todo
+next step, updating...
+length ok
+pushing to legacy array
+done!
+pushing to database
+Updated todos!
+after new todo
+Method GET
+new image file should be ready
+remember curly braces!
+response all todos:
+ {
+  rows: [
+    { id: 1, content: "Exercise 2.08: Project v1.2" },
+    { id: 2, content: "Exercise 2.09: Daily todos" },
+    { id: 3, content: "Exercise 2.10: Project v1.3" },
+    { id: 4, content: "todo or not todo" }
+  ]
+}
+rvl@eb: Project $ kubectl logs proj01-dep-5cbf6b8cb-s6jxx --namespace project 
+Server started in port 9999
+db setup response:
+ { rows: [] }
+number of rows... { rows: [ { count: 0n } ] }
+...Number of rows: 0
+item is: { id: 6, content: "Exercise 2.08: Project v1.2" }
+6  ,  Exercise 2.08: Project v1.2
+item is: { id: 7, content: "Exercise 2.09: Daily todos" }
+7  ,  Exercise 2.09: Daily todos
+item is: { id: 8, content: "Exercise 2.10: Project v1.3" }
+8  ,  Exercise 2.10: Project v1.3
+response was { rows: [] }
+response was { rows: [] }
+response was { rows: [] }
+AFTER!
+number of rows... { rows: [ { count: 2n } ] }
+...Number of rows: 2
+remember curly braces!
+response all todos:
+ {
+  rows: [
+    { id: 1, content: "Exercise 2.08: Project v1.2" },
+    { id: 2, content: "Exercise 2.09: Daily todos" },
+    { id: 3, content: "Exercise 2.10: Project v1.3" }
+  ]
+}
+before new todo
+in todoctr.newTodo
+in todoctr.newTodo +1
+8 number
+in todoctr.newTodo +2 3
+Request:
+ Request {
+  hasBody: true,
+  headers: Headers {
+  accept: "*/*",
+  "accept-encoding": "gzip",
+  "content-length": "43",
+  "content-type": "application/json",
+  host: "localhost:8081",
+  "user-agent": "curl/7.68.0",
+  "x-forwarded-for": "10.42.0.0",
+  "x-forwarded-host": "localhost:8081",
+  "x-forwarded-port": "8081",
+  "x-forwarded-proto": "http",
+  "x-forwarded-server": "traefik-56c4b88c4b-2vbfq",
+  "x-real-ip": "10.42.0.0"
+},
+  ip: "10.42.2.91",
+  ips: [],
+  method: "POST",
+  secure: false,
+  url: "http://localhost:8081/todos"
+}
+Body:
+ { type: "json", value: [Getter] }
+The type of the request body is:
+json
+Params are as follows:
+{ content: "todo or not todo", id: "42" }
+Printing todo from params:
+todo or not todo
+next step, updating...
+length ok
+pushing to legacy array
+done!
+pushing to database
+Updated todos!
+after new todo
+Method GET
+new image file should be ready
+remember curly braces!
+response all todos:
+ {
+  rows: [
+    { id: 1, content: "Exercise 2.08: Project v1.2" },
+    { id: 2, content: "Exercise 2.09: Daily todos" },
+    { id: 3, content: "Exercise 2.10: Project v1.3" },
+    { id: 4, content: "todo or not todo" }
+  ]
+}
+before new todo
+in todoctr.newTodo
+in todoctr.newTodo +1
+9 number
+in todoctr.newTodo +2 4
+Request:
+ Request {
+  hasBody: true,
+  headers: Headers {
+  accept: "application/json, text/plain, */*",
+  "accept-encoding": "gzip, deflate, br",
+  "accept-language": "en-US,en;q=0.9,fi;q=0.8,sv;q=0.7",
+  "cache-control": "no-cache",
+  "content-length": "38",
+  "content-type": "application/json",
+  host: "localhost:8081",
+  origin: "http://localhost:8081",
+  pragma: "no-cache",
+  referer: "http://localhost:8081/",
+  "sec-ch-ua": '".Not/A)Brand";v="99", "Google Chrome";v="103", "Chromium";v="103"',
+  "sec-ch-ua-mobile": "?0",
+  "sec-ch-ua-platform": '"Linux"',
+  "sec-fetch-dest": "empty",
+  "sec-fetch-mode": "cors",
+  "sec-fetch-site": "same-origin",
+  "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.3...",
+  "x-forwarded-for": "10.42.2.1",
+  "x-forwarded-host": "localhost:8081",
+  "x-forwarded-port": "8081",
+  "x-forwarded-proto": "http",
+  "x-forwarded-server": "traefik-56c4b88c4b-2vbfq",
+  "x-real-ip": "10.42.2.1"
+},
+  ip: "10.42.2.91",
+  ips: [],
+  method: "POST",
+  secure: false,
+  url: "http://localhost:8081/todos"
+}
+Body:
+ { type: "json", value: [Getter] }
+The type of the request body is:
+json
+Params are as follows:
+{ content: "Todo from web gui", id: 5 }
+Printing todo from params:
+Todo from web gui
+next step, updating...
+length ok
+pushing to legacy array
+done!
+pushing to database
+Updated todos!
+after new todo
+rvl@eb: Project $ curl localhost:8081/todos
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"todo or not todo"},{"id":5,"content":"Todo from web gui"}]rvl@eb: Project $ 
+rvl@eb: Project $ 

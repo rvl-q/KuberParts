@@ -1,6 +1,6 @@
 # Exercise 2.08: Project v1.2
 
-Creating a database and saving the todos there.
+Creating a database and saving the todos there. Working, but old code should be cleaned out.
 
 Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 
@@ -8,18 +8,10 @@ Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 
 Latest version will be publlishes one way or another before end of part 2.
 
-The used [yaml file](./manifests/persistent/namespace.yaml) for the new namespace.
-```
-kind: Namespace
-apiVersion: v1
-metadata:
-  name: project
-  labels:
-    name: project
-```
 
-Command(s) used to setup namespace, persistent volume and deploy the application(s):
+Command(s) used to setup namespace, persistent volume, database and deploy the application(s):
 ```
+sops --decrypt secret.enc.yaml | kubectl apply -f -
 kubectl apply -f persistent/
 kubectl apply -f manifests/
 ```
@@ -27,7 +19,7 @@ kubectl apply -f manifests/
 [The manifest folders are here.](./manifests/)
 
 
-Docker images (tag: v1.1):
+Docker images (tag: v1.2):
 
 Back: https://hub.docker.com/r/rvlq/project/tags
 

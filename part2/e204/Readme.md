@@ -6,7 +6,7 @@ Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 
 [Public checkout of the previous version here at end of part 1.](../../part1/e113/Project.v0.7/)
 
-Latest version will be publlishes one way or another before end of part 2.
+Latest version will be publlished one way or another before end of part 2.
 
 The used [yaml file](./manifests/persistent/namespace.yaml) for the new namespace.
 ```

@@ -21,3 +21,7 @@ The used [cronjob.yaml file](./daily-todos/manifests/cronjob.yaml).
 The used [shell script file](./daily-todos/).
 ```
 ```
+
+
+logs:
+[here](./e209.txt).

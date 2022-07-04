@@ -1,0 +1,47 @@
+rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ kubectl config set-context --current --namespace=project
+Context "k3d-k3s-default" modified.
+rvl@eb: daily-todos $ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+postgres-ss-0                1/1     Running   0          29h
+proj02-dep-f84856d9-zz5kd    1/1     Running   0          17h
+proj01-dep-5cbf6b8cb-qlmt5   1/1     Running   0          24m
+rvl@eb: daily-todos $ kubectl apply -f ./manifests/cronjob.yaml 
+cronjob.batch/daily-todo created
+rvl@eb: daily-todos $ kubectl get po
+NAME                         READY   STATUS    RESTARTS   AGE
+postgres-ss-0                1/1     Running   0          29h
+proj02-dep-f84856d9-zz5kd    1/1     Running   0          17h
+proj01-dep-5cbf6b8cb-qlmt5   1/1     Running   0          29m
+rvl@eb: daily-todos $ kubectl get cronjobs.batch 
+NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+daily-todo   * 17 * * *   False     0        <none>          26s
+rvl@eb: daily-todos $ curl localhost:8081/todos
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"Read https://en.wikipedia.org/wiki/1529_in_India"}]rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ date --utc
+ma 4.7.2022 16.58.23 +0000
+rvl@eb: daily-todos $ date --utc
+ma 4.7.2022 16.59.18 +0000
+rvl@eb: daily-todos $ kubectl get cronjobs.batch 
+NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+daily-todo   * 17 * * *   False     0        <none>          2m57s
+rvl@eb: daily-todos $ kubectl get cronjobs.batch 
+NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+daily-todo   * 17 * * *   False     0        <none>          3m16s
+rvl@eb: daily-todos $ date --utc
+ma 4.7.2022 16.59.45 +0000
+rvl@eb: daily-todos $ kubectl get po
+NAME                           READY   STATUS              RESTARTS   AGE
+postgres-ss-0                  1/1     Running             0          29h
+proj02-dep-f84856d9-zz5kd      1/1     Running             0          17h
+proj01-dep-5cbf6b8cb-qlmt5     1/1     Running             0          32m
+daily-todo-27615900--1-tnf56   0/1     ContainerCreating   0          0s
+rvl@eb: daily-todos $ kubectl get po
+NAME                           READY   STATUS      RESTARTS   AGE
+postgres-ss-0                  1/1     Running     0          29h
+proj02-dep-f84856d9-zz5kd      1/1     Running     0          17h
+proj01-dep-5cbf6b8cb-qlmt5     1/1     Running     0          33m
+daily-todo-27615900--1-tnf56   0/1     Completed   0          16s
+rvl@eb: daily-todos $ curl localhost:8081/todos
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"Read https://en.wikipedia.org/wiki/1529_in_India"},{"id":5,"content":"Read https://en.wikipedia.org/wiki/Institute_for_Political_Studies_%E2%80%93_Catholic_University_of_Portugal"}]rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ 

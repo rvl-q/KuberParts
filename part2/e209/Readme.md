@@ -24,10 +24,11 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: daily-todo
+  namespace: project
 spec:
   # schedule: "* * * * *"
-  schedule: "*/10 * * * *"
-  # schedule: "* 12 * * *"
+  # schedule: "*/10 * * * *"
+  schedule: "* 17 * * *"
   jobTemplate:
     spec:
       template:
@@ -35,12 +36,10 @@ spec:
           containers:
           - name: daily-todo
             # image: alpine/curl:3.14
-            image: rvlq/daily-job:latest
-            imagePullPolicy: Always
-            # imagePullPolicy: IfNotPresent
+            image: rvlq/daily-job:2.09
+            # imagePullPolicy: Always
+            imagePullPolicy: IfNotPresent
             # command:
-            # # - sh
-            # - ./jobs/todo-job.sh; echo testing echo
             # echo `curl -v https://en.wikipedia.org/wiki/Special:Random 2>&1 >/dev/null | grep '< location: '|cut -c13-153`
           restartPolicy: OnFailure
 ```
@@ -64,6 +63,7 @@ then
 fi
 ```
 
+[Docker image](https://hub.docker.com/r/rvlq/daily-job/tags)
 
 logs:
 [here](./e209.txt).

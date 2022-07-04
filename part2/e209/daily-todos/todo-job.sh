@@ -11,5 +11,6 @@ then
         -H 'Content-Type: application/json'\
         -d '{"content": "Read '${WIKI}'"}'
 
-      echo \nEpäile kaikkea!\nposted
+      echo 
+      echo posted
 fi

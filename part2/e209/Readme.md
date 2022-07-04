@@ -14,7 +14,7 @@
 ```
 Using hourly job for testing and switch to daily when it works.
 
-The used [cronjob.yaml file](./daily-todos/cronjob.yaml).
+The used [cronjob.yaml file](./daily-todos/manifests/cronjob.yaml).
 ```
 ```
 

@@ -12,7 +12,11 @@
 # │ │ │ │ │
 # * * * * *
 ```
-Using hourly job for testing and switch to daily when it works.
+Using every 10h minute job for testing and switch to daily when it works.
+```
+spec:
+  schedule: "*/10 * * * *"
+```
 
 The used [cronjob.yaml file](./daily-todos/manifests/cronjob.yaml).
 ```

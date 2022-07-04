@@ -1,47 +1,53 @@
 rvl@eb: daily-todos $ 
 rvl@eb: daily-todos $ kubectl config set-context --current --namespace=project
 Context "k3d-k3s-default" modified.
-rvl@eb: daily-todos $ kubectl get po
-NAME                         READY   STATUS    RESTARTS   AGE
-postgres-ss-0                1/1     Running   0          29h
-proj02-dep-f84856d9-zz5kd    1/1     Running   0          17h
-proj01-dep-5cbf6b8cb-qlmt5   1/1     Running   0          24m
+rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ curl localhost:8081/todos
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"}]rvl@eb: daily-todos $ 
 rvl@eb: daily-todos $ kubectl apply -f ./manifests/cronjob.yaml 
 cronjob.batch/daily-todo created
+rvl@eb: daily-todos $ kubectl get cronjobs.batch 
+NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+daily-todo   0 18 * * *   False     0        <none>          9s
+rvl@eb: daily-todos $ date --utc
+ma 4.7.2022 17.24.46 +0000
 rvl@eb: daily-todos $ kubectl get po
 NAME                         READY   STATUS    RESTARTS   AGE
-postgres-ss-0                1/1     Running   0          29h
+postgres-ss-0                1/1     Running   0          30h
 proj02-dep-f84856d9-zz5kd    1/1     Running   0          17h
-proj01-dep-5cbf6b8cb-qlmt5   1/1     Running   0          29m
-rvl@eb: daily-todos $ kubectl get cronjobs.batch 
-NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
-daily-todo   * 17 * * *   False     0        <none>          26s
-rvl@eb: daily-todos $ curl localhost:8081/todos
-[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"Read https://en.wikipedia.org/wiki/1529_in_India"}]rvl@eb: daily-todos $ 
-rvl@eb: daily-todos $ date --utc
-ma 4.7.2022 16.58.23 +0000
-rvl@eb: daily-todos $ date --utc
-ma 4.7.2022 16.59.18 +0000
-rvl@eb: daily-todos $ kubectl get cronjobs.batch 
-NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
-daily-todo   * 17 * * *   False     0        <none>          2m57s
-rvl@eb: daily-todos $ kubectl get cronjobs.batch 
-NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
-daily-todo   * 17 * * *   False     0        <none>          3m16s
-rvl@eb: daily-todos $ date --utc
-ma 4.7.2022 16.59.45 +0000
+proj01-dep-5cbf6b8cb-vff54   1/1     Running   0          3m45s
+rvl@eb: daily-todos $ echo Manually Trigger CronJob daily-todo in Lens.
+Manually Trigger CronJob daily-todo in Lens.
 rvl@eb: daily-todos $ kubectl get po
-NAME                           READY   STATUS              RESTARTS   AGE
-postgres-ss-0                  1/1     Running             0          29h
-proj02-dep-f84856d9-zz5kd      1/1     Running             0          17h
-proj01-dep-5cbf6b8cb-qlmt5     1/1     Running             0          32m
-daily-todo-27615900--1-tnf56   0/1     ContainerCreating   0          0s
-rvl@eb: daily-todos $ kubectl get po
-NAME                           READY   STATUS      RESTARTS   AGE
-postgres-ss-0                  1/1     Running     0          29h
-proj02-dep-f84856d9-zz5kd      1/1     Running     0          17h
-proj01-dep-5cbf6b8cb-qlmt5     1/1     Running     0          33m
-daily-todo-27615900--1-tnf56   0/1     Completed   0          16s
+NAME                               READY   STATUS      RESTARTS   AGE
+postgres-ss-0                      1/1     Running     0          30h
+proj02-dep-f84856d9-zz5kd          1/1     Running     0          17h
+proj01-dep-5cbf6b8cb-vff54         1/1     Running     0          5m24s
+daily-todo-manual-1mnnv--1-wqnzb   0/1     Completed   0          56s
+rvl@eb: daily-todos $ date --utc
+ma 4.7.2022 17.27.08 +0000
 rvl@eb: daily-todos $ curl localhost:8081/todos
-[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"Read https://en.wikipedia.org/wiki/1529_in_India"},{"id":5,"content":"Read https://en.wikipedia.org/wiki/Institute_for_Political_Studies_%E2%80%93_Catholic_University_of_Portugal"}]rvl@eb: daily-todos $ 
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"Read https://en.wikipedia.org/wiki/Astrid_Gunnestad"}]rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ kubectl logs daily-todo-manual-1mnnv--1-wqnzb 
+Wiki random url is: https://en.wikipedia.org/wiki/Astrid_Gunnestad
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   138  100    72  100    66   4034   3697 --:--:-- --:--:-- --:--:--  8117
+{"id":9,"content":"Read https://en.wikipedia.org/wiki/Astrid_Gunnestad"}
+posted
+rvl@eb: daily-todos $ date --utc
+ma 4.7.2022 18.00.02 +0000
+rvl@eb: daily-todos $ kubectl get po
+NAME                               READY   STATUS      RESTARTS   AGE
+postgres-ss-0                      1/1     Running     0          30h
+proj02-dep-f84856d9-zz5kd          1/1     Running     0          18h
+proj01-dep-5cbf6b8cb-vff54         1/1     Running     0          38m
+daily-todo-manual-1mnnv--1-wqnzb   0/1     Completed   0          34m
+daily-todo-27615960--1-w57ck       0/1     Completed   0          16s
+rvl@eb: daily-todos $ curl localhost:8081/todos
+[{"id":1,"content":"Exercise 2.08: Project v1.2"},{"id":2,"content":"Exercise 2.09: Daily todos"},{"id":3,"content":"Exercise 2.10: Project v1.3"},{"id":4,"content":"Read https://en.wikipedia.org/wiki/Astrid_Gunnestad"},{"id":5,"content":"Read https://en.wikipedia.org/wiki/John_Socha"}]rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ 
+rvl@eb: daily-todos $ kubectl get cronjobs.batch 
+NAME         SCHEDULE     SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+daily-todo   0 18 * * *   False     0        75s             36m
 rvl@eb: daily-todos $ 

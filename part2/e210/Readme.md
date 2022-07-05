@@ -1,6 +1,8 @@
 # Exercise 2.10: Project v1.3
 
-Add logging.
+Add logging, or actually remove unnecessarily wordy debug logging, as the required frunctionality was already there. Claened out old code left from the version without a database.
+
+![screenshot](Screenshot.png)
 
 Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
 

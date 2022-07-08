@@ -1,0 +1,20 @@
+<% layout("./layouts/layout.eta") %>
+<h1>Todos!</h1>
+<h2>Exercise 2.08: Project v1.2</h2>
+
+<IMG class="displayed" src="/images/image.jpg" alt="daily picture" width="400" height="400">
+
+<p></p>
+
+<form method="POST">
+  <input type="text" name="todo" minlength="1" maxlength = "140"/>
+  <input type="submit" value="Create TODO" />
+</form>
+
+<ul>
+<% it.todos.forEach((todo) => { %>
+  <li>
+    <%= todo.content %>
+  </li>
+<% }); %>
+</ul>

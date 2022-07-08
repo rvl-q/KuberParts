@@ -1,0 +1,52 @@
+version: "3.4"
+
+services:
+  front:
+    # build: client/
+    build:
+      context: client
+      dockerfile: Dockerfile_II
+    image: proj-front
+    restart: "no"
+    ports:
+      - 3000:3000
+
+  app:
+    env_file:
+      - project.env
+      - .env
+    build: server/app
+    image: project
+    restart: "no"
+    #restart: "yes"
+    #volumes:
+      #- ./app/:/app
+      #- ./app-cache/:/app-cache
+    ports:
+      #- 9999:9999
+      - ${PORT:?err}:${PORT:?err}
+      #- $PORT:$PORT
+      #- ${PORT:-6666}:${PORT:-6666}
+      #- 6666:6666
+      #- 7777:7777
+      #- 7788:7788
+  #   depends_on:
+  #     - database
+  #     - flyway
+
+  # database:
+  #   container_name: database-server
+  #   image: postgres:14.1
+  #   restart: "no"
+  #   env_file:
+  #       - project.env
+
+  # flyway:
+  #   image: flyway/flyway:8.4.0-alpine
+  #   depends_on:
+  #     - database
+  #   volumes:
+  #     - .:/flyway/sql
+  #   command: -connectRetries=60 -baselineOnMigrate=true migrate
+  #   env_file:
+  #     - project.env

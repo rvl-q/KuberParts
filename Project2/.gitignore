@@ -1,0 +1,5 @@
+server/app-cache/deps/**
+server/app-cache/gen/**
+
+*secret.yaml
+key.txt

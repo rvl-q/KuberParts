@@ -1,6 +1,6 @@
-[submodule "Project"]
-	path = Project
-	url = git@version.aalto.fi:rvl/project.git
+# [submodule "Project"]
+# 	path = Project
+# 	url = git@version.aalto.fi:rvl/project.git
 [submodule "log-output"]
 	path = log-output
 	url = git@github.com:rvl-q/hashapp.git

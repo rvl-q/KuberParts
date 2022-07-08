@@ -1,0 +1,30 @@
+2022-07-09 00:40:03	
+http://proj01-svc.project:2345/todos New todo request with content:
+2022-07-09 00:40:03	
+Read https://en.wikipedia.org/wiki/1943_in_Australia
+2022-07-09 00:50:03	
+http://proj01-svc.project:2345/todos New todo request with content:
+2022-07-09 00:50:03	
+Read https://en.wikipedia.org/wiki/Monty_Python%27s_Total_Rubbish
+2022-07-09 01:03:33	
+http://proj01-svc:2345/todos New todo request with content:
+2022-07-09 01:03:33	
+Read https://en.wikipedia.org/wiki/Helene_Muller-Landau
+2022-07-09 01:04:03	
+GET requeset to: http://localhost:8081/todos
+2022-07-09 01:04:08	
+GET requeset to: http://localhost:8081/todos
+2022-07-09 01:15:59	
+GET requeset to: http://localhost:8081/todos
+2022-07-09 01:16:06	
+GET requeset to: http://localhost:8081/todos
+2022-07-09 01:31:41	
+http://localhost:8081/todos New todo request with content:
+2022-07-09 01:31:41	
+0       10        20        30        40        50        60        70        80        90       100        10        20        30       140
+2022-07-09 01:31:49	
+http://localhost:8081/todos New todo request with content:
+2022-07-09 01:31:49	
+0       10        20        30        40        50        60        70        80        90       100        10        20        30       1401
+2022-07-09 01:31:49	
+Rejected!Show context

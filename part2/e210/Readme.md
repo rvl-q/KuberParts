@@ -21,11 +21,13 @@ kubectl apply -f manifests/
 [The manifest folders are here.](./manifests/)
 
 
-Docker images (tag: v1.2):
+Docker images (tag: v1.3):
 
 Back: https://hub.docker.com/r/rvlq/project/tags
 
 Front: https://hub.docker.com/r/rvlq/proj-front/tags
+
+Daily Cron job: https://hub.docker.com/r/rvlq/daily-job/tags
 
 Command used to start the cluster:
 ```

@@ -8,6 +8,6 @@ This project is based on the so called *walking skeleton* -- a starting point fo
 assignments -- for the free online Web Software Development course available at
 [https://wsd.cs.aalto.fi/](https://wsd.cs.aalto.fi/).
 
-[Original README file](OriginalREADME.md)
+[Original README file](./server/OriginalREADME.md)
 
 [Original repo](https://github.com/avihavai/wsd-walking-skeleton) by avihavai

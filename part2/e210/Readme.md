@@ -4,9 +4,9 @@ Add logging, or actually remove unnecessarily wordy debug logging, as the requir
 
 ![screenshot](Screenshot.png)
 
-Project source: https://version.aalto.fi/gitlab/rvl/project/-/tree/main
+[Project source](../../Project/) now in this repo and no longer a submodule.
 
-[Public checkout of the previous version here at end of part 1.](../../part1/e113/Project.v0.7/)
+[Public checkout of version v0.7 here at end of part 1.](../../part1/e113/Project.v0.7/)
 
 Latest version will be publlished one way or another before end of part 2.
 

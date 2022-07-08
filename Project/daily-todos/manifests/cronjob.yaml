@@ -13,9 +13,9 @@ spec:
         spec:
           containers:
           - name: daily-todo
-            # image: rvlq/daily-job:latest
+            image: rvlq/daily-job:latest
             imagePullPolicy: Always
-            image: rvlq/daily-job:2.09
+            # image: rvlq/daily-job:2.09
             # imagePullPolicy: IfNotPresent
             # command:
             # echo `curl -v https://en.wikipedia.org/wiki/Special:Random 2>&1 >/dev/null | grep '< location: '|cut -c13-153`

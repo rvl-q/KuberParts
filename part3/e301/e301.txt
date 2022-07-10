@@ -1,0 +1,11 @@
+v901-103:part3 rvl$ 
+v901-103:part3 rvl$ curl http://35.228.240.76/pingpong
+pong 1v901-103:part3 rvl$ curl http://35.228.240.76/pingpong
+pong 2v901-103:part3 rvl$ curl http://35.228.240.76/pingpong
+pong 3v901-103:part3 rvl$ curl http://35.228.240.76/pingpong
+pong 4v901-103:part3 rvl$ curl http://35.228.240.76/pingpong
+pong 5v901-103:part3 rvl$ 
+v901-103:part3 rvl$ curl http://35.228.240.76/
+curl: (52) Empty reply from server
+v901-103:part3 rvl$ date
+Sun Jul 10 23:03:50 EEST 2022

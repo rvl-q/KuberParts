@@ -103,10 +103,17 @@ const handleRequest = async (request) => {
     _ping_num = await getNumPings();
     return new Response("pong " + _ping_num);
   }
-   else if (url.pathname === "/pongs" && request.method === "GET"){
+  else if (url.pathname === "/pongs" && request.method === "GET"){
     _ping_num = await getNumPings();
     return new Response(_ping_num);
   }
+  // needed for GKE Ingress health check
+  else if (url.pathname === "/" && request.method === "GET"){
+    return new Response('Dummy 200 OK');
+  }
+  // else {
+  //   return new Response('400');
+  // }
 };
 
 console.log("Server started in port " + PORT);

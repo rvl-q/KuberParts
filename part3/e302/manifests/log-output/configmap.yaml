@@ -6,3 +6,4 @@ metadata:
 data:
   # property-like keys; each key maps to a simple value
   message: "Hello"
+  ping-svc-url: "http://ping-pong-svc:80/pongs"

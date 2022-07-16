@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - ./ping-pong/pg-statefulset.yaml
+  - ./ping-pong/pg-service.yaml
+  - ./ping-pong/deployment.yaml
+  - ./ping-pong/service.yaml
+  - ./log-output/configmap.yaml
+  - ./log-output/deployment.yaml
+  - ./log-output/service.yaml
+  - lp-ingress.yaml
+

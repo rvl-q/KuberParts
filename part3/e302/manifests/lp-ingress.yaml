@@ -14,10 +14,10 @@ spec:
             name: ping-pong-svc
             port:
               number: 80
-spec:
-  rules:
-  - http:
-      paths:
+# spec:
+#   rules:
+#   - http:
+#       paths:
       - path: /
         pathType: Prefix
         backend:

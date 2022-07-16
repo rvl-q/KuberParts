@@ -1,0 +1,625 @@
+v901-103:manifests rvl$ cat kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - ./ping-pong/pg-statefulset.yaml
+  - ./ping-pong/pg-service.yaml
+  - ./ping-pong/deployment.yaml
+  - ./ping-pong/service.yaml
+  - ./log-output/configmap.yaml
+  - ./log-output/deployment.yaml
+  - ./log-output/service.yaml
+  - lp-ingress.yaml
+
+v901-103:manifests rvl$ sops --decrypt secret.enc.yaml | kubectl apply -f -
+W0716 11:35:50.349632   79756 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Error from server (NotFound): error when creating "STDIN": namespaces "exercises" not found
+v901-103:manifests rvl$ kubectl apply -f namespace.yaml 
+W0716 11:36:35.435907   79763 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace/exercises created
+v901-103:manifests rvl$ sops --decrypt secret.enc.yaml | kubectl apply -f -
+W0716 11:36:40.305544   79766 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+secret/pg-secrets created
+v901-103:manifests rvl$ kubectl apply -k .
+W0716 11:36:57.625821   79769 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace/exercises unchanged
+configmap/log-pong created
+service/log-output-svc created
+service/ping-pong-svc created
+service/postgres-svc created
+deployment.apps/log-output-dep created
+deployment.apps/ping-pong-dep created
+statefulset.apps/postgres-ss created
+ingress.networking.k8s.io/log-pong-ingress created
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=exercises
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get po
+W0716 11:38:29.486886   79781 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                              READY   STATUS    RESTARTS      AGE
+log-output-dep-6cb7bd9975-xl56w   1/1     Running   0             90s
+ping-pong-dep-666f688779-l2f8g    1/1     Running   2 (73s ago)   90s
+postgres-ss-0                     1/1     Running   0             90s
+v901-103:manifests rvl$ kubectl get ing
+W0716 11:38:43.321200   79784 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME               CLASS    HOSTS   ADDRESS   PORTS   AGE
+log-pong-ingress   <none>   *                 80      103s
+v901-103:manifests rvl$ kubectl get ing
+W0716 11:39:40.225292   79791 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME               CLASS    HOSTS   ADDRESS   PORTS   AGE
+log-pong-ingress   <none>   *                 80      2m40s
+v901-103:manifests rvl$ curl http://35.228.108.105
+^C
+v901-103:manifests rvl$ curl http://35.228.108.105/
+^C
+v901-103:manifests rvl$ kubectl get ing
+W0716 11:41:47.122076   79809 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME               CLASS    HOSTS   ADDRESS         PORTS   AGE
+log-pong-ingress   <none>   *       34.102.194.66   80      4m47s
+v901-103:manifests rvl$ curl http://34.102.194.66
+curl: (52) Empty reply from server
+v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+curl: (52) Empty reply from server
+v901-103:manifests rvl$ kubectl get ing
+W0716 11:42:41.949641   79819 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME               CLASS    HOSTS   ADDRESS         PORTS   AGE
+log-pong-ingress   <none>   *       34.102.194.66   80      5m42s
+v901-103:manifests rvl$ kubectl get po
+W0716 11:42:58.655605   79822 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                              READY   STATUS    RESTARTS        AGE
+log-output-dep-6cb7bd9975-xl56w   1/1     Running   0               5m59s
+ping-pong-dep-666f688779-l2f8g    1/1     Running   2 (5m42s ago)   5m59s
+postgres-ss-0                     1/1     Running   0               5m59s
+v901-103:manifests rvl$ kubectl logs log-output-dep-6cb7bd9975-xl56w
+W0716 11:43:40.113041   79827 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+2022-07-16 08:37:24.174748+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:7777 (Press CTRL+C to quit)
+2022-07-16 08:37:29.173974+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:37:34.173369+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:37:39.173135+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:37:44.173974+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:37:49.173922+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:37:54.173596+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:37:59.173667+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:04.173894+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:09.174925+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:14.173224+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:19.173978+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:24.174236+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:29.173603+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:34.173671+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:39.174167+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:44.173128+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:49.173298+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:54.173632+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:38:59.173482+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:04.173890+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:09.174014+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:14.174144+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:19.173259+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:24.174395+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:29.174009+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:34.173636+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:39.174015+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:44.173215+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:49.174849+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:39:54.173253+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:39:54.173253+00:00 0
+INFO:     35.191.0.96:45672 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:39:54.173253+00:00 0
+INFO:     35.191.0.106:40984 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:39:54.173253+00:00 0
+INFO:     35.191.0.102:44532 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:39:59.173540+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:04.173491+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:09.173745+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:40:09.173745+00:00 0
+INFO:     35.191.0.96:46030 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:09.173745+00:00 0
+INFO:     35.191.0.106:41450 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:09.173745+00:00 0
+INFO:     35.191.0.102:45374 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:40:14.175067+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:19.173915+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:24.173888+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:40:24.173888+00:00 0
+INFO:     35.191.0.96:46126 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:24.173888+00:00 0
+INFO:     35.191.0.106:42132 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:24.173888+00:00 0
+INFO:     35.191.0.102:46168 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:40:29.173643+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:34.173802+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:39.173904+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:40:39.173904+00:00 0
+INFO:     35.191.0.96:46478 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:39.173904+00:00 0
+INFO:     35.191.0.106:43540 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:39.173904+00:00 0
+INFO:     35.191.0.102:46740 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:40:44.173228+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:49.173263+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:40:54.173257+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:40:54.173257+00:00 0
+INFO:     35.191.0.96:47846 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:54.173257+00:00 0
+INFO:     35.191.0.106:44230 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:40:54.173257+00:00 0
+INFO:     35.191.0.102:47000 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:40:59.174024+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:04.173976+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:09.173203+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:41:09.173203+00:00 0
+INFO:     35.191.0.96:48882 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:09.173203+00:00 0
+INFO:     35.191.0.106:45532 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:09.173203+00:00 0
+INFO:     35.191.0.102:48522 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:41:14.173214+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:19.173123+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:24.173720+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:41:24.173720+00:00 0
+INFO:     35.191.0.96:49880 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:24.173720+00:00 0
+INFO:     35.191.0.106:46048 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:24.173720+00:00 0
+INFO:     35.191.0.102:49104 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:41:29.174203+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:34.173327+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:39.173874+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:41:39.173874+00:00 0
+INFO:     35.191.0.96:50996 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:39.173874+00:00 0
+INFO:     35.191.0.106:46734 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:39.173874+00:00 0
+INFO:     35.191.0.102:50122 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:41:44.173944+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:49.174022+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:41:54.173419+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:41:54.173419+00:00 0
+INFO:     35.191.0.96:52588 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:54.173419+00:00 0
+INFO:     35.191.0.106:47062 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:41:54.173419+00:00 0
+INFO:     35.191.0.102:50678 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:41:59.173922+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:04.173678+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:09.173668+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:42:09.173668+00:00 0
+INFO:     35.191.0.96:53448 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:09.173668+00:00 0
+INFO:     35.191.0.106:47750 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:09.173668+00:00 0
+INFO:     35.191.0.102:51012 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:42:14.173301+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:19.174547+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:24.174420+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:42:24.174420+00:00 0
+INFO:     35.191.0.96:54948 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:24.174420+00:00 0
+INFO:     35.191.0.106:47898 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:24.174420+00:00 0
+INFO:     35.191.0.102:51354 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:42:29.173431+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:34.173807+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:39.173649+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:42:39.173649+00:00 0
+INFO:     35.191.0.96:55468 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:39.173649+00:00 0
+INFO:     35.191.0.106:48446 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:39.173649+00:00 0
+INFO:     35.191.0.102:52824 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:42:44.174981+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:49.176933+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:42:54.173680+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:42:54.173680+00:00 0
+INFO:     35.191.0.96:56672 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:54.173680+00:00 0
+INFO:     35.191.0.106:48708 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:42:54.173680+00:00 0
+INFO:     35.191.0.102:53166 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:42:59.173527+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:04.173463+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:09.173882+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:43:09.173882+00:00 0
+INFO:     35.191.0.96:57368 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:09.173882+00:00 0
+INFO:     35.191.0.106:49684 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:09.173882+00:00 0
+INFO:     35.191.0.102:53476 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:43:14.173940+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:19.173155+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:24.173189+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:43:24.173189+00:00 0
+INFO:     35.191.0.96:57908 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:24.173189+00:00 0
+INFO:     35.191.0.106:49744 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:24.173189+00:00 0
+INFO:     35.191.0.102:53696 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:43:29.173533+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:34.173393+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:39.173297+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:43:39.173297+00:00 0
+INFO:     35.191.0.96:58576 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:39.173297+00:00 0
+INFO:     35.191.0.106:49984 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:39.173297+00:00 0
+INFO:     35.191.0.102:54280 - "GET / HTTP/1.1" 200 OK
+v901-103:manifests rvl$ kubectl logs log-output-dep-6cb7bd9975-xl56w
+W0716 11:44:39.085964   79835 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+INFO:     Started server process [1]
+
+...
+
+2022-07-16 08:43:29.173533+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:34.173393+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:39.173297+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:43:39.173297+00:00 0
+INFO:     35.191.0.96:58576 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:39.173297+00:00 0
+INFO:     35.191.0.106:49984 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:39.173297+00:00 0
+INFO:     35.191.0.102:54280 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:43:44.173248+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:49.173573+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:43:54.174274+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:43:54.174274+00:00 0
+INFO:     35.191.0.96:59020 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:54.174274+00:00 0
+INFO:     35.191.0.106:50336 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:43:54.174274+00:00 0
+INFO:     35.191.0.102:54546 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:43:59.174846+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:04.173510+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:09.173608+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:44:09.173608+00:00 0
+INFO:     35.191.0.96:59848 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:09.173608+00:00 0
+INFO:     35.191.0.106:50544 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:09.173608+00:00 0
+INFO:     35.191.0.102:55204 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:44:14.174808+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:19.173260+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:24.173307+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:44:24.173307+00:00 0
+INFO:     35.191.0.96:60734 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:24.173307+00:00 0
+INFO:     35.191.0.106:50754 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:24.173307+00:00 0
+INFO:     35.191.0.102:55552 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:44:29.173744+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:34.173927+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:39.173763+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+v901-103:manifests rvl$ curl -v http://34.102.194.66/
+*   Trying 34.102.194.66...
+* TCP_NODELAY set
+* Connected to 34.102.194.66 (34.102.194.66) port 80 (#0)
+> GET / HTTP/1.1
+> Host: 34.102.194.66
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+* Empty reply from server
+* Connection #0 to host 34.102.194.66 left intact
+curl: (52) Empty reply from server
+v901-103:manifests rvl$ kubectl logs log-output-dep-6cb7bd9975-xl56w
+W0716 11:45:07.023316   79840 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+INFO:     Started server process [1]
+
+...
+
+2022-07-16 08:44:29.173744+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:34.173927+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:39.173763+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:44:39.173763+00:00 0
+INFO:     35.191.0.96:33228 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:39.173763+00:00 0
+INFO:     35.191.0.106:51314 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:39.173763+00:00 0
+INFO:     35.191.0.102:56230 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:44:44.173917+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:49.173562+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:44:54.174125+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+time and pongs: 2022-07-16 08:44:54.174125+00:00 0
+INFO:     35.191.0.96:33334 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:54.174125+00:00 0
+INFO:     35.191.0.106:51754 - "GET / HTTP/1.1" 200 OK
+time and pongs: 2022-07-16 08:44:54.174125+00:00 0
+INFO:     35.191.0.102:56360 - "GET / HTTP/1.1" 200 OK
+2022-07-16 08:44:59.173669+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+2022-07-16 08:45:04.173976+00:00 28e3014f69ad7f0bc39ea49bec5fd52e
+v901-103:manifests rvl$ kubectl get po
+W0716 11:45:39.130896   79845 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                              READY   STATUS    RESTARTS        AGE
+log-output-dep-6cb7bd9975-xl56w   1/1     Running   0               8m40s
+ping-pong-dep-666f688779-l2f8g    1/1     Running   2 (8m23s ago)   8m40s
+postgres-ss-0                     1/1     Running   0               8m40s
+v901-103:manifests rvl$ kubectl logs ping-pong-dep-666f688779-l2f8g
+W0716 11:46:00.347741   79848 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+24
+Got PASSWORD
+table created []
+initialized pings QueryArrayResult {
+  query: Query {
+    args: [],
+    camelcase: undefined,
+    fields: undefined,
+    result_type: 0,
+    text: "INSERT INTO counters (name, value) VALUES ('p', 0);"
+  },
+  command: "INSERT",
+  rowCount: 1,
+  warnings: [],
+  rows: []
+} []
+inital pings  from database are: 0
+Server started in port 8888
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://ping-pong-svc:80/pongs
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://10.28.1.4/
+Request to http://ping-pong-svc:80/pongs
+v901-103:manifests rvl$ curl -v http://34.102.194.66/pingpong
+*   Trying 34.102.194.66...
+* TCP_NODELAY set
+* Connected to 34.102.194.66 (34.102.194.66) port 80 (#0)
+> GET /pingpong HTTP/1.1
+> Host: 34.102.194.66
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< content-type: text/plain;charset=UTF-8
+< content-length: 6
+< date: Sat, 16 Jul 2022 08:46:39 GMT
+< Via: 1.1 google
+< 
+* Connection #0 to host 34.102.194.66 left intact
+pong 1v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 2v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 3v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 4v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 5v901-103:manifests rvl$ curl http://34.102.194.66/pong
+{"detail":"Not Found"}v901-103:manifests rvl$ 
+v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:47:34.174387+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 5v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:47:54.175085+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 5v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:48:09.174095+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 5v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:48:29.173527+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 5v901-103:manifests rvl$ 
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 6v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 7v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 8v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 9v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 10v901-103:manifests rvl$ 
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:48:49.173760+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 10v901-103:manifests rvl$ 
+v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:48:59.175167+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 10v901-103:manifests rvl$ 
+v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 08:51:24.173307+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 10v901-103kubectl get ing
+W0716 11:51:58.655416   79906 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME               CLASS    HOSTS   ADDRESS         PORTS   AGE
+log-pong-ingress   <none>   *       34.102.194.66   80      14m
+v901-103:manifests rvl$ kubectl describe ing
+W0716 11:52:08.128877   79908 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             log-pong-ingress
+Labels:           <none>
+Namespace:        exercises
+Address:          34.102.194.66
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /pingpong   ping-pong-svc:80 (10.28.1.4:8888)
+              /           log-output-svc:80 (10.28.0.7:7777)
+Annotations:  ingress.kubernetes.io/backends:
+                {"k8s-be-31477--0fc517395c744bcc":"HEALTHY","k8s1-0fc51739-exercises-log-output-svc-80-ff6cdcdc":"HEALTHY","k8s1-0fc51739-exercises-ping-p...
+              ingress.kubernetes.io/forwarding-rule: k8s2-fr-bbiobom2-exercises-log-pong-ingress-14zc1bgq
+              ingress.kubernetes.io/target-proxy: k8s2-tp-bbiobom2-exercises-log-pong-ingress-14zc1bgq
+              ingress.kubernetes.io/url-map: k8s2-um-bbiobom2-exercises-log-pong-ingress-14zc1bgq
+Events:
+  Type    Reason     Age                 From                     Message
+  ----    ------     ----                ----                     -------
+  Normal  Sync       12m                 loadbalancer-controller  UrlMap "k8s2-um-bbiobom2-exercises-log-pong-ingress-14zc1bgq" created
+  Normal  Sync       12m                 loadbalancer-controller  TargetProxy "k8s2-tp-bbiobom2-exercises-log-pong-ingress-14zc1bgq" created
+  Normal  Sync       12m                 loadbalancer-controller  ForwardingRule "k8s2-fr-bbiobom2-exercises-log-pong-ingress-14zc1bgq" created
+  Normal  IPChanged  12m                 loadbalancer-controller  IP is now 34.102.194.66
+  Normal  Sync       9m6s (x6 over 15m)  loadbalancer-controller  Scheduled for sync
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ date
+Sat Jul 16 12:43:38 EEST 2022
+v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 11v901-103:manifests rvl$ curl http://34.102.194.66/pingpong
+pong 12v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 09:43:59.174079+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 12v901-103:manifests rvl$ 
+v901-103:manifests rvl$ curl http://34.102.194.66/
+Hello
+2022-07-16 09:44:04.173210+00:00 28e3014f69ad7f0bc39ea49bec5fd52e.
+Ping / Pongs: 12v901-103:manifests rvl$ 

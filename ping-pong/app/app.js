@@ -26,26 +26,29 @@ const result0 = await client.queryArray(
     id SERIAL PRIMARY KEY,
     name TEXT,
     value INT
-  );`
+  );
+  INSERT INTO counters (id, name, value)
+    VALUES (1, 'p', 0 ) ON CONFLICT DO NOTHING;
+  `
 );
 await client.end();
 console.log('table created', result0.rows);
 
-await client.connect();
-const result1 = await client.queryArray(
-  `SELECT value FROM counters WHERE id=1 ;`
-);
-await client.end();
-// console.log('initial pings', result1, result1 && result1.rows);
+// await client.connect();
+// const result1 = await client.queryArray(
+//   `SELECT value FROM counters WHERE id=1 ;`
+// );
+// await client.end();
+// // console.log('initial pings', result1, result1 && result1.rows);
 
-if (result1.rowCount === 0){
-  await client.connect();
-  const result2 = await client.queryArray(
-    `INSERT INTO counters (name, value) VALUES ('p', 0);`
-  );
-  await client.end();
-  console.log('initialized pings', result2, result2 && result2.rows);
-}
+// if (result1.rowCount === 0){
+//   await client.connect();
+//   const result2 = await client.queryArray(
+//     `INSERT INTO counters (name, value) VALUES ('p', 0);`
+//   );
+//   await client.end();
+//   console.log('initialized pings', result2, result2 && result2.rows);
+// }
 
 await client.connect();
 const result3 = await client.queryArray(

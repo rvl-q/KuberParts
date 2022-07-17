@@ -14,6 +14,8 @@ const client = new Client({
   port: 5432,
 });
 
+let db_ready = false;
+
 // // test query, with "manually" created table
 // await client.connect();
 // const result = await client.queryArray("SELECT * FROM names;");
@@ -61,15 +63,20 @@ await client.end();
 let _ping_num = result3.rows[0][2];
 // Deno.writeTextFile("./shared/pongs.txt", _ping_num);
 console.log('inital pings  from database are:', _ping_num)
+db_ready = true;
 
 const getNumPings = async () => {
-  await client.connect();
-  const result = await client.queryArray(
-    `SELECT value FROM counters WHERE id=1 ;`
-  );
-  await client.end();
-  
-  return result.rows[0][0];
+  if (db_ready) {
+    await client.connect();
+    const result = await client.queryArray(
+      `SELECT value FROM counters WHERE id=1 ;`
+    );
+    await client.end();
+    
+    return result.rows[0][0];
+  } else {
+    return -1;
+}
 };
 
 const incPings = async () => {

@@ -9,10 +9,15 @@ import axios from 'axios'
 
 const App = () => {
 
-  const TODO_BACKEND_URL = "http://localhost:8081/todos";
-  const TODO_IMAGE_URL = "http://localhost:8081/images/image.jpg";
+  // const TODO_BACKEND_URL = "http://localhost:8081/todos";
+  // const TODO_IMAGE_URL = "http://localhost:8081/images/image.jpg";
+  const TODO_BACKEND_PATH = "/todos";
+  const TODO_IMAGE_PATH = "/images/image.jpg";
+  const host = location.origin;
   // const TODO_BACKEND_URL = "http://localhost:9999/todos";
   // const TODO_IMAGE_URL = "http://localhost:8081/images/image.jpg";
+  const TODO_BACKEND_URL = host + TODO_BACKEND_PATH;
+  const TODO_IMAGE_URL = host + TODO_IMAGE_PATH;
 
   const [todos, setTodos] = useState([])
   const [newTodo, setNewTodo] = useState('') 

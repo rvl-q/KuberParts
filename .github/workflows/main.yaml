@@ -10,9 +10,10 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  SOPS_AGE_KEY: ${{ secrets.AGE_SECRET_KEY }} # export SOPS_AGE_KEY ${{ secrets.AGE_SECRET_KEY }}
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  IMAGE: dwk-environments
+  IMAGE: dwk-project
 
 jobs:
   setup-build-publish-deploy:
@@ -34,6 +35,16 @@ jobs:
       # helper for authentication
       - run: |-
           gcloud --quiet auth configure-docker
+
+      # Dry run test Sops without GKE project running
+      # TODO! - remove after test -
+      - run: |-
+          echo testing sops decryption, before:
+          cat ./Project/manifests/secret.enc.yaml>wc
+          sops -d -i Project/manifests/secret.enc.yaml
+          echo testing sops decryption, after:
+          cat ./Project/manifests/secret.enc.yaml>wc
+
       # Get the GKE credentials so we can deploy to the cluster
       - run: |-
           gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
@@ -59,10 +70,11 @@ jobs:
         uses: mdgreenwald/mozilla-sops-action@v1.2.0
 
       # Decrypt...
+        # echo "${{ secrets.AGE_SECRET_KEY }}" > key.txt
+        # export SOPS_AGE_KEY_FILE=key.txt
+        # export SOPS_AGE_KEY ${{ secrets.AGE_SECRET_KEY }}
       - name: Decrypt secret yaml
         run: |-
-          echo "${{ secrets.AGE_SECRET_KEY }}" > key.txt
-          export SOPS_AGE_KEY_FILE=key.txt
           sops -d -i Project/manifests/secret.enc.yaml
 
       # Set up kustomize
@@ -77,12 +89,11 @@ jobs:
       #     kubectl rollout status deployment $IMAGE
       #     kubectl get services -o wide
 
-# TODO!
-      # - name: Deploy
-      #   run: |-
-      #     kubectl create namespace ${GITHUB_REF#refs/heads/} || true
-      #     kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
-      #     kustomize edit set namespace ${GITHUB_REF#refs/heads/}
-      #     kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
-      #     kubectl apply -k .
-      #     kubectl rollout status deployment $IMAGE
+      - name: Deploy
+        run: |-
+          kubectl create namespace ${GITHUB_REF#refs/heads/} || true
+          kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
+          kustomize edit set namespace ${GITHUB_REF#refs/heads/}
+          kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+          kubectl apply -k .
+          kubectl rollout status deployment $IMAGE

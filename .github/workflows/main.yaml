@@ -36,18 +36,22 @@ jobs:
       - run: |-
           gcloud --quiet auth configure-docker
 
-      # Dry run test Sops without GKE project running
-      # TODO! - remove after test -
-      # We need sops
-      - name: Install sops
-        uses: mdgreenwald/mozilla-sops-action@v1.2.0
+      # # Dry run test Sops without GKE project running
+      # # DONE! - remove after test - OK!
+      # # We need sops
+      # - name: Install sops
+      #   uses: mdgreenwald/mozilla-sops-action@v1.2.0
 
-      - run: |-
-          echo testing sops decryption, before:
-          cat ./Project/manifests/secret.enc.yaml|wc
-          sops -d -i Project/manifests/secret.enc.yaml
-          echo testing sops decryption, after:
-          cat ./Project/manifests/secret.enc.yaml|wc
+      # - run: |-
+      #     echo testing sops decryption, before:
+      #     cat ./Project/manifests/secret.enc.yaml|wc
+      #     sops -d -i Project/manifests/secret.enc.yaml
+      #     echo testing sops decryption, after:
+      #     cat ./Project/manifests/secret.enc.yaml|wc
+        # testing sops decryption, before:
+        #      29      54    1595
+        # testing sops decryption, after:
+        #       9      16     216
 
       # Get the GKE credentials so we can deploy to the cluster
       - run: |-

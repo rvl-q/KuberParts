@@ -2,8 +2,8 @@ name: Release application
 
 on:
   push:
-    branches-ignore:
-      - 'testing'
+    # branches-ignore:
+    #   - 'testing'
     paths:
       - './Project/**'  
       - '.github/workflow/main.yaml'  

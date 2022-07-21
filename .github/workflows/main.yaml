@@ -44,10 +44,10 @@ jobs:
 
       - run: |-
           echo testing sops decryption, before:
-          cat ./Project/manifests/secret.enc.yaml>wc
+          cat ./Project/manifests/secret.enc.yaml|wc
           sops -d -i Project/manifests/secret.enc.yaml
           echo testing sops decryption, after:
-          cat ./Project/manifests/secret.enc.yaml>wc
+          cat ./Project/manifests/secret.enc.yaml|wc
 
       # Get the GKE credentials so we can deploy to the cluster
       - run: |-

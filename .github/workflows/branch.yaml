@@ -3,10 +3,10 @@ name: Release application
 on:
   push:
     branches-ignore:
-      - 'testing'
+      - 'main'
     paths:
       - './Project/**'  
-      - '.github/workflows/main.yaml'  
+      - '.github/workflows/branch.yaml'  
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -100,13 +100,12 @@ jobs:
       - name: Deploy
         run: |-
           cd Project
-          kubectl create namespace project || true
-          kubectl config set-context --current --namespace=project
-
+          kubectl create namespace ${GITHUB_REF#refs/heads/} || true
+          kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
+          kustomize edit set namespace ${GITHUB_REF#refs/heads/}
           kustomize edit set image BACK_IMG=gcr.io/$PROJECT_ID/$IMAGE-back:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kustomize edit set image CRON_IMG=gcr.io/$PROJECT_ID/$IMAGE-cron:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kustomize edit set image FRONT_IMG=gcr.io/$PROJECT_ID/$IMAGE-front:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kubectl apply -k .
           kubectl rollout status deployment $IMAGE-dep
           kubectl get services -o wide
-      #     kustomize edit set namespace ${GITHUB_REF#refs/heads/}

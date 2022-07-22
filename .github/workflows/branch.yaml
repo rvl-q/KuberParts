@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - 'main'
     paths:
-      - './Project/**'  
+      - 'Project/**'  
       - '.github/workflows/branch.yaml'  
 
 env:

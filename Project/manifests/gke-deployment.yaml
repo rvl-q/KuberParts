@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dwk-project-dep
+  name: gke-project-dep
   namespace: project
 spec:
   replicas: 1

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gke-proj02-dep
+  name: gke-project-f-dep
   namespace: project
 spec:
   replicas: 1

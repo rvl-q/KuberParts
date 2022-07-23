@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gke-proj01-svc
+  namespace: project
+spec:
+  type: NodePort
+  # type: ClusterIP
+  selector:
+    app: proj01 # This is the app as declared in the deployment.
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 9999
+    # - name: http
+    #   nodePort: 31337 # This is the port that is available outside. Value for nodePort can be between 30000-32767
+    #   protocol: TCP
+    #   port: 1234 # This is a port that is available to the cluster, in this case it can be ~ anything
+    #   targetPort: 9999 # This is the target port

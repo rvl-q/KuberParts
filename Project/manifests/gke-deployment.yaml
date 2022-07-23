@@ -13,10 +13,10 @@ spec:
       labels:
         app: proj01
     spec:
-      volumes:
-        - name: shared-share
-          persistentVolumeClaim:
-            claimName: share-claim
+      # volumes:
+      #   - name: shared-share
+      #     persistentVolumeClaim:
+      #       claimName: share-claim
       containers:
         - name: proj01
           imagePullPolicy: Always

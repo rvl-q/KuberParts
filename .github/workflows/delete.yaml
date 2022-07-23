@@ -25,6 +25,7 @@ jobs:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           export_default_credentials: true
 
+      - run: echo tearing down namespace ${{GITHUB_REF#refs/heads/}}
       - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
       - name: De-Deploy

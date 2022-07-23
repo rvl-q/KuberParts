@@ -16,10 +16,11 @@ const IMAGE_PATH = "./images/image.jpg";
 //   views: `${Deno.cwd()}/views/`,
 // });
 
-// const root = async ({ request, response }) => {
-//   console.log("Method", request.method);
-//   response.body = await todoController.viewTodos({ request });
-// };
+const root = async ({ request, response }) => {
+  console.log("Method", request.method);
+  // response.body = await todoController.viewTodos({ request });
+  response.body = "OK";
+};
 
 const getTodos = async ({ request, response }) => {
   const resp_l = await todoController.listTodos({ request, response });
@@ -45,7 +46,7 @@ const getImage = async ({ request, response }) => {
 console.log("Server started in port " + PORT);
 todoController.initTodoTable();
 
-// router.get("/", root);
+router.get("/", root);
 router.get("/images/image.jpg", getImage);
 router.get("/todos", getTodos);
 router.post("/todos", newTodo);

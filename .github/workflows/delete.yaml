@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
@@ -25,7 +25,9 @@ jobs:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           export_default_credentials: true
 
-      - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+      - run: |-
+        echo tearing down namespace ${{GITHUB_REF#refs/heads/}}
+        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
       - name: De-Deploy
         run: kubectl delete namespace ${{GITHUB_REF#refs/heads/}}

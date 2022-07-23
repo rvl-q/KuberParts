@@ -13,7 +13,7 @@ env:
   SOPS_AGE_KEY: ${{ secrets.AGE_SECRET_KEY }} # export SOPS_AGE_KEY ${{ secrets.AGE_SECRET_KEY }}
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-north1-b
-  IMAGE: dwk-project
+  IMAGE: gke-project
 
 jobs:
   setup-build-publish-deploy:
@@ -108,4 +108,5 @@ jobs:
           kustomize edit set image FRONT_IMG=gcr.io/$PROJECT_ID/$IMAGE-front:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kubectl apply -k .
           kubectl rollout status deployment $IMAGE-dep
+          kubectl rollout status deployment $IMAGE-f-dep
           kubectl get services -o wide

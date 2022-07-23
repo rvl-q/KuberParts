@@ -26,7 +26,7 @@ jobs:
           export_default_credentials: true
 
       - run: |-
-        echo tearing down namespace ${{GITHUB_REF#refs/heads/}}
+        echo tearing down namespace "$GITHUB_REF#refs/heads/"
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
       - name: De-Deploy

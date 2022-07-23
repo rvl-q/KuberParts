@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - persistent/namespace.yaml
   # - ./persistent/gke-persistentvolume.yaml # dynamically provided
-  - persistent/persistentvolumeclaim.yaml
+  # - persistent/persistentvolumeclaim.yaml
   - persistent/pg-statefulset.yaml
   - persistent/pg-service.yaml
   - manifests/secret.enc.yaml

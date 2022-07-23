@@ -63,7 +63,7 @@ jobs:
             --tag "gcr.io/$PROJECT_ID/$IMAGE-front:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
           docker build ./Project/daily-todos \
             --tag "gcr.io/$PROJECT_ID/$IMAGE-cron:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
-          docker build ./Project/server \
+          docker build ./Project/server/app \
             --tag "gcr.io/$PROJECT_ID/$IMAGE-back:${GITHUB_REF#refs/heads/}-$GITHUB_SHA"
 
       # Push the Docker image to Google Container Registry

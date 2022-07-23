@@ -1,0 +1,38 @@
+name: Delete namespace
+
+on:
+  delete:
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: dwk-cluster
+  GKE_ZONE: europe-north1-b
+  IMAGE: gke-project
+
+jobs:
+  setup-build-publish-deploy:
+    name: Reversed Setup, Build, Publish, and Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # - name: Checkout
+      #   uses: actions/checkout@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+          export_default_credentials: true
+
+      - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+      - name: De-Deploy
+        run: kubectl delete namespace ${{GITHUB_REF#refs/heads/}}
+
+        # kubectl create namespace ${GITHUB_REF#refs/heads/} || true
+        # kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
+        # kustomize edit set namespace ${GITHUB_REF#refs/heads/}
+        # kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
+        # kubectl apply -k .
+        # kubectl rollout status deployment $IMAGE

@@ -11,8 +11,16 @@ const MAX_LENGTH = 140;
 
 const initial_todos = [
   {
-    id: 8,
-    content: "Exercise 2.10: Project v1.3",
+    id: 1,
+    content: "Exercise 3.03: Project v1.4",
+  },
+  {
+    id: 2,
+    content: "Exercise 3.04: Project v1.41",
+  },
+  {
+    id: 3,
+    content: "Exercise 3.05: Project v1.42",
   },
 ];
 

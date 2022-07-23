@@ -9,7 +9,7 @@ spec:
   selector:
     app: proj02 # This is the app as declared in the deployment.
   ports:
-    - port: 1234
+    - port: 80
       protocol: TCP
       # targetPort: 3000
       targetPort: 80  # trying nginx

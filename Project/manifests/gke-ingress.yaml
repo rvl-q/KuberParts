@@ -13,14 +13,14 @@ spec:
           service:
             name: gke-proj01-svc
             port:
-              number: 2345
+              number: 80
       - path: /images
         pathType: Prefix
         backend:
           service:
             name: gke-proj01-svc
             port:
-              number: 2345
+              number: 80
       # - path: /
       #   pathType: Exact
       #   backend:
@@ -38,18 +38,18 @@ spec:
           service:
             name: gke-proj02-svc
             port:
-              number: 1234
+              number: 80
       - path: /static
         pathType: Prefix
         backend:
           service:
             name: gke-proj02-svc
             port:
-              number: 1234
+              number: 80
       - path: /sockjs-node
         pathType: Prefix
         backend:
           service:
             name: gke-proj02-svc
             port:
-              number: 1234
+              number: 80

@@ -22,6 +22,10 @@ const initial_todos = [
     id: 3,
     content: "Exercise 3.05: Project v1.42",
   },
+  {
+    id: 4,
+    content: "Exercise 3.03: Project v1.4 pers. volume!",
+  },
 ];
 
 const initTodoTable = async () => {

@@ -20,7 +20,7 @@ spec:
       containers:
         - name: proj02
           imagePullPolicy: Always
-          image: rvlq/proj-front:latest53
+          image: rvlq/proj-front:latest
           # image: rvlq/proj-front:nginx
           # image: rvlq/proj-front:v1.2
           # volumeMounts: # Mount volume

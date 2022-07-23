@@ -20,7 +20,7 @@ spec:
       containers:
         - name: proj01
           imagePullPolicy: Always
-          image: rvlq/project:latest55
+          image: rvlq/project:latest
           # image: rvlq/project:v1.2
           envFrom:
             - secretRef:

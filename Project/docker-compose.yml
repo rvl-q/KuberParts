@@ -5,7 +5,7 @@ services:
     # build: client/
     build:
       context: client
-      dockerfile: Dockerfile_II
+      dockerfile: Dockerfile
     image: proj-front
     restart: "no"
     ports:

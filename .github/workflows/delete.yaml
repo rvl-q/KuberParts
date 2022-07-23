@@ -25,11 +25,14 @@ jobs:
           service_account_key: ${{ secrets.GKE_SA_KEY }}
           export_default_credentials: true
 
-      - run: echo tearing down namespace ${{GITHUB_REF#refs/heads/}}
+      # - run: echo tearing down namespace ${{GITHUB_REF#refs/heads/}}
+      - run: echo tearing down namespace "${{ github.event.ref }}"
+      - run: echo tearing down namespace ${{ github.event.ref }}
+      - run: echo tearing down namespace...
       - run: gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
       - name: De-Deploy
-        run: kubectl delete namespace ${{GITHUB_REF#refs/heads/}}
+        run: kubectl delete namespace ${{ github.event.ref }} # not ${{GITHUB_REF#refs/heads/}}
 
         # kubectl create namespace ${GITHUB_REF#refs/heads/} || true
         # kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}

@@ -1,15 +1,12 @@
-# Exercise 3.04: Project v1.4.1
-
-```
 name: Release application
 
 on:
   push:
-    branches-ignore:
+    branches:
       - 'main'
     paths:
       - 'Project/**'  
-      - '.github/workflows/branch.yaml'  
+      - '.github/workflows/main.yaml' #here GKE_PROJECT!!!
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
@@ -103,9 +100,9 @@ jobs:
       - name: Deploy
         run: |-
           cd Project
-          kubectl create namespace ${GITHUB_REF#refs/heads/} || true
-          kubectl config set-context --current --namespace=${GITHUB_REF#refs/heads/}
-          kustomize edit set namespace ${GITHUB_REF#refs/heads/}
+          kubectl create namespace project || true
+          kubectl config set-context --current --namespace=project
+
           kustomize edit set image BACK_IMG=gcr.io/$PROJECT_ID/$IMAGE-back:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kustomize edit set image CRON_IMG=gcr.io/$PROJECT_ID/$IMAGE-cron:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kustomize edit set image FRONT_IMG=gcr.io/$PROJECT_ID/$IMAGE-front:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
@@ -113,24 +110,5 @@ jobs:
           kubectl rollout status deployment $IMAGE-dep
           kubectl rollout status deployment $IMAGE-f-dep
           kubectl get services -o wide
-```
-
-https://github.com/rvl-q/KuberParts/actions/runs/2725311862
-
-```
-2022-07-23T23:18:37.025708573Z	Service p304/gke-proj01-svc updated: 1 ports
-2022-07-23T23:18:37.025996179Z	Adding new service port "p304/gke-proj01-svc" at 10.32.15.183:80/TCP
-2022-07-23T23:18:37.026047995Z	"Syncing iptables rules"
-2022-07-23T23:18:37.063988361Z	"SyncProxyRules complete" elapsed="38.168234ms"
-2022-07-23T23:18:37.163626578Z	"Syncing iptables rules"
-2022-07-23T23:18:37.203974159Z	"SyncProxyRules complete" elapsed="40.452331ms"
-2022-07-23T23:18:37.398838497Z	Service p304/gke-proj02-svc updated: 1 ports
-2022-07-23T23:18:39.982993781Z	Service p304/gke-proj02-svc updated: 1 ports
-2022-07-23T23:18:47.205106272Z	Adding new service port "p304/gke-proj02-svc" at 10.32.10.163:80/TCP
-2022-07-23T23:18:47.205313090Z	"Syncing iptables rules"
-2022-07-23T23:18:47.257016830Z	"SyncProxyRules complete" elapsed="51.936429ms"
-2022-07-23T23:18:57.257647734Z	"Syncing iptables rules"
-2022-07-23T23:18:57.297186873Z	"SyncProxyRules complete" elapsed="39.859561ms"
-```
-
-[Possible logs](../e303/e303.txt) Line 2138->
+      #     kustomize edit set namespace ${GITHUB_REF#refs/heads/}
+          # 

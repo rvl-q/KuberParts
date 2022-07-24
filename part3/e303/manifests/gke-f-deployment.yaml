@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gke-project-f-dep
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proj02
+  template:
+    metadata:
+      labels:
+        app: proj02
+    spec:
+      # volumes:
+      #   - name: shared-share
+      #     persistentVolumeClaim:
+      #       claimName: share-claim
+      containers:
+        - name: proj02
+          imagePullPolicy: Always
+          image: FRONT_IMG
+          # image: rvlq/proj-front:nginx
+          # image: rvlq/proj-front:v1.2
+          # volumeMounts: # Mount volume
+          # - name: shared-share
+          #   mountPath: /app/images
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "25m"
+            limits:
+              memory: "256Mi"
+              cpu: "250m"

@@ -1,0 +1,2320 @@
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=master
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get all
+W0723 22:58:22.954742   24419 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/dwk-environments-547645947f-4pb69   1/1     Running   0          6m52s
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP    PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.4.249   34.88.159.53   80:31026/TCP   6m53s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   1/1     1            1           6m53s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-547645947f   1         1         1       6m53s
+v901-103:manifests rvl$ kubectl get po
+W0723 22:58:41.448981   24422 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS   AGE
+dwk-environments-547645947f-4pb69   1/1     Running   0          7m10s
+v901-103:manifests rvl$ kubectl get ing
+W0723 22:58:53.165282   24424 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+No resources found in master namespace.
+v901-103:manifests rvl$ kubectl config get-context all
+error: unknown command "get-context all"
+See 'kubectl config -h' for help and examples
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=red
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get all
+W0723 23:07:32.859272   24651 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/dwk-environments-547645947f-x8mxh   1/1     Running   0          114s
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.7.253   35.228.187.167   80:31032/TCP   114s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   1/1     1            1           114s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-547645947f   1         1         1       114s
+v901-103:manifests rvl$ kubectl get all
+W0723 23:35:44.960113   25190 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/dwk-environments-547645947f-x8mxh   1/1     Running   0          30m
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP      PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.7.253   35.228.187.167   80:31032/TCP   30m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   1/1     1            1           30m
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-547645947f   1         1         1       30m
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get all
+W0723 23:37:02.102473   25362 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/gke-project-dep-5f865dc88d-kggw6    0/1     Pending   0          3m12s
+pod/gke-project-f-dep-896b887d9-c5b95   1/1     Running   0          3m12s
+pod/postgres-ss-0                       1/1     Running   0          3m11s
+
+NAME                     TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.3.92   <none>        80:30603/TCP     3m14s
+service/gke-proj02-svc   NodePort    10.32.8.2    <none>        1234:31512/TCP   3m14s
+service/postgres-svc     ClusterIP   None         <none>        5432/TCP         3m13s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           3m12s
+deployment.apps/gke-project-f-dep   1/1     1            1           3m12s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-5f865dc88d    1         1         0       3m12s
+replicaset.apps/gke-project-f-dep-896b887d9   1         1         1       3m12s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     3m11s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     0        <none>          3m10s
+v901-103:manifests rvl$ kubectl get po
+W0723 23:37:55.018616   25370 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS   AGE
+gke-project-dep-5f865dc88d-kggw6    0/1     Pending   0          4m5s
+gke-project-f-dep-896b887d9-c5b95   1/1     Running   0          4m5s
+postgres-ss-0                       1/1     Running   0          4m4s
+v901-103:manifests rvl$ kubectl get ing
+W0723 23:38:09.424594   25373 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      4m17s
+v901-103:manifests rvl$ kubectl get all
+W0723 23:38:39.299916   25377 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/gke-project-dep-5f865dc88d-kggw6    0/1     Pending   0          4m49s
+pod/gke-project-f-dep-896b887d9-c5b95   1/1     Running   0          4m49s
+pod/postgres-ss-0                       1/1     Running   0          4m48s
+
+NAME                     TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.3.92   <none>        80:30603/TCP     4m51s
+service/gke-proj02-svc   NodePort    10.32.8.2    <none>        1234:31512/TCP   4m51s
+service/postgres-svc     ClusterIP   None         <none>        5432/TCP         4m50s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           4m49s
+deployment.apps/gke-project-f-dep   1/1     1            1           4m49s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-5f865dc88d    1         1         0       4m49s
+replicaset.apps/gke-project-f-dep-896b887d9   1         1         1       4m49s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     4m48s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     0        <none>          4m47s
+v901-103:manifests rvl$ kubectl get po
+W0723 23:40:21.239679   25391 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS      AGE
+gke-daily-todo-27643480-l9h6f       0/1     CrashLoopBackOff   1 (13s ago)   21s
+gke-project-dep-5f865dc88d-kggw6    0/1     Pending            0             6m31s
+gke-project-f-dep-896b887d9-c5b95   1/1     Running            0             6m31s
+postgres-ss-0                       1/1     Running            0             6m30s
+v901-103:manifests rvl$ kubectl get dep
+W0723 23:40:58.324327   25397 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+error: the server doesn't have a resource type "dep"
+v901-103:manifests rvl$ kubectl get all
+W0723 23:41:30.181833   25403 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS             RESTARTS      AGE
+pod/gke-daily-todo-27643480-l9h6f       0/1     CrashLoopBackOff   3 (37s ago)   90s
+pod/gke-project-dep-5f865dc88d-kggw6    0/1     Pending            0             7m40s
+pod/gke-project-f-dep-896b887d9-c5b95   1/1     Running            0             7m40s
+pod/postgres-ss-0                       1/1     Running            0             7m39s
+
+NAME                     TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.3.92   <none>        80:30603/TCP     7m42s
+service/gke-proj02-svc   NodePort    10.32.8.2    <none>        1234:31512/TCP   7m42s
+service/postgres-svc     ClusterIP   None         <none>        5432/TCP         7m41s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           7m40s
+deployment.apps/gke-project-f-dep   1/1     1            1           7m40s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-5f865dc88d    1         1         0       7m40s
+replicaset.apps/gke-project-f-dep-896b887d9   1         1         1       7m40s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     7m39s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     1        90s             7m38s
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643480   0/1           90s        90s
+v901-103:manifests rvl$ kubectl describe gke-project-dep-5f865dc88d-kggw6
+W0723 23:43:32.339721   25419 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+error: the server doesn't have a resource type "gke-project-dep-5f865dc88d-kggw6"
+v901-103:manifests rvl$ kubectl describe pod/gke-project-dep-5f865dc88d-kggw6
+W0723 23:44:09.804861   25427 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:           gke-project-dep-5f865dc88d-kggw6
+Namespace:      project
+Priority:       0
+Node:           <none>
+Labels:         app=proj01
+                pod-template-hash=5f865dc88d
+Annotations:    <none>
+Status:         Pending
+IP:             
+IPs:            <none>
+Controlled By:  ReplicaSet/gke-project-dep-5f865dc88d
+Containers:
+  proj01:
+    Image:      gcr.io/dwk-gke-355822/gke-project-back:main-71955a38431482544d92ba437c8f73ca13454340
+    Port:       <none>
+    Host Port:  <none>
+    Limits:
+      cpu:     99m
+      memory:  128Mi
+    Requests:
+      cpu:     99m
+      memory:  128Mi
+    Environment Variables from:
+      pg-secrets  Secret  Optional: false
+    Environment:  <none>
+    Mounts:
+      /app/images from shared-share (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-w4xss (ro)
+Conditions:
+  Type           Status
+  PodScheduled   False 
+Volumes:
+  shared-share:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  share-claim
+    ReadOnly:   false
+  kube-api-access-w4xss:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason             Age                 From                Message
+  ----     ------             ----                ----                -------
+  Warning  FailedScheduling   42s (x13 over 10m)  default-scheduler   0/3 nodes are available: 3 pod has unbound immediate PersistentVolumeClaims.
+  Normal   NotTriggerScaleUp  15s (x61 over 10m)  cluster-autoscaler  pod didn't trigger scale-up:
+v901-103:manifests rvl$ kubectl delete pod/gke-project-dep-5f865dc88d-kggw6
+W0723 23:45:38.113282   25438 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+pod "gke-project-dep-5f865dc88d-kggw6" deleted
+v901-103:manifests rvl$ kubectl get po
+W0723 23:45:50.943364   25442 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS        AGE
+gke-daily-todo-27643480-l9h6f       0/1     CrashLoopBackOff   5 (2m40s ago)   5m51s
+gke-project-dep-5f865dc88d-4ptgh    0/1     Pending            0               13s
+gke-project-f-dep-896b887d9-c5b95   1/1     Running            0               12m
+postgres-ss-0                       1/1     Running            0               12m
+v901-103:manifests rvl$ kubectl get po
+W0723 23:46:25.450203   25446 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS   AGE
+gke-project-dep-5f865dc88d-4ptgh    0/1     Pending   0          47s
+gke-project-f-dep-896b887d9-c5b95   1/1     Running   0          12m
+postgres-ss-0                       1/1     Running   0          12m
+v901-103:manifests rvl$ kubectl get po
+W0723 23:52:26.924438   25552 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS      AGE
+gke-daily-todo-27643490-8v86d       0/1     CrashLoopBackOff   4 (40s ago)   2m27s
+gke-project-dep-5f865dc88d-4ptgh    0/1     Pending            0             6m49s
+gke-project-dep-6c9dbbfb99-82wl7    0/1     Pending            0             31s
+gke-project-f-dep-84b45f648-89mj7   1/1     Running            0             30s
+postgres-ss-0                       1/1     Running            0             18m
+v901-103:manifests rvl$ kubectl delete pod/gke-project-dep-5f865dc88d-4ptgh
+W0723 23:53:11.277408   25557 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+pod "gke-project-dep-5f865dc88d-4ptgh" deleted
+v901-103:manifests rvl$ kubectl get po
+W0723 23:53:14.737810   25559 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS      AGE
+gke-daily-todo-27643490-8v86d       0/1     CrashLoopBackOff   4 (87s ago)   3m14s
+gke-project-dep-5f865dc88d-xlncn    0/1     Pending            0             3s
+gke-project-dep-6c9dbbfb99-82wl7    0/1     Pending            0             78s
+gke-project-f-dep-84b45f648-89mj7   1/1     Running            0             77s
+postgres-ss-0                       1/1     Running            0             19m
+v901-103:manifests rvl$ kubectl get all
+W0723 23:54:05.585963   25566 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS             RESTARTS      AGE
+pod/gke-daily-todo-27643490-8v86d       0/1     CrashLoopBackOff   5 (46s ago)   4m5s
+pod/gke-project-dep-5f865dc88d-xlncn    0/1     Pending            0             54s
+pod/gke-project-dep-6c9dbbfb99-82wl7    0/1     Pending            0             2m9s
+pod/gke-project-f-dep-84b45f648-89mj7   1/1     Running            0             2m8s
+pod/postgres-ss-0                       1/1     Running            0             20m
+
+NAME                     TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.3.92   <none>        80:30603/TCP     20m
+service/gke-proj02-svc   NodePort    10.32.8.2    <none>        1234:31512/TCP   20m
+service/postgres-svc     ClusterIP   None         <none>        5432/TCP         20m
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           20m
+deployment.apps/gke-project-f-dep   1/1     1            1           20m
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-5f865dc88d    1         1         0       20m
+replicaset.apps/gke-project-dep-6c9dbbfb99    1         1         0       2m10s
+replicaset.apps/gke-project-f-dep-84b45f648   1         1         1       2m10s
+replicaset.apps/gke-project-f-dep-896b887d9   0         0         0       20m
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     20m
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     1        4m6s            20m
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643480   0/1           14m        14m
+job.batch/gke-daily-todo-27643490   0/1           4m6s       4m6s
+v901-103:manifests rvl$ kubectl delete replicaset.apps/gke-project-dep-5f865dc88d
+W0723 23:54:44.958688   25572 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+replicaset.apps "gke-project-dep-5f865dc88d" deleted
+v901-103:manifests rvl$ kubectl get all
+W0723 23:54:49.359157   25573 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS             RESTARTS      AGE
+pod/gke-daily-todo-27643490-8v86d       0/1     CrashLoopBackOff   5 (90s ago)   4m49s
+pod/gke-project-dep-6c9dbbfb99-82wl7    0/1     Pending            0             2m53s
+pod/gke-project-f-dep-84b45f648-89mj7   1/1     Running            0             2m52s
+pod/postgres-ss-0                       1/1     Running            0             20m
+
+NAME                     TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.3.92   <none>        80:30603/TCP     21m
+service/gke-proj02-svc   NodePort    10.32.8.2    <none>        1234:31512/TCP   21m
+service/postgres-svc     ClusterIP   None         <none>        5432/TCP         21m
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           20m
+deployment.apps/gke-project-f-dep   1/1     1            1           20m
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-6c9dbbfb99    1         1         0       2m53s
+replicaset.apps/gke-project-f-dep-84b45f648   1         1         1       2m53s
+replicaset.apps/gke-project-f-dep-896b887d9   0         0         0       20m
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     20m
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     1        4m50s           20m
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643480   0/1           14m        14m
+job.batch/gke-daily-todo-27643490   0/1           4m50s      4m50s
+v901-103:manifests rvl$ kubectl get po
+W0723 23:55:05.350925   25576 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS       AGE
+gke-daily-todo-27643490-8v86d       0/1     CrashLoopBackOff   5 (106s ago)   5m5s
+gke-project-dep-6c9dbbfb99-82wl7    0/1     Pending            0              3m9s
+gke-project-f-dep-84b45f648-89mj7   1/1     Running            0              3m8s
+postgres-ss-0                       1/1     Running            0              21m
+v901-103:manifests rvl$ kubectl delete namespace project
+W0723 23:56:15.610239   25585 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace "project" deleted
+
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ kubectl delete namespace red
+W0723 23:57:46.045243   25660 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace "red" deleted
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=master
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get all
+W0724 00:18:15.567710   26208 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS             RESTARTS   AGE
+pod/dwk-environments-65c74fc889-494ld   0/1     InvalidImageName   0          35s
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.0.231   <pending>     80:31593/TCP   35s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   0/1     1            0           35s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-65c74fc889   1         1         0       35s
+v901-103:manifests rvl$ kubectl get all
+W0724 00:18:46.215960   26215 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS             RESTARTS   AGE
+pod/dwk-environments-65c74fc889-494ld   0/1     InvalidImageName   0          65s
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.0.231   34.88.219.176   80:31593/TCP   65s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   0/1     1            0           65s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-65c74fc889   1         1         0       65s
+v901-103:manifests rvl$ kubectl get all
+W0724 00:28:36.545974   26449 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/dwk-environments-8496c847b4-ft52z   1/1     Running   0          24s
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.0.231   34.88.219.176   80:31593/TCP   10m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   1/1     1            1           10m
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-65c74fc889   0         0         0       10m
+replicaset.apps/dwk-environments-8496c847b4   1         1         1       25s
+v901-103:manifests rvl$ kubectl get all
+W0724 00:30:13.403702   26463 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/dwk-environments-8496c847b4-ft52z   1/1     Running   0          2m1s
+
+NAME                           TYPE           CLUSTER-IP    EXTERNAL-IP     PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.0.231   34.88.219.176   80:31593/TCP   12m
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   1/1     1            1           12m
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-65c74fc889   0         0         0       12m
+replicaset.apps/dwk-environments-8496c847b4   1         1         1       2m1s
+v901-103:manifests rvl$ kubectl get po
+W0724 00:30:27.919625   26467 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS   AGE
+dwk-environments-8496c847b4-ft52z   1/1     Running   0          2m16s
+v901-103:manifests rvl$ kubectl config get-context --current
+error: unknown flag: --current
+See 'kubectl config --help' for usage.
+v901-103:manifests rvl$ kubectl config --help
+Modify kubeconfig files using subcommands like "kubectl config set current-context my-context"
+
+ The loading order follows these rules:
+
+  1.  If the --kubeconfig flag is set, then only that file is loaded. The flag may only be set once and no merging takes
+place.
+  2.  If $KUBECONFIG environment variable is set, then it is used as a list of paths (normal path delimiting rules for
+your system). These paths are merged. When a value is modified, it is modified in the file that defines the stanza. When
+a value is created, it is created in the first file that exists. If no files in the chain exist, then it creates the
+last file in the list.
+  3.  Otherwise, ${HOME}/.kube/config is used and no merging takes place.
+
+Available Commands:
+  current-context   Display the current-context
+  delete-cluster    Delete the specified cluster from the kubeconfig
+  delete-context    Delete the specified context from the kubeconfig
+  delete-user       Delete the specified user from the kubeconfig
+  get-clusters      Display clusters defined in the kubeconfig
+  get-contexts      Describe one or many contexts
+  get-users         Display users defined in the kubeconfig
+  rename-context    Rename a context from the kubeconfig file
+  set               Set an individual value in a kubeconfig file
+  set-cluster       Set a cluster entry in kubeconfig
+  set-context       Set a context entry in kubeconfig
+  set-credentials   Set a user entry in kubeconfig
+  unset             Unset an individual value in a kubeconfig file
+  use-context       Set the current-context in a kubeconfig file
+  view              Display merged kubeconfig settings or a specified kubeconfig file
+
+Usage:
+  kubectl config SUBCOMMAND [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+v901-103:manifests rvl$ kubectl config get-contexts
+CURRENT   NAME                                             CLUSTER                                          AUTHINFO                                         NAMESPACE
+          docker-desktop                                   docker-desktop                                   docker-desktop                                   exercises
+*         gke_dwk-gke-355822_europe-north1-b_dwk-cluster   gke_dwk-gke-355822_europe-north1-b_dwk-cluster   gke_dwk-gke-355822_europe-north1-b_dwk-cluster   master
+v901-103:manifests rvl$ kubectl --help namespace
+kubectl controls the Kubernetes cluster manager.
+
+ Find more information at: https://kubernetes.io/docs/reference/kubectl/overview/
+
+Basic Commands (Beginner):
+  create          Create a resource from a file or from stdin
+  expose          Take a replication controller, service, deployment or pod and expose it as a new Kubernetes service
+  run             Run a particular image on the cluster
+  set             Set specific features on objects
+
+Basic Commands (Intermediate):
+  explain         Get documentation for a resource
+  get             Display one or many resources
+  edit            Edit a resource on the server
+  delete          Delete resources by file names, stdin, resources and names, or by resources and label selector
+
+Deploy Commands:
+  rollout         Manage the rollout of a resource
+  scale           Set a new size for a deployment, replica set, or replication controller
+  autoscale       Auto-scale a deployment, replica set, stateful set, or replication controller
+
+Cluster Management Commands:
+  certificate     Modify certificate resources.
+  cluster-info    Display cluster information
+  top             Display resource (CPU/memory) usage
+  cordon          Mark node as unschedulable
+  uncordon        Mark node as schedulable
+  drain           Drain node in preparation for maintenance
+  taint           Update the taints on one or more nodes
+
+Troubleshooting and Debugging Commands:
+  describe        Show details of a specific resource or group of resources
+  logs            Print the logs for a container in a pod
+  attach          Attach to a running container
+  exec            Execute a command in a container
+  port-forward    Forward one or more local ports to a pod
+  proxy           Run a proxy to the Kubernetes API server
+  cp              Copy files and directories to and from containers
+  auth            Inspect authorization
+  debug           Create debugging sessions for troubleshooting workloads and nodes
+
+Advanced Commands:
+  diff            Diff the live version against a would-be applied version
+  apply           Apply a configuration to a resource by file name or stdin
+  patch           Update fields of a resource
+  replace         Replace a resource by file name or stdin
+  wait            Experimental: Wait for a specific condition on one or many resources
+  kustomize       Build a kustomization target from a directory or URL.
+
+Settings Commands:
+  label           Update the labels on a resource
+  annotate        Update the annotations on a resource
+  completion      Output shell completion code for the specified shell (bash, zsh or fish)
+
+Other Commands:
+  alpha           Commands for features in alpha
+  api-resources   Print the supported API resources on the server
+  api-versions    Print the supported API versions on the server, in the form of "group/version"
+  config          Modify kubeconfig files
+  plugin          Provides utilities for interacting with plugins
+  version         Print the client and server version information
+
+Usage:
+  kubectl [flags] [options]
+
+Use "kubectl <command> --help" for more information about a given command.
+Use "kubectl options" for a list of global command-line options (applies to all commands).
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get po
+W0724 00:33:07.959260   26494 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                 READY   STATUS             RESTARTS      AGE
+gke-daily-todo-27643530-5s6pf        0/1     CrashLoopBackOff   4 (88s ago)   3m8s
+gke-project-dep-568658dcfd-slt9x     0/1     Pending            0             32m
+gke-project-dep-868f5ff9f9-4qch6     0/1     Pending            0             19m
+gke-project-f-dep-7ff8456d76-tcl2d   1/1     Running            0             19m
+postgres-ss-0                        1/1     Running            0             32m
+v901-103:manifests rvl$ kubectl get all
+W0724 00:33:21.201023   26496 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                     READY   STATUS    RESTARTS       AGE
+pod/gke-daily-todo-27643530-5s6pf        0/1     Error     5 (101s ago)   3m21s
+pod/gke-project-dep-568658dcfd-slt9x     0/1     Pending   0              33m
+pod/gke-project-dep-868f5ff9f9-4qch6     0/1     Pending   0              19m
+pod/gke-project-f-dep-7ff8456d76-tcl2d   1/1     Running   0              19m
+pod/postgres-ss-0                        1/1     Running   0              33m
+
+NAME                     TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.10.77   <none>        80:32223/TCP     33m
+service/gke-proj02-svc   NodePort    10.32.4.21    <none>        1234:32590/TCP   33m
+service/postgres-svc     ClusterIP   None          <none>        5432/TCP         33m
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           33m
+deployment.apps/gke-project-f-dep   1/1     1            1           33m
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-568658dcfd     1         1         0       33m
+replicaset.apps/gke-project-dep-868f5ff9f9     1         1         0       19m
+replicaset.apps/gke-project-f-dep-6b8894f45f   0         0         0       33m
+replicaset.apps/gke-project-f-dep-7ff8456d76   1         1         1       19m
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     33m
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     1        3m21s           33m
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643520   0/1           13m        13m
+job.batch/gke-daily-todo-27643530   0/1           3m21s      3m21s
+v901-103:manifests rvl$ kubectl delete namespace project
+W0724 00:45:45.796019   26694 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace "project" deleted
+
+
+
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ 
+v901-103:manifests rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:manifests rvl$ kubectl get all
+W0724 00:49:19.906218   26754 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                     READY   STATUS    RESTARTS   AGE
+pod/gke-project-dep-6b864ffcd7-2sk5q     0/1     Pending   0          63s
+pod/gke-project-f-dep-6dcd79b95b-7cvzx   1/1     Running   0          63s
+pod/postgres-ss-0                        1/1     Running   0          62s
+
+NAME                     TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.6.174   <none>        80:32458/TCP     66s
+service/gke-proj02-svc   NodePort    10.32.3.102   <none>        1234:31973/TCP   65s
+service/postgres-svc     ClusterIP   None          <none>        5432/TCP         65s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     0/1     1            0           63s
+deployment.apps/gke-project-f-dep   1/1     1            1           63s
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-6b864ffcd7     1         1         0       63s
+replicaset.apps/gke-project-f-dep-6dcd79b95b   1         1         1       63s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     62s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     0        <none>          62s
+v901-103:manifests rvl$ kubectl get po
+W0724 00:49:37.449934   26756 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                 READY   STATUS    RESTARTS   AGE
+gke-project-dep-6b864ffcd7-2sk5q     0/1     Pending   0          80s
+gke-project-f-dep-6dcd79b95b-7cvzx   1/1     Running   0          80s
+postgres-ss-0                        1/1     Running   0          79s
+v901-103:manifests rvl$ pwd
+/Users/rvl/kod/kuber/part3/KuberParts/part3/e302/manifests
+v901-103:manifests rvl$ cd ..
+v901-103:e302 rvl$ cd ..
+v901-103:part3 rvl$ ls
+e301	e302	e303	e304	e305	e306	e307	e308	e309	e310
+v901-103:part3 rvl$ pwd
+/Users/rvl/kod/kuber/part3/KuberParts/part3
+v901-103:part3 rvl$ cd ..
+v901-103:KuberParts rvl$ pwd
+/Users/rvl/kod/kuber/part3/KuberParts
+v901-103:KuberParts rvl$ ls
+Project		Readme.md	log-output	part1		part2		part3		ping-pong
+v901-103:KuberParts rvl$ cd Project/
+v901-103:Project rvl$ cat manifests/
+b-deployment.yaml      cronjob.yaml           f-service.yaml         gke-f-deployment.yaml  gke-service.yaml
+b-ingress.yaml         f-deployment.yaml      gke-cronjob.yaml       gke-f-service.yaml     secret.enc.yaml
+b-service.yaml         f-ingress.yaml         gke-deployment.yaml    gke-ingress.yaml       
+v901-103:Project rvl$ cat manifests/gke-deployment.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gke-project-dep
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proj01
+  template:
+    metadata:
+      labels:
+        app: proj01
+    spec:
+      volumes:
+        - name: shared-share
+          persistentVolumeClaim:
+            claimName: share-claim
+      containers:
+        - name: proj01
+          imagePullPolicy: Always
+          image: BACK_IMG
+          # image: rvlq/project:v1.2
+          envFrom:
+            - secretRef:
+                name: pg-secrets
+          volumeMounts: # Mount volume
+          - name: shared-share
+            mountPath: /app/images
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "99m" # trig test
+v901-103:Project rvl$ kubectl get ing
+W0724 00:53:16.013300   26790 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      4m57s
+v901-103:Project rvl$ kubectl delete namespace project
+W0724 00:57:06.429595   26908 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace "project" deleted
+v901-103:Project rvl$ kubectl config set-context --current --namespace=blue
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl get ing
+W0724 01:01:54.524626   27106 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+No resources found in blue namespace.
+v901-103:Project rvl$ kubectl get all
+W0724 01:02:00.836300   27107 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/dwk-environments-58867759d9-8cb79   1/1     Running   0          68s
+
+NAME                           TYPE           CLUSTER-IP     EXTERNAL-IP    PORT(S)        AGE
+service/dwk-environments-svc   LoadBalancer   10.32.11.141   34.88.159.53   80:31829/TCP   69s
+
+NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dwk-environments   1/1     1            1           68s
+
+NAME                                          DESIRED   CURRENT   READY   AGE
+replicaset.apps/dwk-environments-58867759d9   1         1         1       68s
+v901-103:Project rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl get all
+W0724 01:05:56.700310   27195 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                     READY   STATUS             RESTARTS        AGE
+pod/gke-daily-todo-27643560-pltgr        0/1     CrashLoopBackOff   5 (2m35s ago)   5m57s
+pod/gke-project-f-dep-56b9b945b4-z4fnl   1/1     Running            0               6m55s
+pod/postgres-ss-0                        1/1     Running            0               6m55s
+
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.15.180   <none>        80:32027/TCP     6m57s
+service/gke-proj02-svc   NodePort    10.32.12.241   <none>        1234:30211/TCP   6m57s
+service/postgres-svc     ClusterIP   None           <none>        5432/TCP         6m56s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-f-dep   1/1     1            1           6m56s
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-f-dep-56b9b945b4   1         1         1       6m56s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     6m55s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     1        5m57s           6m55s
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643560   0/1           5m57s      5m57s
+v901-103:Project rvl$ kubectl delete namespace project
+W0724 01:06:21.044646   27198 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace "project" deleted
+v901-103:Project rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl get all
+W0724 01:08:40.732821   27218 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+No resources found in project namespace.
+v901-103:Project rvl$ kubectl delete namespace project
+W0724 01:08:47.243267   27221 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Error from server (NotFound): namespaces "project" not found
+v901-103:Project rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ 
+v901-103:Project rvl$ cubectl get all
+-bash: cubectl: command not found
+v901-103:Project rvl$ kubectl get all
+W0724 01:09:47.699992   27230 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+No resources found in project namespace.
+v901-103:Project rvl$ kubectl delete namespace project
+W0724 01:09:58.765108   27232 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Error from server (NotFound): namespaces "project" not found
+v901-103:Project rvl$ kubectl get all
+W0724 01:10:01.483465   27233 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+No resources found in project namespace.
+v901-103:Project rvl$ kubectl config set-context --current --namespace=master
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl delete namespace blue
+W0724 01:13:29.115270   27325 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+namespace "blue" deleted
+v901-103:Project rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl get all
+W0724 01:16:59.050112   27356 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                     READY   STATUS    RESTARTS   AGE
+pod/gke-project-dep-754f4d68db-28l2c     1/1     Running   0          112s
+pod/gke-project-f-dep-65df6f665f-qj97v   1/1     Running   0          112s
+pod/postgres-ss-0                        1/1     Running   0          111s
+
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+service/gke-proj01-svc   NodePort    10.32.0.11     <none>        80:30245/TCP     114s
+service/gke-proj02-svc   NodePort    10.32.11.147   <none>        1234:32485/TCP   113s
+service/postgres-svc     ClusterIP   None           <none>        5432/TCP         113s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     1/1     1            1           112s
+deployment.apps/gke-project-f-dep   1/1     1            1           112s
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-754f4d68db     1         1         1       112s
+replicaset.apps/gke-project-f-dep-65df6f665f   1         1         1       112s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     111s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     0        <none>          111s
+v901-103:Project rvl$ kubectl get ing
+W0724 01:17:10.810462   27359 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      2m
+v901-103:Project rvl$ kubectl get pods
+W0724 01:17:31.192457   27362 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                 READY   STATUS    RESTARTS   AGE
+gke-project-dep-754f4d68db-28l2c     1/1     Running   0          2m23s
+gke-project-f-dep-65df6f665f-qj97v   1/1     Running   0          2m23s
+postgres-ss-0                        1/1     Running   0          2m22s
+v901-103:Project rvl$ kubectl get pods
+W0724 01:17:59.009537   27367 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                 READY   STATUS    RESTARTS   AGE
+gke-project-dep-754f4d68db-28l2c     1/1     Running   0          2m51s
+gke-project-f-dep-65df6f665f-qj97v   1/1     Running   0          2m51s
+postgres-ss-0                        1/1     Running   0          2m50s
+v901-103:Project rvl$ kubectl logs gke-project-dep-754f4d68db-28l2c
+W0724 01:18:19.580479   27371 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+v901-103:Project rvl$ kubectl logs gke-project-dep-754f4d68db-28l2c
+W0724 01:18:51.059651   27376 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+v901-103:Project rvl$ kubectl logs gke-project-f-dep-65df6f665f-qj97v
+W0724 01:19:16.917353   27379 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+v901-103:Project rvl$ kubectl get ing
+W0724 01:19:43.885815   27384 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      4m34s
+v901-103:Project rvl$ kubectl get server/
+error: arguments in resource/name form must have a single resource and name
+v901-103:Project rvl$ kubectl get services
+W0724 01:20:21.533555   27390 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE
+gke-proj01-svc   NodePort    10.32.0.11     <none>        80:30245/TCP     5m15s
+gke-proj02-svc   NodePort    10.32.11.147   <none>        1234:32485/TCP   5m14s
+postgres-svc     ClusterIP   None           <none>        5432/TCP         5m14s
+v901-103:Project rvl$ kubectl describe ing
+W0724 01:20:46.783140   27394 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        project
+Address:          
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:2345 (10.28.1.22:9999)
+              /images        gke-proj01-svc:2345 (10.28.1.22:9999)
+              /              gke-proj02-svc:1234 (10.28.0.10:80)
+              /static        gke-proj02-svc:1234 (10.28.0.10:80)
+              /sockjs-node   gke-proj02-svc:1234 (10.28.0.10:80)
+Annotations:  <none>
+Events:
+  Type     Reason     Age                     From                     Message
+  ----     ------     ----                    ----                     -------
+  Normal   Sync       3m28s (x3 over 5m37s)   loadbalancer-controller  Scheduled for sync
+  Warning  Translate  2m53s (x17 over 5m37s)  loadbalancer-controller  Translation failed: invalid ingress spec: could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"
+v901-103:Project rvl$ kubectl describe ing
+W0724 01:27:00.134830   27560 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        project
+Address:          
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:2345 (10.28.1.22:9999)
+              /images        gke-proj01-svc:2345 (10.28.1.22:9999)
+              /              gke-proj02-svc:1234 (10.28.0.10:80)
+              /static        gke-proj02-svc:1234 (10.28.0.10:80)
+              /sockjs-node   gke-proj02-svc:1234 (10.28.0.10:80)
+Annotations:  <none>
+Events:
+  Type     Reason     Age                   From                     Message
+  ----     ------     ----                  ----                     -------
+  Normal   Sync       9m42s (x3 over 11m)   loadbalancer-controller  Scheduled for sync
+  Warning  Translate  3m40s (x18 over 11m)  loadbalancer-controller  Translation failed: invalid ingress spec: could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"
+v901-103:Project rvl$ pwd
+/Users/rvl/kod/kuber/part3/KuberParts/Project
+v901-103:Project rvl$ kubectl apply -f manifests/gke-ingress.yaml 
+W0724 01:28:09.061028   27570 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+ingress.networking.k8s.io/gke-prj-ingress unchanged
+v901-103:Project rvl$ kubectl describe ing
+W0724 01:28:26.706262   27578 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        project
+Address:          
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:80 (10.28.0.12:9999)
+              /images        gke-proj01-svc:80 (10.28.0.12:9999)
+              /              gke-proj02-svc:80 (10.28.2.9:80)
+              /static        gke-proj02-svc:80 (10.28.2.9:80)
+              /sockjs-node   gke-proj02-svc:80 (10.28.2.9:80)
+Annotations:  <none>
+Events:
+  Type     Reason     Age                 From                     Message
+  ----     ------     ----                ----                     -------
+  Warning  Translate  68s (x19 over 13m)  loadbalancer-controller  Translation failed: invalid ingress spec: could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"
+  Warning  Translate  25s (x2 over 25s)   loadbalancer-controller  Translation failed: invalid ingress spec: could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:1234,}" in service "project/gke-proj02-svc"; could not find port "&ServiceBackendPort{Name:,Number:1234,}" in service "project/gke-proj02-svc"; could not find port "&ServiceBackendPort{Name:,Number:1234,}" in service "project/gke-proj02-svc"
+  Normal   Sync       24s (x5 over 13m)   loadbalancer-controller  Scheduled for sync
+v901-103:Project rvl$ cat manifests/gke-ingress.yaml 
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gke-prj-ingress
+  namespace: project
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /todos
+        pathType: Exact
+        backend:
+          service:
+            name: gke-proj01-svc
+            port:
+              number: 80
+      - path: /images
+        pathType: Prefix
+        backend:
+          service:
+            name: gke-proj01-svc
+            port:
+              number: 80
+      # - path: /
+      #   pathType: Exact
+      #   backend:
+      #     service:
+      #       name: proj01-svc
+      #       port:
+      #         number: 2345
+# spec:
+#   rules:
+#   - http:
+#       paths:
+      - path: /
+        pathType: Exact
+        backend:
+          service:
+            name: gke-proj02-svc
+            port:
+              number: 80
+      - path: /static
+        pathType: Prefix
+        backend:
+          service:
+            name: gke-proj02-svc
+            port:
+              number: 80
+      - path: /sockjs-node
+        pathType: Prefix
+        backend:
+          service:
+            name: gke-proj02-svc
+            port:
+              number: 80
+v901-103:Project rvl$ kubectl describe ing
+W0724 01:29:53.908379   27592 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        project
+Address:          
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:80 (10.28.0.12:9999)
+              /images        gke-proj01-svc:80 (10.28.0.12:9999)
+              /              gke-proj02-svc:80 (10.28.2.9:80)
+              /static        gke-proj02-svc:80 (10.28.2.9:80)
+              /sockjs-node   gke-proj02-svc:80 (10.28.2.9:80)
+Annotations:  <none>
+Events:
+  Type     Reason     Age                   From                     Message
+  ----     ------     ----                  ----                     -------
+  Warning  Translate  2m35s (x19 over 14m)  loadbalancer-controller  Translation failed: invalid ingress spec: could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"
+  Warning  Translate  112s (x2 over 112s)   loadbalancer-controller  Translation failed: invalid ingress spec: could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:2345,}" in service "project/gke-proj01-svc"; could not find port "&ServiceBackendPort{Name:,Number:1234,}" in service "project/gke-proj02-svc"; could not find port "&ServiceBackendPort{Name:,Number:1234,}" in service "project/gke-proj02-svc"; could not find port "&ServiceBackendPort{Name:,Number:1234,}" in service "project/gke-proj02-svc"
+  Normal   Sync       111s (x5 over 14m)    loadbalancer-controller  Scheduled for sync
+v901-103:Project rvl$ kubectl get services
+W0724 01:30:15.153284   27596 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+gke-proj01-svc   NodePort    10.32.0.11     <none>        80:30245/TCP   15m
+gke-proj02-svc   NodePort    10.32.11.147   <none>        80:32485/TCP   15m
+postgres-svc     ClusterIP   None           <none>        5432/TCP       15m
+v901-103:Project rvl$ kubectl get ing
+W0724 01:30:21.801454   27598 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      15m
+v901-103:Project rvl$ kubectl apply -f manifests/gke-ingress.yaml 
+W0724 01:30:50.166497   27601 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+ingress.networking.k8s.io/gke-prj-ingress unchanged
+v901-103:Project rvl$ kubectl delete -f manifests/gke-ingress.yaml 
+W0724 01:31:04.181341   27604 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+ingress.networking.k8s.io "gke-prj-ingress" deleted
+
+
+v901-103:Project rvl$ 
+v901-103:Project rvl$ 
+v901-103:Project rvl$ kubectl apply -f manifests/gke-ingress.yaml 
+W0724 01:32:53.699342   27621 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+ingress.networking.k8s.io/gke-prj-ingress created
+v901-103:Project rvl$ kubectl get ing
+W0724 01:33:00.018343   27622 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      6s
+v901-103:Project rvl$ kubectl get po
+W0724 01:33:10.596516   27624 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS       AGE
+gke-daily-todo-27643590-bc4dk       0/1     Error     5 (101s ago)   3m10s
+gke-project-dep-744d98c589-2jc7r    1/1     Running   0              5m8s
+gke-project-f-dep-5d97b74fd-64j8p   1/1     Running   0              5m8s
+postgres-ss-0                       1/1     Running   0              18m
+v901-103:Project rvl$ kubectl logs gke-project-dep-744d98c589-2jc7r
+W0724 01:33:40.905563   27629 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+v901-103:Project rvl$ kubectl logs gke-project-dep-744d98c589-2jc7r
+W0724 01:34:00.732457   27632 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+v901-103:Project rvl$ kubectl get services -o wide
+W0724 01:34:53.289006   27641 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE   SELECTOR
+gke-proj01-svc   NodePort    10.32.0.11     <none>        80:30245/TCP   19m   app=proj01
+gke-proj02-svc   NodePort    10.32.11.147   <none>        80:32485/TCP   19m   app=proj02
+postgres-svc     ClusterIP   None           <none>        5432/TCP       19m   app=postgres
+v901-103:Project rvl$ kubectl get ing
+W0724 01:35:28.943649   27645 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      2m35s
+v901-103:Project rvl$ kubectl describe ing
+W0724 01:35:40.895357   27647 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        project
+Address:          34.160.169.189
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:80 (10.28.0.12:9999)
+              /images        gke-proj01-svc:80 (10.28.0.12:9999)
+              /              gke-proj02-svc:80 (10.28.2.9:80)
+              /static        gke-proj02-svc:80 (10.28.2.9:80)
+              /sockjs-node   gke-proj02-svc:80 (10.28.2.9:80)
+Annotations:  <none>
+Events:
+  Type    Reason     Age                 From                     Message
+  ----    ------     ----                ----                     -------
+  Normal  Sync       18s                 loadbalancer-controller  UrlMap "k8s2-um-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" created
+  Normal  Sync       14s                 loadbalancer-controller  TargetProxy "k8s2-tp-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" created
+  Normal  Sync       2s (x3 over 2m47s)  loadbalancer-controller  Scheduled for sync
+  Normal  Sync       2s                  loadbalancer-controller  ForwardingRule "k8s2-fr-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" created
+  Normal  IPChanged  2s                  loadbalancer-controller  IP is now 34.160.169.189
+v901-103:Project rvl$ kubectl get ing
+W0724 01:36:29.130292   27658 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS          PORTS   AGE
+gke-prj-ingress   <none>   *       34.160.169.189   80      3m35s
+v901-103:Project rvl$ kubectl get ing
+W0724 01:38:20.691009   27684 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS          PORTS   AGE
+gke-prj-ingress   <none>   *       34.160.169.189   80      5m27s
+v901-103:Project rvl$ kubectl get ing
+W0724 01:38:41.205570   27688 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS          PORTS   AGE
+gke-prj-ingress   <none>   *       34.160.169.189   80      5m47s
+v901-103:Project rvl$ kubectl get po
+W0724 01:38:49.710747   27690 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS   AGE
+gke-project-dep-744d98c589-2jc7r    1/1     Running   0          10m
+gke-project-f-dep-5d97b74fd-64j8p   1/1     Running   0          10m
+postgres-ss-0                       1/1     Running   0          23m
+v901-103:Project rvl$ kubectl logs gke-project-dep-744d98c589-2jc7r
+W0724 01:39:00.660077   27692 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+v901-103:Project rvl$ kubectl exec -it postgres-ss-0 -- /bin/bash
+W0724 01:42:03.772324   27714 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+root@postgres-ss-0:/# psql -U postgres
+psql (14.0 (Debian 14.0-1.pgdg110+1))
+Type "help" for help.
+
+postgres=# \dt
+         List of relations
+ Schema | Name  | Type  |  Owner   
+--------+-------+-------+----------
+ public | todos | table | postgres
+(1 row)
+
+postgres=# select * from todos;
+ id |                  content                  
+----+-------------------------------------------
+  1 | Exercise 3.03: Project v1.4
+  2 | Exercise 3.04: Project v1.41
+  3 | Exercise 3.05: Project v1.42
+  4 | Exercise 3.03: Project v1.4 pers. volume!
+(4 rows)
+
+postgres=# exit
+root@postgres-ss-0:/# exit
+exit
+v901-103:Project rvl$ kubectl get po
+W0724 01:45:27.264125   27753 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS       AGE
+gke-daily-todo-27643600-4gzvn       0/1     CrashLoopBackOff   5 (2m8s ago)   5m27s
+gke-project-dep-744d98c589-2jc7r    1/1     Running            0              17m
+gke-project-f-dep-5d97b74fd-64j8p   1/1     Running            0              17m
+postgres-ss-0                       1/1     Running            0              30m
+v901-103:Project rvl$ kubectl get ing
+W0724 01:45:36.277509   27755 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS          PORTS   AGE
+gke-prj-ingress   <none>   *       34.160.169.189   80      12m
+v901-103:Project rvl$ kubectl exec -it gke-project-dep-744d98c589-2jc7r -- /bin/bash
+W0724 01:46:32.440580   27762 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+error: Internal error occurred: error executing command in container: failed to exec in container: failed to start exec "af1cd29630f002e700ba580b9888505f0a475852053f889bb4be899b94eba5ab": OCI runtime exec failed: exec failed: container_linux.go:380: starting container process caused: exec: "/bin/bash": stat /bin/bash: no such file or directory: unknown
+v901-103:Project rvl$ kubectl exec -it gke-project-dep-744d98c589-2jc7r -- /bin/sh
+W0724 01:47:04.466846   27799 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+/app # ls
+Dockerfile      app.js          database        static          views
+Dockerfile_dev  controllers     images          utils
+/app # ls images/
+image.jpg
+/app # ls -l images/
+total 156
+-rw-r--r--    1 root     root        159698 Jul 23 22:25 image.jpg
+/app # curl
+/bin/sh: curl: not found
+/app # exit
+command terminated with exit code 127
+v901-103:Project rvl$ 
+v901-103:Project rvl$ kubectl get ing
+W0724 01:52:23.939701   27856 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS          PORTS   AGE
+gke-prj-ingress   <none>   *       34.160.169.189   80      19m
+v901-103:Project rvl$ kubectl get ing
+W0724 02:01:20.810966   27995 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS          PORTS   AGE
+gke-prj-ingress   <none>   *       34.160.169.189   80      28m
+v901-103:Project rvl$ curl http://34.160.169.189/todos
+[{"id":1,"content":"Exercise 3.03: Project v1.4"},{"id":2,"content":"Exercise 3.04: Project v1.41"},{"id":3,"content":"Exercise 3.05: Project v1.42"},{"id":4,"content":"Exercise 3.03: Project v1.4 pers. volume!"},{"id":5,"content":"new todo"}]v901-103:Project rvl$ 
+v901-103:Project rvl$ curl http://34.160.169.189/todos
+[{"id":1,"content":"Exercise 3.03: Project v1.4"},{"id":2,"content":"Exercise 3.04: Project v1.41"},{"id":3,"content":"Exercise 3.05: Project v1.42"},{"id":4,"content":"Exercise 3.03: Project v1.4 pers. volume!"},{"id":5,"content":"new todo"},{"id":6,"content":"new todo from GUI"}]v901-103:Project rvl$ 
+v901-103:Project rvl$ kubectl describe ing
+W0724 02:04:52.624811   28024 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        project
+Address:          34.160.169.189
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:80 (10.28.1.27:9999)
+              /images        gke-proj01-svc:80 (10.28.1.27:9999)
+              /              gke-proj02-svc:80 (10.28.0.13:80)
+              /static        gke-proj02-svc:80 (10.28.0.13:80)
+              /sockjs-node   gke-proj02-svc:80 (10.28.0.13:80)
+Annotations:  ingress.kubernetes.io/backends:
+                {"k8s1-c7bf78ad-kube-system-default-http-backend-80-ad46351e":"HEALTHY","k8s1-c7bf78ad-project-gke-proj01-svc-80-0ae73943":"UNHEALTHY","k8...
+              ingress.kubernetes.io/forwarding-rule: k8s2-fr-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl
+              ingress.kubernetes.io/target-proxy: k8s2-tp-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl
+              ingress.kubernetes.io/url-map: k8s2-um-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl
+Events:
+  Type    Reason     Age                  From                     Message
+  ----    ------     ----                 ----                     -------
+  Normal  Sync       29m                  loadbalancer-controller  UrlMap "k8s2-um-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" created
+  Normal  Sync       29m                  loadbalancer-controller  TargetProxy "k8s2-tp-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" created
+  Normal  Sync       29m                  loadbalancer-controller  ForwardingRule "k8s2-fr-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" created
+  Normal  IPChanged  29m                  loadbalancer-controller  IP is now 34.160.169.189
+  Normal  Sync       4m20s (x9 over 31m)  loadbalancer-controller  Scheduled for sync
+  Normal  Sync       4m9s                 loadbalancer-controller  UrlMap "k8s2-um-ejuo3bbj-project-gke-prj-ingress-4w5eyhwl" updated
+v901-103:Project rvl$ kubectl get po
+W0724 02:05:13.096539   28027 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS       AGE
+gke-daily-todo-27643620-p99zq       0/1     CrashLoopBackOff   5 (2m7s ago)   5m13s
+gke-project-dep-5f8b855f5b-4lpw8    1/1     Running            0              4m41s
+gke-project-f-dep-b9d8574cc-s8mlf   1/1     Running            0              4m41s
+postgres-ss-0                       1/1     Running            0              50m
+v901-103:Project rvl$ kubectl apply manifests/gke-
+gke-cronjob.yaml       gke-f-deployment.yaml  gke-ingress.yaml       
+gke-deployment.yaml    gke-f-service.yaml     gke-service.yaml       
+v901-103:Project rvl$ kubectl apply manifests/gke-cronjob.yaml 
+W0724 02:06:27.227538   28038 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+error: must specify one of -f and -k
+v901-103:Project rvl$ kubectl apply -f manifests/gke-cronjob.yaml 
+W0724 02:06:42.023722   28041 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+cronjob.batch/gke-daily-todo configured
+v901-103:Project rvl$ kubectl get po
+W0724 02:06:52.619876   28044 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS    RESTARTS   AGE
+gke-project-dep-5f8b855f5b-4lpw8    1/1     Running   0          6m20s
+gke-project-f-dep-b9d8574cc-s8mlf   1/1     Running   0          6m20s
+postgres-ss-0                       1/1     Running   0          51m
+v901-103:Project rvl$ kubectl get all
+W0724 02:07:40.776305   28050 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                    READY   STATUS    RESTARTS   AGE
+pod/gke-project-dep-5f8b855f5b-4lpw8    1/1     Running   0          7m8s
+pod/gke-project-f-dep-b9d8574cc-s8mlf   1/1     Running   0          7m8s
+pod/postgres-ss-0                       1/1     Running   0          52m
+
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/gke-proj01-svc   NodePort    10.32.0.11     <none>        80:30245/TCP   52m
+service/gke-proj02-svc   NodePort    10.32.11.147   <none>        80:32485/TCP   52m
+service/postgres-svc     ClusterIP   None           <none>        5432/TCP       52m
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     1/1     1            1           52m
+deployment.apps/gke-project-f-dep   1/1     1            1           52m
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-5f8b855f5b     1         1         1       7m9s
+replicaset.apps/gke-project-dep-744d98c589     0         0         0       39m
+replicaset.apps/gke-project-dep-754f4d68db     0         0         0       52m
+replicaset.apps/gke-project-f-dep-5d97b74fd    0         0         0       39m
+replicaset.apps/gke-project-f-dep-65df6f665f   0         0         0       52m
+replicaset.apps/gke-project-f-dep-b9d8574cc    1         1         1       7m9s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     52m
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     0        7m41s           52m
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643620   0/1           7m41s      7m41s
+v901-103:Project rvl$ kubectl logs pod/gke-project-dep-5f8b855f5b-4lpw8
+W0724 02:09:14.708338   28064 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo from GUI
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+v901-103:Project rvl$ kubectl logs pod/gke-project-dep-5f8b855f5b-4lpw8
+W0724 02:10:42.843541   28075 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo from GUI
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+v901-103:Project rvl$ kubectl logs pod/gke-project-dep-5f8b855f5b-4lpw8
+W0724 02:11:06.576558   28080 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo from GUI
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+v901-103:Project rvl$ kubectl logs pod/gke-project-dep-5f8b855f5b-4lpw8
+W0724 02:11:10.429437   28081 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo from GUI
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+v901-103:Project rvl$ kubectl logs pod/gke-project-dep-5f8b855f5b-4lpw8
+W0724 02:11:17.822502   28084 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo from GUI
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+v901-103:Project rvl$ kubectl logs pod/gke-project-dep-5f8b855f5b-4lpw8
+W0724 02:16:06.808229   28271 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+NOTICE: relation "todos" already exists, skipping
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+http://34.160.169.189/todos New todo request with content:
+new todo from GUI
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+GET requeset to: http://34.160.169.189/todos
+GET requeset to: http://34.160.169.189/todos
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+v901-103:Project rvl$ kubectl config set-context --current --namespace=p304
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl get po
+W0724 02:19:38.684640   28300 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                 READY   STATUS    RESTARTS      AGE
+gke-project-dep-677b64b49b-d46nf     1/1     Running   1 (47s ago)   61s
+gke-project-f-dep-6cb5659d5c-lmbmn   1/1     Running   0             61s
+postgres-ss-0                        1/1     Running   0             60s
+v901-103:Project rvl$ kubectl get ing
+W0724 02:19:50.853601   28302 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      72s
+v901-103:Project rvl$ date
+Sun Jul 24 02:20:10 EEST 2022
+v901-103:Project rvl$ kubectl get ing
+W0724 02:20:13.155761   28307 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS   PORTS   AGE
+gke-prj-ingress   <none>   *                 80      94s
+v901-103:Project rvl$ kubectl logs gke-project-dep-677b64b49b-d46nf 
+W0724 02:21:09.733792   28315 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Server started in port 9999
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+Method GET
+v901-103:Project rvl$ kubectl get ing
+W0724 02:21:29.593502   28318 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS         PORTS   AGE
+gke-prj-ingress   <none>   *       34.102.194.66   80      2m50s
+v901-103:Project rvl$ curl http://34.102.194.66/todos
+curl: (52) Empty reply from server
+v901-103:Project rvl$ curl -v http://34.102.194.66/todos
+*   Trying 34.102.194.66...
+* TCP_NODELAY set
+* Connected to 34.102.194.66 (34.102.194.66) port 80 (#0)
+> GET /todos HTTP/1.1
+> Host: 34.102.194.66
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+* Empty reply from server
+* Connection #0 to host 34.102.194.66 left intact
+curl: (52) Empty reply from server
+v901-103:Project rvl$ kubectl get ing
+W0724 02:24:06.524599   28349 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              CLASS    HOSTS   ADDRESS         PORTS   AGE
+gke-prj-ingress   <none>   *       34.102.194.66   80      5m27s
+v901-103:Project rvl$ kubectl describe ing
+W0724 02:24:17.806071   28352 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+Name:             gke-prj-ingress
+Labels:           <none>
+Namespace:        p304
+Address:          34.102.194.66
+Ingress Class:    <none>
+Default backend:  <default>
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /todos         gke-proj01-svc:80 (10.28.2.10:9999)
+              /images        gke-proj01-svc:80 (10.28.2.10:9999)
+              /              gke-proj02-svc:80 (10.28.1.28:80)
+              /static        gke-proj02-svc:80 (10.28.1.28:80)
+              /sockjs-node   gke-proj02-svc:80 (10.28.1.28:80)
+Annotations:  ingress.kubernetes.io/backends:
+                {"k8s1-c7bf78ad-kube-system-default-http-backend-80-ad46351e":"HEALTHY","k8s1-c7bf78ad-p304-gke-proj01-svc-80-04f784d4":"HEALTHY","k8s1-c7...
+              ingress.kubernetes.io/forwarding-rule: k8s2-fr-ejuo3bbj-p304-gke-prj-ingress-nfia8fmf
+              ingress.kubernetes.io/target-proxy: k8s2-tp-ejuo3bbj-p304-gke-prj-ingress-nfia8fmf
+              ingress.kubernetes.io/url-map: k8s2-um-ejuo3bbj-p304-gke-prj-ingress-nfia8fmf
+Events:
+  Type    Reason     Age                    From                     Message
+  ----    ------     ----                   ----                     -------
+  Normal  Sync       3m57s                  loadbalancer-controller  UrlMap "k8s2-um-ejuo3bbj-p304-gke-prj-ingress-nfia8fmf" created
+  Normal  Sync       3m54s                  loadbalancer-controller  TargetProxy "k8s2-tp-ejuo3bbj-p304-gke-prj-ingress-nfia8fmf" created
+  Normal  Sync       3m42s                  loadbalancer-controller  ForwardingRule "k8s2-fr-ejuo3bbj-p304-gke-prj-ingress-nfia8fmf" created
+  Normal  IPChanged  3m42s                  loadbalancer-controller  IP is now 34.102.194.66
+  Normal  Sync       3m35s (x4 over 5m39s)  loadbalancer-controller  Scheduled for sync
+v901-103:Project rvl$ curl -v http://34.102.194.66/todos
+*   Trying 34.102.194.66...
+* TCP_NODELAY set
+* Connected to 34.102.194.66 (34.102.194.66) port 80 (#0)
+> GET /todos HTTP/1.1
+> Host: 34.102.194.66
+> User-Agent: curl/7.54.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< access-control-allow-origin: *
+< content-type: application/json; charset=utf-8
+< content-length: 213
+< date: Sat, 23 Jul 2022 23:25:10 GMT
+< Via: 1.1 google
+< 
+* Connection #0 to host 34.102.194.66 left intact
+[{"id":1,"content":"Exercise 3.03: Project v1.4"},{"id":2,"content":"Exercise 3.04: Project v1.41"},{"id":3,"content":"Exercise 3.05: Project v1.42"},{"id":4,"content":"Exercise 3.03: Project v1.4 pers. volume!"}]v901-103:Project rvl$ 
+v901-103:Project rvl$ date
+Sun Jul 24 02:25:19 EEST 2022
+v901-103:Project rvl$ kubectl get all
+W0724 02:27:02.011589   28378 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                     READY   STATUS    RESTARTS        AGE
+pod/gke-project-dep-677b64b49b-d46nf     1/1     Running   1 (8m10s ago)   8m24s
+pod/gke-project-f-dep-6cb5659d5c-lmbmn   1/1     Running   0               8m24s
+pod/postgres-ss-0                        1/1     Running   0               8m23s
+
+NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/gke-proj01-svc   NodePort    10.32.15.183   <none>        80:30427/TCP   8m25s
+service/gke-proj02-svc   NodePort    10.32.10.163   <none>        80:32175/TCP   8m25s
+service/postgres-svc     ClusterIP   None           <none>        5432/TCP       8m25s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/gke-project-dep     1/1     1            1           8m24s
+deployment.apps/gke-project-f-dep   1/1     1            1           8m24s
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/gke-project-dep-677b64b49b     1         1         1       8m24s
+replicaset.apps/gke-project-f-dep-6cb5659d5c   1         1         1       8m24s
+
+NAME                           READY   AGE
+statefulset.apps/postgres-ss   1/1     8m23s
+
+NAME                           SCHEDULE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/gke-daily-todo   */10 * * * *   False     0        7m2s            8m23s
+
+NAME                                COMPLETIONS   DURATION   AGE
+job.batch/gke-daily-todo-27643640   0/1           7m2s       7m2s
+v901-103:Project rvl$ kubectl get namespace
+W0724 02:28:46.283194   28396 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              STATUS   AGE
+default           Active   4h2m
+kube-node-lease   Active   4h2m
+kube-public       Active   4h2m
+kube-system       Active   4h2m
+master            Active   131m
+p304              Active   10m
+project           Active   73m
+v901-103:Project rvl$ git push --delete origin p304
+To github.com:rvl-q/KuberParts.git
+ - [deleted]         p304
+v901-103:Project rvl$ git branch -v -a
+* main                 08eff29 root
+  remotes/origin/HEAD  -> origin/main
+  remotes/origin/main  08eff29 root
+  remotes/origin/part2 60cb6cf Update Readme.md
+v901-103:Project rvl$ kubectl config set-context --current --namespace=project
+Context "gke_dwk-gke-355822_europe-north1-b_dwk-cluster" modified.
+v901-103:Project rvl$ kubectl get po
+W0724 02:33:17.432764   28526 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME                                READY   STATUS             RESTARTS   AGE
+gke-daily-todo-27643630-j74nb       0/1     InvalidImageName   0          23m
+gke-daily-todo-27643640-rdktc       0/1     InvalidImageName   0          13m
+gke-daily-todo-27643650-gj4qh       0/1     InvalidImageName   0          3m17s
+gke-project-dep-5f8b855f5b-4lpw8    1/1     Running            0          32m
+gke-project-f-dep-b9d8574cc-s8mlf   1/1     Running            0          32m
+postgres-ss-0                       1/1     Running            0          78m
+v901-103:Project rvl$ kubectl get namespace
+W0724 02:36:00.571963   28559 gcp.go:120] WARNING: the gcp auth plugin is deprecated in v1.22+, unavailable in v1.25+; use gcloud instead.
+To learn more, consult https://cloud.google.com/blog/products/containers-kubernetes/kubectl-auth-changes-in-gke
+NAME              STATUS   AGE
+default           Active   4h9m
+kube-node-lease   Active   4h9m
+kube-public       Active   4h9m
+kube-system       Active   4h9m
+master            Active   138m
+project           Active   80m
+v901-103:Project rvl$

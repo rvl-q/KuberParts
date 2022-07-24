@@ -133,4 +133,4 @@ https://github.com/rvl-q/KuberParts/actions/runs/2725311862
 2022-07-23T23:18:57.297186873Z	"SyncProxyRules complete" elapsed="39.859561ms"
 ```
 
-[Possible logs](../e303/e303.txt) Line 2138->
+[Possible logs](../e303/e303.txt#L2138) Line 2138->

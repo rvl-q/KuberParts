@@ -70,4 +70,4 @@ Info
 2022-07-23T23:32:28.840424147Z"SyncProxyRules complete" elapsed="43.109893ms"
 ```
 
-[Possible logs](../e303/e303.txt) Line 2290->
+[Possible logs](../e303/e303.txt#L2290) Line 2290->

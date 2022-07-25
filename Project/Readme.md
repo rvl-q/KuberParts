@@ -2,12 +2,40 @@
 
 This is the so callled todo project.
 
-## Project v0.7 at end of part 1 (Exercise 1.13)
+# Exercise 3.06: DBaaS vs DIY
 
-This project is based on the so called *walking skeleton* -- a starting point for working on the course
-assignments -- for the free online Web Software Development course available at
-[https://wsd.cs.aalto.fi/](https://wsd.cs.aalto.fi/).
+## Cloud SQL
 
-[Original README file](./server/OriginalREADME.md)
+### Prices, cheapest alternative in Finland
 
-[Original repo](https://github.com/avihavai/wsd-walking-skeleton) by avihavai
+|   |   |   |
+| --- | --- | --- |
+|RAM    |gigabyte hour   |$0.0077|
+|IP Charges|hour   |$0.011|
+|micro instance|hour|$0.0116|
+|Low cost storage|gigabyte month|$0.099|
+|backup|gigabyte month|$0.088|
+---
+No idea of the size limitations of "micro instance".
+
+### pros
+* easy to setup
+* maintained (security)
+### cons
+* less flexible
+* cost (at least for the more "serious" instances)
+
+## DIY
+### pros
+* full flexibility for custom needs
+* less expensive (probably)
+### cons
+* maintenance (more resources and skills needed, this costs too)
+* setup less easy
+* backup also DIY
+
+# Exercise 3.07: Commitment
+
+I'll go for DIY, because it is already there.
+Will explore the service option more after all the deadlines.
+

@@ -3,7 +3,7 @@ name: Release application
 on:
   push:
     branches:
-      - 'main'
+      - 'main-3'
     paths:
       - 'Project/**'  
       - '.github/workflows/main.yaml' #here GKE_PROJECT!!!

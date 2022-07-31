@@ -24,7 +24,7 @@ spec:
             periodSeconds: 5 # How often to test
             httpGet:
                path: /healthz
-               port: 3541
+               port: 8888
           # environment
           envFrom:
             - secretRef:

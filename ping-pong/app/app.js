@@ -121,10 +121,12 @@ const handleRequest = async (request) => {
   else if (url.pathname === "/" && request.method === "GET"){
     return new Response('Dummy 200 OK');
   }
-  else if (url.pathname === "/healtz" && request.method === "GET"){
+  else if (url.pathname === "/healthz" && request.method === "GET"){
     if (db_ready) {
-     return new Response('Dummy 200 OK');
+      console.log('200')
+      return new Response('Dummy 200 OK');
     } else {
+      console.log('500')
       return new Response(
           null, { status: Status.InternalServerError }
       );

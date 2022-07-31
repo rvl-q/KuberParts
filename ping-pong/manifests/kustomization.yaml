@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- manifests/deployment.yaml
+- deployment.yaml
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/ping-pong
-  newTag: b09ad3ce0b662b20dfe5457be181679058ce9ce1
+  newTag: 109192e8a104faa0ad479ee73ad7a39efbfe1d34

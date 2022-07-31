@@ -2,7 +2,7 @@ name: Release application
 
 on:
   push:
-    branches:
+    branches-ignore:
       - 'main'
     paths:
       - 'ping-pong/app/**'  

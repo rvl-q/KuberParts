@@ -125,6 +125,7 @@ const handleRequest = async (request) => {
     if (db_ready) {
      return new Response('Dummy 200 OK');
     } else {
+      console.log('500')
       return new Response(
           null, { status: Status.InternalServerError }
       );

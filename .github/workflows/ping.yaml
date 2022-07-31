@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'ping-pong/**'  
+      - 'ping-pong/app/**'  
       - '.github/workflows/ping.yaml' #
 
 jobs:
@@ -46,5 +46,5 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: rvlq/ping-pong
-          context: ping-pong
+          context: ping-pong/app
           tags: ${{ github.sha }}

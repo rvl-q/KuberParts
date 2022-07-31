@@ -46,5 +46,5 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: rvlq/ping-pong
-          context: ping-pong/app
+          path: ping-pong/app
           tags: ${{ github.sha }}

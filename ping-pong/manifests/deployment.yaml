@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: ping-pong
-          image: rvlq/ping-pong:df8ebb6fffe25a951ccd8aac77b0998ff67a34a6
+          # image: rvlq/ping-pong:df8ebb6fffe25a951ccd8aac77b0998ff67a34a6
+          image: IMAGE_PLACEHOLDER
           readinessProbe:
             initialDelaySeconds: 10 # Initial delay until the readiness is tested
             periodSeconds: 5 # How often to test

@@ -18,6 +18,12 @@ spec:
       containers:
         - name: ping-pong
           image: rvlq/ping-pong:latest
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+               path: /healthz
+               port: 3541
           # environment
           envFrom:
             - secretRef:

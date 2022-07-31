@@ -121,6 +121,15 @@ const handleRequest = async (request) => {
   else if (url.pathname === "/" && request.method === "GET"){
     return new Response('Dummy 200 OK');
   }
+  else if (url.pathname === "/healtz" && request.method === "GET"){
+    if (db_ready) {
+     return new Response('Dummy 200 OK');
+    } else {
+      return new Response(
+          null, { status: Status.InternalServerError }
+      );
+    }
+  }
   // else {
   //   return new Response('400');
   // }

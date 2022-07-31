@@ -71,7 +71,7 @@ jobs:
     # Commit and push
     - uses: EndBug/add-and-commit@v7
       with:
-        add: 'ping-pong/kustomization.yaml'
+        add: 'ping-pong/manifests/kustomization.yaml'
         message: New version release for ping-pong ${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ secrets.HUBGIT_TOKEN }}

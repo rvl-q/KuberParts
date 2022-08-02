@@ -1,3 +1,0 @@
-[submodule "log-output"]
-	path = log-output
-	url = git@github.com:rvl-q/hashapp.git

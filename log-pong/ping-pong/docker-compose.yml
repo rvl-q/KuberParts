@@ -1,0 +1,16 @@
+version: "3.4"
+
+services:
+  app:
+    env_file:
+      - project.env
+      - .env
+    build: app
+    image: ping-pong
+    restart: "no"
+    # volumes:
+    #   - ./app/:/app
+      # - ./app-cache/:/app-cache
+    ports:
+      # - ${PORT:?err}:${PORT:?err}
+      - 8888:8888

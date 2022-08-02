@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- deployment.yaml
+images:
+- name: IMAGE_PLACEHOLDER
+  newName: rvlq/log-output
+  newTag: d32e6db71c94549b558cc54782ded1336878604c

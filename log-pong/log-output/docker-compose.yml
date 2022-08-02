@@ -1,0 +1,13 @@
+version: "3.4"
+
+services:
+  # logger:
+  #   build: code
+  #   image: hasher
+  #   restart: "no"
+  server:
+    build: app
+    image: log-output
+    restart: "no"
+    ports:
+      - 7777:7777

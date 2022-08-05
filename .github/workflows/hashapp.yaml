@@ -1,0 +1,62 @@
+name: Release application
+
+on:
+  push:
+    branches-ignore:
+      - 'main'
+    paths:
+      - 'log-pong/log-output/app/**'  
+      - '.github/workflows/hashapp.yaml' #
+
+jobs:
+  setup-build-publish:
+    name: Setup, Build, Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # Build and push
+      - name: Publish to Registry
+        uses: docker/build-push-action@v1
+        with:
+          repository: rvlq/log-output
+          path: log-pong/log-output/sapp
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          tags: ${{ github.sha }}
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: setup-build-publish
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Set up kustomize
+    - name: Set up Kustomize
+      uses: imranismail/setup-kustomize@v1
+
+    # Update yamls
+    - name: Update yamls
+      working-directory: manifests
+      run: |-
+        kustomize edit set image IMAGE_PLACEHOLDER=rvlq/log-output:${{ github.sha }}
+    # Commit and push
+    - uses: EndBug/add-and-commit@v7
+      with:
+        add: 'manifests/kustomization.yaml'
+        # add: 'manifests/deployment.yaml'
+        message: New version release for log-output ${{ github.sha }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.HUBGIT_TOKEN }}
+    # action trigger edit

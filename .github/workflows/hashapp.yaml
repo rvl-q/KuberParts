@@ -48,13 +48,13 @@ jobs:
 
     # Update yamls
     - name: Update yamls
-      working-directory: manifests
+      working-directory: log-pong/log-output/manifests
       run: |-
         kustomize edit set image IMAGE_PLACEHOLDER=rvlq/log-output:${{ github.sha }}
     # Commit and push
     - uses: EndBug/add-and-commit@v7
       with:
-        add: 'manifests/kustomization.yaml'
+        add: 'log-pong/log-output/manifests/kustomization.yaml'
         # add: 'manifests/deployment.yaml'
         message: New version release for log-output ${{ github.sha }}
       env:

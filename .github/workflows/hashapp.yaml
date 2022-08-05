@@ -29,9 +29,9 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: rvlq/log-output
-          path: log-pong/log-output/sapp
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          path: log-pong/log-output/app
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
           tags: ${{ github.sha }}
 
   deploy:

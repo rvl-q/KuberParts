@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - 'main'
     paths:
-      - 'ping-pong/app/**'  
+      - 'log-pong/ping-pong/app/**'  
       - '.github/workflows/ping.yaml' #
 
 jobs:
@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: rvlq/ping-pong
-          path: ping-pong/app
+          path: log-pong/ping-pong/app
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: ${{ github.sha }}
@@ -65,14 +65,14 @@ jobs:
 
     # Update yamls
     - name: Update yamls
-      working-directory: ping-pong/manifests
+      working-directory: log-pong/ping-pong/manifests
       run: |-
         kustomize edit set image IMAGE_PLACEHOLDER=rvlq/ping-pong:${{ github.sha }}
     # Commit and push
     - uses: EndBug/add-and-commit@v7
       with:
-        add: 'ping-pong/manifests/kustomization.yaml'
+        add: 'log-pong/ping-pong/manifests/kustomization.yaml'
         message: New version release for ping-pong ${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ secrets.HUBGIT_TOKEN }}
-    # action trigger edit
+    # action trigger edit.

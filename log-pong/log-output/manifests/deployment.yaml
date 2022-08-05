@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-output-dep
+  namespace: exercises
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-output
+  template:
+    metadata:
+      labels:
+        app: log-output
+    spec:
+      containers:
+        - name: log-output
+          image: IMAGE_PLACEHOLDER
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+               path: /healthz
+               port: 7777
+
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          env:
+            # Define the environment variable
+            - name: MESSAGE # Notice that the case is different here
+                            # from the key name in the ConfigMap.
+              valueFrom:
+                configMapKeyRef:
+                  name: log-pong # The ConfigMap this value comes from.
+                  key: message # The key to fetch.
+            - name: PING_PONG_SVC_URL # Notice that the case is different here
+                            # from the key name in the ConfigMap.
+              valueFrom:
+                configMapKeyRef:
+                  name: log-pong # The ConfigMap this value comes from.
+                  key: ping-svc-url # The key to fetch.

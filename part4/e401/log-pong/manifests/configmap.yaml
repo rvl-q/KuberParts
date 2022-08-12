@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-pong
+  namespace: exercises
+data:
+  # property-like keys; each key maps to a simple value
+  message: "Hello"
+  # PING_PONG_SVC_URL
+  # ping-svc-url: "http://ping-pong-svc:80/pongs"
+  ping-svc-url: "http://ping-pong-svc:1234/pongs"

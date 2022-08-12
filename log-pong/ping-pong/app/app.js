@@ -4,6 +4,7 @@ import {deadline} from "https://deno.land/std/async/mod.ts";
 import { DeadlineError } from "https://deno.land/std@0.134.0/async/deadline.ts";
 import { doze } from 'https://deno.land/x/doze/mod.ts';
 // import { INTERNAL_SERVER_ERROR } from "https://deno.land/x/status@0.1.0/mod.ts";
+import { Status } from "https://deno.land/std/http/http_status.ts";//Status.Ok
 
 const PORT = Deno.env.get("PORT");
 const PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
@@ -79,7 +80,7 @@ const handleRequest = async (request) => {
     } else {
       console.log('500')
       return new Response(
-          null, { status: INTERNAL_SERVER_ERROR }
+          null, { status: Status.INTERNAL_SERVER_ERROR }
       );
     }
   }

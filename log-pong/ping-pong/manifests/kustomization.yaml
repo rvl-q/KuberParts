@@ -4,6 +4,8 @@ resources:
 - deployment.yaml
 - service.yaml
 - ingress.yaml
+- pg-statefulset.yaml
+- pg-service.yaml
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/ping-pong

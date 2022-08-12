@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 import { Client } from "https://deno.land/x/postgres@v0.14.3/mod.ts";
+import {deadline} from "https://deno.land/std/async/mod.ts";
 
 const PORT = Deno.env.get("PORT");
 const PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
@@ -15,6 +16,7 @@ const client = new Client({
 });
 
 let db_ready = false;
+let db_present = false;
 
 // // test query, with "manually" created table
 // await client.connect();
@@ -22,7 +24,22 @@ let db_ready = false;
 // await client.end();
 // console.log(result.rows);
 
-await client.connect();
+// await client.connect();
+while (!db_present){
+  try {
+    const p=client.connect(); //Get promise
+    const d=await deadline(p, 10000); //promise ok, or timeout
+    db_present = true;
+  } catch(e) {
+    if(e instanceof DeadlineError)
+        //handle timeout
+        console.log('db connection timeout')
+    else
+        //handle other errors
+        console.log('db connection other error')
+  }
+}
+
 const result0 = await client.queryArray(
   `CREATE TABLE IF NOT EXISTS counters(
     id SERIAL PRIMARY KEY,

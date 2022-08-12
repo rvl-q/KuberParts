@@ -78,9 +78,9 @@ const handleRequest = async (request) => {
       console.log('200')
       return new Response('Dummy 200 OK');
     } else {
-      console.log('500')
+      console.log('500', Status.InternalServerError)
       return new Response(
-          null, { status: Status.INTERNAL_SERVER_ERROR }
+          null, { status: Status.InternalServerError }
       );
     }
   }

@@ -20,6 +20,9 @@ const client = new Client({
 let db_ready = false;
 let db_present = false;
 
+console.log("Server started in port " + PORT);
+serve(handleRequest, { port: parseInt(PORT) });
+
 // // test query, with "manually" created table
 // await client.connect();
 // const result = await client.queryArray("SELECT * FROM names;");
@@ -159,7 +162,4 @@ const handleRequest = async (request) => {
   //   return new Response('400');
   // }
 };
-
-console.log("Server started in port " + PORT);
-serve(handleRequest, { port: parseInt(PORT) });
 

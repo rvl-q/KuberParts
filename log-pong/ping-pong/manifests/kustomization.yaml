@@ -9,4 +9,4 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/ping-pong
-  newTag: f45dd09c106f1fd0915020c21b6a84bf49117b05
+  newTag: d80e9a25e2bb76a8c0a2246384e4102f9fb3d5dd

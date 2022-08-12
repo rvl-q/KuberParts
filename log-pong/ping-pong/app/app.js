@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.120.0/http/server.ts";
 import { Client } from "https://deno.land/x/postgres@v0.14.3/mod.ts";
 import {deadline} from "https://deno.land/std/async/mod.ts";
 import { DeadlineError } from "https://deno.land/std@0.134.0/async/deadline.ts";
+import { doze } from 'https://deno.land/x/doze/mod.ts';
 
 const PORT = Deno.env.get("PORT");
 const PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
@@ -29,15 +30,19 @@ let db_present = false;
 while (!db_present){
   try {
     const p=client.connect(); //Get promise
-    const d=await deadline(p, 10000); //promise ok, or timeout
+    const _d=await deadline(p, 10000); //promise ok, or timeout
     db_present = true;
   } catch(e) {
-    if(e instanceof DeadlineError)
+    if(e instanceof DeadlineError){
         //handle timeout
-        console.log('db connection timeout')
-    else
+        console.log('db connection timeout');
+        await doze(5);
+      }
+    else {
         //handle other errors
         console.log('db connection other error')
+        await doze(5);
+      }
   }
 }
 

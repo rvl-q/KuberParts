@@ -3,6 +3,7 @@ import { Client } from "https://deno.land/x/postgres@v0.14.3/mod.ts";
 import {deadline} from "https://deno.land/std/async/mod.ts";
 import { DeadlineError } from "https://deno.land/std@0.134.0/async/deadline.ts";
 import { doze } from 'https://deno.land/x/doze/mod.ts';
+import { Status } from "https://deno.land/x/status@0.1.0/status.ts";
 
 const PORT = Deno.env.get("PORT");
 const PASSWORD = Deno.env.get("POSTGRES_PASSWORD");

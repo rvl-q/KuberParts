@@ -1,0 +1,54 @@
+rvl@eb: log-pong $ 
+rvl@eb: log-pong $ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+postgres-ss-0                     1/1     Running   0          8m28s
+ping-pong-dep-78bf474445-pwdg2    1/1     Running   0          9m38s
+log-output-dep-85df98b697-k2phj   1/1     Running   0          17m
+rvl@eb: log-pong $ kubectl delete -f manifests/namespace.yaml 
+namespace "exercises" deleted
+rvl@eb: log-pong $ kubectl apply -f manifests/namespace.yaml 
+namespace/exercises created
+rvl@eb: log-pong $ sops -d manifests/secret.enc.yaml | kubectl apply -f -
+secret/pg-secrets created
+rvl@eb: log-pong $ kubectl apply -f manifests/
+configmap/log-pong created
+namespace/exercises unchanged
+error: error validating "manifests/secret.enc.yaml": error validating data: ValidationError(Secret): unknown field "sops" in io.k8s.api.core.v1.Secret; if you choose to ignore these errors, turn validation off with --validate=false
+rvl@eb: log-pong $ kubectl config set-context --current --namespace=exercises
+Context "k3d-k3s-default" modified.
+rvl@eb: log-pong $ kubectl get pods
+No resources found in exercises namespace.
+rvl@eb: log-pong $ kubectl apply -k log-output/manifests/
+service/log-output-svc created
+deployment.apps/log-output-dep created
+ingress.networking.k8s.io/log-output-ingress created
+rvl@eb: log-pong $ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-85df98b697-slvrf   0/1     Running   0          4s
+rvl@eb: log-pong $ kubectl apply -k ping-pong/manifests/
+service/ping-pong-svc created
+service/postgres-svc created
+deployment.apps/ping-pong-dep created
+ingress.networking.k8s.io/ping-pong-ingress created
+rvl@eb: log-pong $ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-85df98b697-slvrf   0/1     Running   0          31s
+ping-pong-dep-78bf474445-4fgmz    0/1     Running   0          4s
+rvl@eb: log-pong $ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-85df98b697-slvrf   0/1     Running   0          49s
+ping-pong-dep-78bf474445-4fgmz    0/1     Running   0          22s
+rvl@eb: log-pong $ kubectl get pods
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-85df98b697-slvrf   0/1     Running   0          2m59s
+ping-pong-dep-78bf474445-4fgmz    0/1     Running   0          2m32s
+rvl@eb: log-pong $ kubectl apply -f ping-pong/manifests/pg-statefulset.yaml 
+statefulset.apps/postgres-ss created
+rvl@eb: log-pong $ kubectl get pods --watch
+NAME                              READY   STATUS    RESTARTS   AGE
+log-output-dep-85df98b697-slvrf   0/1     Running   0          3m52s
+ping-pong-dep-78bf474445-4fgmz    0/1     Running   0          3m25s
+postgres-ss-0                     1/1     Running   0          9s
+ping-pong-dep-78bf474445-4fgmz    1/1     Running   0          3m25s
+log-output-dep-85df98b697-slvrf   1/1     Running   0          3m54s
+^Crvl@eb: log-pong $ 

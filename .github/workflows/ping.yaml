@@ -75,4 +75,4 @@ jobs:
         message: New version release for ping-pong ${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ secrets.HUBGIT_TOKEN }}
-    # action trigger edit
+    # action trigger edit.

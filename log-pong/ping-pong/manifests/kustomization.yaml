@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
 # - pg-statefulset.yaml
+resources:
 - pg-service.yaml
 - deployment.yaml
 - service.yaml
@@ -9,4 +9,4 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/ping-pong
-  newTag: 290fb007f8ee16bd14ad588ba4cfe0a1d984b53e
+  newTag: 59f9b34c989c5347e96eec41760c63cb2ceb27e0

@@ -41,13 +41,13 @@ jobs:
 
     # Update yamls
     - name: Update yamls
-      working-directory: Project/server/manifests
+      working-directory: Project/manifests/server
       run: |-
         kustomize edit set image IMAGE_PLACEHOLDER=rvlq/project:${{ github.sha }}
     # Commit and push
     - uses: EndBug/add-and-commit@v7
       with:
-        add: 'Project/server/manifests/kustomization.yaml'
+        add: 'Project/manifests/server/kustomization.yaml'
         message: New version release for ping-pong ${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ secrets.HUBGIT_TOKEN }}

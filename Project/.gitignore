@@ -3,3 +3,5 @@ server/app-cache/gen/**
 
 *secret.yaml
 key.txt
+
+backup/**

@@ -8,7 +8,7 @@ spec:
   - http:
       paths:
       - path: /todos
-        pathType: Exact
+        pathType: Prefix
         backend:
           service:
             name: proj01-svc

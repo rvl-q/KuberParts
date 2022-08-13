@@ -48,7 +48,7 @@ jobs:
     - uses: EndBug/add-and-commit@v7
       with:
         add: 'Project/manifests/server/kustomization.yaml'
-        message: New version release for ping-pong ${{ github.sha }}
+        message: New version release for project server ${{ github.sha }}
       env:
         GITHUB_TOKEN: ${{ secrets.HUBGIT_TOKEN }}
     # action trigger edit.

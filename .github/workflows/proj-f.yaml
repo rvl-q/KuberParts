@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           repository: rvlq/proj-front
-          path: Project/client/src
+          path: Project/client
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           tags: ${{ github.sha }}

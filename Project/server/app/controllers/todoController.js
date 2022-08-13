@@ -74,6 +74,21 @@ const initTodoTable = async () => {
   // console.log("...Number of rows:", nn);
 };
 
+const dbAlive = async () => {
+  console.log("inner health check");
+
+  let _db_todos = [];
+  const db_response = await executeQuery(
+    `SELECT * FROM
+      todos
+    ;`,
+  );
+
+  _db_todos = db_response.rows;
+  return 200;
+};
+
+
 // const listTodos = async ({ request, response }) => {
 // const listTodos = async ({ response }) => {
 const listTodos = async ({ request }) => {
@@ -151,4 +166,4 @@ const newTodo = async ({ request, response }) => {
 };
 
 // export { listTodos, newTodo, viewTodos, initTodoTable };
-export { initTodoTable, listTodos, newTodo };
+export { initTodoTable, listTodos, newTodo, dbAlive };

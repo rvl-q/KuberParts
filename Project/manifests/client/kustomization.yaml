@@ -7,4 +7,4 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/proj-front
-  newTag: 5bb5c322e6af3a366c3c6a6e940b8580db18a500
+  newTag: e779f8ad76469c7af91f2e6512cde42ba0329c16

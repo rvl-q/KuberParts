@@ -41,7 +41,7 @@ jobs:
 
     # Update yamls
     - name: Update yamls
-      working-directory: Project/manifests/server
+      working-directory: Project/manifests/client
       run: |-
         kustomize edit set image IMAGE_PLACEHOLDER=rvlq/proj-front:${{ github.sha }}
     # Commit and push

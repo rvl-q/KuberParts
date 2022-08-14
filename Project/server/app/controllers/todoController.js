@@ -103,16 +103,10 @@ const initTodoTable = async () => {
   }
 };
 
-const dbAlive = async () => {
+const dbAlive = () => {
   console.log("inner health check");
 
-  try {
-    const _db_response = await executeQuery(
-      `SELECT * FROM
-        todos
-      ;`,
-    );
-  } catch {
+  if (!db_present) {
     console.log('db error...');
     return 500
   }

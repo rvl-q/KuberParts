@@ -38,13 +38,14 @@ const executeQuery = async (query, ...args) => {
 
     await doze(5);
     try{
-      connectionPool = new Pool({
-        hostname: "postgres-svc",
-        database: POSTGRES_DATABASE,
-        user: POSTGRES_USERNAME,
-        password: POSTGRES_PASSWORD,
-        port: 5432,
-      }, CONCURRENT_CONNECTIONS);
+      // connectionPool = new Pool({
+      //   hostname: "postgres-svc",
+      //   database: POSTGRES_DATABASE,
+      //   user: POSTGRES_USERNAME,
+      //   password: POSTGRES_PASSWORD,
+      //   port: 5432,
+      // }, CONCURRENT_CONNECTIONS);
+      console.log('dummy...')
     } catch(e){
       console.log("inner connection error:\n",e);
     }

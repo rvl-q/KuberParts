@@ -22,13 +22,13 @@ spec:
           imagePullPolicy: Always
           image: IMAGE_PLACEHOLDER
           readinessProbe:
-            initialDelaySeconds: 1 # Initial delay until the readiness is tested
+            initialDelaySeconds: 5 # Initial delay until the readiness is tested
             periodSeconds: 5 # How often to test
             httpGet:
                path: /healthz
                port: 9999
           livenessProbe:
-            initialDelaySeconds: 30 # Initial delay until the readiness is tested
+            initialDelaySeconds: 15 # Initial delay until the readiness is tested
             periodSeconds: 5 # How often to test
             httpGet:
                path: /healthz

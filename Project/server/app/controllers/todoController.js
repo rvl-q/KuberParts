@@ -117,10 +117,10 @@ const initTodoTable = async () => {
 };
 
 const dbAlive = () => {
-  console.log("inner health check");
+  console.log("inner health check", db_present);
 
   if (!db_present) {
-    console.log('db error...');
+    console.log('db not present error...');
     initTodoTable();
     return 500
   }

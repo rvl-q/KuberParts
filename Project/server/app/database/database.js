@@ -38,8 +38,8 @@ const executeQuery = async (query, ...args) => {
     //   password: POSTGRES_PASSWORD,
     //   port: 5432,
     // }, CONCURRENT_CONNECTIONS);
-    connectionPool.end()
-    
+    // connectionPool.end()
+    console.log("connection error:\n",e);
     response.error = e;
   } finally {
     if (client) {

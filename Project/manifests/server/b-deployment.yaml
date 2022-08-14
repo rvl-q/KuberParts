@@ -19,7 +19,7 @@ spec:
             claimName: share-claim
       containers:
         - name: proj01
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           image: IMAGE_PLACEHOLDER
           readinessProbe:
             initialDelaySeconds: 5 # Initial delay until the readiness is tested

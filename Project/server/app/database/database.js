@@ -1,4 +1,6 @@
 import { Pool } from "https://deno.land/x/postgres@v0.14.3/mod.ts";
+import { doze } from 'https://deno.land/x/doze/mod.ts';
+
 
 const POSTGRES_USERNAME = Deno.env.get("POSTGRES_USERNAME");
 const POSTGRES_DATABASE = Deno.env.get("POSTGRES_DATABASE");
@@ -6,7 +8,7 @@ const POSTGRES_PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
 
 const CONCURRENT_CONNECTIONS = 2;
 
-const connectionPool = new Pool({
+let connectionPool = new Pool({
   hostname: "postgres-svc",
   database: POSTGRES_DATABASE,
   user: POSTGRES_USERNAME,
@@ -31,16 +33,24 @@ const executeQuery = async (query, ...args) => {
       response.rows = result.rows;
     }
   } catch (e) {
-    // connectionPool = new Pool({
-    //   hostname: "postgres-svc",
-    //   database: POSTGRES_DATABASE,
-    //   user: POSTGRES_USERNAME,
-    //   password: POSTGRES_PASSWORD,
-    //   port: 5432,
-    // }, CONCURRENT_CONNECTIONS);
-    // connectionPool.end()
     console.log("connection error:\n",e);
     response.error = e;
+
+    await doze(5);
+    try{
+      connectionPool = new Pool({
+        hostname: "postgres-svc",
+        database: POSTGRES_DATABASE,
+        user: POSTGRES_USERNAME,
+        password: POSTGRES_PASSWORD,
+        port: 5432,
+      }, CONCURRENT_CONNECTIONS);
+    } catch(e){
+      console.log("inner connection error:\n",e);
+    }
+    // connectionPool.end()
+    console.log("after connection error");
+
   } finally {
     if (client) {
       try {

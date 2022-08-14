@@ -66,13 +66,13 @@ const initTodoTable = async () => {
         ;`,
       );
       if ('error' in db1_response){
-        throw 'db NOT ready!';
+        throw 'db NOT ready 1!';
       }
 
       // console.log("number of rows...", db1_response);
       // { rows: [ { count: 1n } ] }
       const n = Number(db1_response.rows[0].count);
-      // console.log("...Number of rows:", n);
+      console.log("...Number of rows:", n);
 
       // array.forEach((value) => {
       //   console.log(value);
@@ -90,7 +90,7 @@ const initTodoTable = async () => {
         });
       }
       if ('error' in db1_response){
-        throw 'db NOT ready!';
+        throw 'db NOT ready 2!';
       }
 
       db1_response = await executeQuery(
@@ -99,11 +99,14 @@ const initTodoTable = async () => {
         ;`,
       );
       if ('error' in db1_response){
-        throw 'db NOT ready!';
+        throw 'db NOT ready 3!';
       }
 
+      console.log('almost done');
       db_init_in_progress = false;
       db_present = true;
+      console.log('db setup done!');
+    
 
     } catch(e) {
       console.log('error:', e)

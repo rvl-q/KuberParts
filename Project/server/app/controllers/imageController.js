@@ -11,6 +11,7 @@ const MAXAGE = 86400000
 // const MAXAGE = 100000 // for faster debugging
 
 const serveImage = async () => {
+  console.log("serving image...");
   const file = await Deno.stat(IMAGE_PATH);
   if (file.isFile) {
     const file_time = file.mtime;

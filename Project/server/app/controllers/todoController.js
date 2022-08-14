@@ -88,10 +88,11 @@ const initTodoTable = async () => {
       // console.log("...Number of rows:", nn);
 
       db_present = true;
-      
+
     } catch(e) {
       console.log('error:', e)
       doze(5);
+      console.log('error: after doze!')
     }
   }
 };

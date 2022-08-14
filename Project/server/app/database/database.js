@@ -6,7 +6,7 @@ const POSTGRES_PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
 
 const CONCURRENT_CONNECTIONS = 2;
 
-const connectionPool = new Pool({
+let connectionPool = new Pool({
   hostname: "postgres-svc",
   database: POSTGRES_DATABASE,
   user: POSTGRES_USERNAME,
@@ -31,6 +31,14 @@ const executeQuery = async (query, ...args) => {
       response.rows = result.rows;
     }
   } catch (e) {
+    connectionPool = new Pool({
+      hostname: "postgres-svc",
+      database: POSTGRES_DATABASE,
+      user: POSTGRES_USERNAME,
+      password: POSTGRES_PASSWORD,
+      port: 5432,
+    }, CONCURRENT_CONNECTIONS);
+    
     response.error = e;
   } finally {
     if (client) {

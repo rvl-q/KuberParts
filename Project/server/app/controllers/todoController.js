@@ -98,7 +98,7 @@ const initTodoTable = async () => {
     } catch(e) {
       console.log('error:', e)
       await doze(5);
-      console.log('error: after doze!')
+      // console.log('error: after doze!')
     }
   }
 };

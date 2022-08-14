@@ -23,7 +23,7 @@ const root = ({ request, response }) => {
 };
 
 const check = async ({ response }) => {
-  console.log("Health check");
+  // console.log("Health check");
   response.status = await todoController.dbAlive();
   // response.status = 200;
   response.body = "";

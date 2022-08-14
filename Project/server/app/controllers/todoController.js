@@ -113,7 +113,7 @@ const initTodoTable = async () => {
   }
 };
 
-const dbAlive = () => {
+const dbAlive = async () => {
   console.log("inner health check");
 
   if (!db_present) {
@@ -123,14 +123,14 @@ const dbAlive = () => {
   }
 
   try {
-    if ('error' in db1_response){
-      throw 'db NOT ready!';
-    }
     db1_response = await executeQuery(
       `SELECT COUNT(content) FROM
         todos
       ;`,
     );
+    if ('error' in db1_response){
+      throw 'db NOT ready!';
+    }
   } catch(e) {
     db_present = false;
     return 500

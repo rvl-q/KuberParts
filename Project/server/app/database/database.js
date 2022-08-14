@@ -14,6 +14,8 @@ const connectionPool = new Pool({
   port: 5432,
 }, CONCURRENT_CONNECTIONS);
 
+console.log('connection pool:', connectionPool);
+
 const executeQuery = async (query, ...args) => {
   const response = {};
   let client;

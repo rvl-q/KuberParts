@@ -51,7 +51,7 @@ const initTodoTable = async () => {
         );`,
       );
 
-      console.log("db setup response:\n", db1_response);
+      // console.log("db setup response:\n", db1_response);
 
       if ('error' in db1_response){
         throw 'db NOT ready!';

@@ -126,13 +126,13 @@ const dbAlive = async () => {
   }
 
   try {
-    db1_response = await executeQuery(
+    const db1_response = await executeQuery(
       `SELECT COUNT(content) FROM
         todos
       ;`,
     );
     if ('error' in db1_response){
-      throw 'db NOT ready!';
+      throw 'db NOT ready @dbAlive!';
     }
   } catch(e) {
     console.log('healthz err', e);

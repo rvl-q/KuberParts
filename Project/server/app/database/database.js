@@ -23,6 +23,7 @@ const executeQuery = async (query, ...args) => {
   try {
 
     console.log('...try connection pool:', connectionPool);
+    console.log('connectionPool.connect:', connectionPool.connect);
 
     client = await connectionPool.connect();
     const result = await client.queryObject(query, ...args);

@@ -121,7 +121,9 @@ const dbAlive = async () => {
 
   if (!db_present) {
     console.log('db not present error...');
-    initTodoTable();
+    if (!db_init_in_progress){
+      initTodoTable();
+    }
     return 500
   }
 

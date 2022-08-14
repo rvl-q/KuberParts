@@ -21,6 +21,13 @@ spec:
         - name: proj01
           imagePullPolicy: Always
           image: IMAGE_PLACEHOLDER
+          readinessProbe:
+            initialDelaySeconds: 10 # Initial delay until the readiness is tested
+            periodSeconds: 5 # How often to test
+            httpGet:
+               path: /healthz
+               port: 9999
+
           # image: rvlq/project:latest
           # image: rvlq/project:v1.2
           envFrom:

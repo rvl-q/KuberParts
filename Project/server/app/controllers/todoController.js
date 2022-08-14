@@ -77,14 +77,17 @@ const initTodoTable = async () => {
 const dbAlive = async () => {
   console.log("inner health check");
 
-  let _db_todos = [];
-  const db_response = await executeQuery(
-    `SELECT * FROM
-      todos
-    ;`,
-  );
+  try {
+    const _db_response = await executeQuery(
+      `SELECT * FROM
+        todos
+      ;`,
+    );
+  } catch {
+    console.log('db error...');
+    return 500
+  }
 
-  _db_todos = db_response.rows;
   return 200;
 };
 

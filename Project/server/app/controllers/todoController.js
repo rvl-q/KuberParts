@@ -50,7 +50,9 @@ const initTodoTable = async () => {
           content VARCHAR(140)
         );`,
       );
-      // console.log("db setup response:\n", db1_response);
+
+      console.log("db setup response:\n", db1_response);
+      
       db1_response = await executeQuery(
         `SELECT COUNT(content) FROM
           todos

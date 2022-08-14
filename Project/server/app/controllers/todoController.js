@@ -39,8 +39,13 @@ const initial_todos = [
 ];
 
 let db_present = false;
+let db_init_in_progress = false;
 
 const initTodoTable = async () => {
+  if (db_init_in_progress){
+    return;
+  }
+  db_init_in_progress = true;
   while (!db_present){
     try {  
       // let item;
@@ -50,9 +55,7 @@ const initTodoTable = async () => {
           content VARCHAR(140)
         );`,
       );
-
       // console.log("db setup response:\n", db1_response);
-
       if ('error' in db1_response){
         throw 'db NOT ready!';
       }
@@ -62,6 +65,10 @@ const initTodoTable = async () => {
           todos
         ;`,
       );
+      if ('error' in db1_response){
+        throw 'db NOT ready!';
+      }
+
       // console.log("number of rows...", db1_response);
       // { rows: [ { count: 1n } ] }
       const n = Number(db1_response.rows[0].count);
@@ -82,17 +89,20 @@ const initTodoTable = async () => {
           // console.log("response was", db1_response);
         });
       }
+      if ('error' in db1_response){
+        throw 'db NOT ready!';
+      }
 
       db1_response = await executeQuery(
         `SELECT COUNT(content) FROM
           todos
         ;`,
       );
-      // console.log("AFTER!\nnumber of rows...", db1_response);
-      // // { rows: [ { count: 1n } ] }
-      // const nn = Number(db1_response.rows[0].count);
-      // console.log("...Number of rows:", nn);
+      if ('error' in db1_response){
+        throw 'db NOT ready!';
+      }
 
+      db_init_in_progress = false;
       db_present = true;
 
     } catch(e) {
@@ -108,9 +118,23 @@ const dbAlive = () => {
 
   if (!db_present) {
     console.log('db error...');
+    initTodoTable();
     return 500
   }
 
+  try {
+    if ('error' in db1_response){
+      throw 'db NOT ready!';
+    }
+    db1_response = await executeQuery(
+      `SELECT COUNT(content) FROM
+        todos
+      ;`,
+    );
+  } catch(e) {
+    db_present = false;
+    return 500
+  }
   return 200;
 };
 

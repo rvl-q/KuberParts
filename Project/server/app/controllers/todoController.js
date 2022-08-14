@@ -86,11 +86,13 @@ const initTodoTable = async () => {
       // // { rows: [ { count: 1n } ] }
       // const nn = Number(db1_response.rows[0].count);
       // console.log("...Number of rows:", nn);
+
+      db_present = true;
+      
     } catch(e) {
       console.log('error:', e)
       doze(5);
     }
-    db_present = true;
   }
 };
 
@@ -140,7 +142,7 @@ const listTodos = async ({ request }) => {
 
 const newTodo = async ({ request, response }) => {
   const newTodo = {
-    id: 9,
+    id: 999,
     content: "dummy empty todo",
   };
 

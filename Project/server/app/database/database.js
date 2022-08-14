@@ -21,6 +21,9 @@ const executeQuery = async (query, ...args) => {
   let client;
 
   try {
+
+    console.log('...try connection pool:', connectionPool);
+
     client = await connectionPool.connect();
     const result = await client.queryObject(query, ...args);
     if (result.rows) {

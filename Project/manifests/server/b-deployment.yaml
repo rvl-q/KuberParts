@@ -33,6 +33,9 @@ spec:
             httpGet:
                path: /healthz
                port: 9999
+            failureThreshold: 10
+            # Override pod-level terminationGracePeriodSeconds #
+            terminationGracePeriodSeconds: 60
 
           # image: rvlq/project:latest
           # image: rvlq/project:v1.2

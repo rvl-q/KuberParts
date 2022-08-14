@@ -8,7 +8,7 @@ const POSTGRES_PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
 
 const CONCURRENT_CONNECTIONS = 2;
 
-let connectionPool = new Pool({
+const connectionPool = new Pool({
   hostname: "postgres-svc",
   database: POSTGRES_DATABASE,
   user: POSTGRES_USERNAME,

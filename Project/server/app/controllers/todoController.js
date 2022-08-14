@@ -106,7 +106,7 @@ const initTodoTable = async () => {
       db_init_in_progress = false;
       db_present = true;
       console.log('db setup done!');
-    
+  
 
     } catch(e) {
       console.log('error:', e)
@@ -135,6 +135,7 @@ const dbAlive = () => {
       throw 'db NOT ready!';
     }
   } catch(e) {
+    console.log('healthz err', e);
     db_present = false;
     return 500
   }

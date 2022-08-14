@@ -126,7 +126,7 @@ const dbAlive = () => {
   }
 
   try {
-    db1_response = executeQuery(
+    db1_response = await executeQuery(
       `SELECT COUNT(content) FROM
         todos
       ;`,

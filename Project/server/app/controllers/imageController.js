@@ -12,7 +12,7 @@ const MAXAGE = 86400000
 // const MAXAGE = 100000 // for faster debugging
 
 const pathFound = existsSync(IMAGE_PATH)
-console.log('filr present:', pathFound)
+console.log('file present:', pathFound)
 if (!pathFound) {
   await Deno.create(IMAGE_PATH);
 }
@@ -29,7 +29,7 @@ const serveImage = async () => {
     const day_number_file = dayOfYear(file_time);
     const day_number_now = dayOfYear(now);
     // console.log(dn, dnn, dt);
-    if (day_number_file != day_number_now || diff_time > MAXAGE) {
+    if (file.size===0 | day_number_file != day_number_now || diff_time > MAXAGE) {
       // console.log("debug, we are here! Updating image...");
       const fileResponse = await fetch(IMAGE_URL);
       // const fileResponse = await fetch("https://picsum.photos/400");

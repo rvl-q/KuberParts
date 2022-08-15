@@ -208,12 +208,15 @@ const newTodo = async ({ request, response }) => {
       newTodo.content = todoText;
 
       // refactor to params ASAP!
-      await executeQuery(
-        `INSERT INTO todos (content) VALUES ($1);`,
+      const new_id = await executeQuery(
+        `INSERT INTO todos (content) VALUES ($1)
+          SELECT id
+          FROM rows
+          RETURNING id;`,
         todoText,
       );
 
-      // console.log("Updated todos!");
+      console.log("Updated todos! id:", new_id);
       response.body = newTodo;
     } else {
       console.log("Rejected!");

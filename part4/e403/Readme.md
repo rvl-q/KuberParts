@@ -16,7 +16,9 @@ filter1+2
 
 `sum(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"})` -> `{}  2`
 
-`scalar(sum(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"}))` ->
+`scalar(sum(kube_pod_info{namespace="prometheus", created_by_kind="StatefulSet"}))`
+
+->
 `scalar  2`
 
 

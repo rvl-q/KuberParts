@@ -1,0 +1,122 @@
+rvl@eb: e402 $ 
+rvl@eb: e402 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS      AGE
+proj02-dep-6b695b6457-jb6mf   1/1     Running   0             24m
+postgres-ss-0                 1/1     Running   0             24m
+proj01-dep-58bb84444c-pgg7x   1/1     Running   1 (23m ago)   24m
+rvl@eb: e402 $ kubectl delete -f manifests/persistent/pg-statefulset.yaml 
+statefulset.apps "postgres-ss" deleted
+rvl@eb: e402 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS      AGE
+proj02-dep-6b695b6457-jb6mf   1/1     Running   0             25m
+proj01-dep-58bb84444c-pgg7x   1/1     Running   1 (24m ago)   25m
+rvl@eb: e402 $ kubectl delete -k manifests/server/
+service "proj01-svc" deleted
+deployment.apps "proj01-dep" deleted
+ingress.networking.k8s.io "prj-back-ingress" deleted
+rvl@eb: e402 $ kubectl delete -k manifests/client/
+service "proj02-svc" deleted
+deployment.apps "proj02-dep" deleted
+ingress.networking.k8s.io "prj-front-ingress" deleted
+rvl@eb: e402 $ kubectl get pods
+No resources found in Project namespace.
+rvl@eb: e402 $ kubectl apply -k manifests/default/
+namespace/project unchanged
+service/postgres-svc unchanged
+service/proj01-svc created
+service/proj02-svc created
+persistentvolumeclaim/share-claim unchanged
+deployment.apps/proj01-dep created
+deployment.apps/proj02-dep created
+cronjob.batch/daily-todo unchanged
+ingress.networking.k8s.io/prj-back-ingress created
+ingress.networking.k8s.io/prj-front-ingress created
+rvl@eb: e402 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-58bb84444c-qvhbj   0/1     Running   0          12s
+proj02-dep-6b695b6457-9k4b7   1/1     Running   0          12s
+rvl@eb: e402 $ kubectl describe pod proj01-dep-58bb84444c-qvhbj 
+Name:         proj01-dep-58bb84444c-qvhbj
+Namespace:    project
+Priority:     0
+Node:         k3d-k3s-default-server-0/172.28.0.5
+Start Time:   Mon, 15 Aug 2022 21:44:47 +0300
+Labels:       app=proj01
+              pod-template-hash=58bb84444c
+Annotations:  <none>
+Status:       Running
+IP:           10.42.0.152
+IPs:
+  IP:           10.42.0.152
+Controlled By:  ReplicaSet/proj01-dep-58bb84444c
+Containers:
+  proj01:
+    Container ID:   containerd://bd0572e5a5ce8972c6023a0995637a22dd2059ea7f7ac543b0c944402ca50aa2
+    Image:          rvlq/project:3c95d1542d8d3e8c9607e39598f9e7eb36dd5919
+    Image ID:       docker.io/rvlq/project@sha256:85589daac3895f83bc32f3f3105ec2cbfd30bb1ea6f924edbf7e508e6b943d5c
+    Port:           <none>
+    Host Port:      <none>
+    State:          Running
+      Started:      Mon, 15 Aug 2022 21:44:48 +0300
+    Ready:          False
+    Restart Count:  0
+    Limits:
+      cpu:     100m
+      memory:  128Mi
+    Requests:
+      cpu:      100m
+      memory:   128Mi
+    Liveness:   http-get http://:9999/healthz delay=20s timeout=1s period=10s #success=1 #failure=5
+    Readiness:  http-get http://:9999/healthz delay=5s timeout=1s period=10s #success=1 #failure=3
+    Environment Variables from:
+      pg-secrets  Secret  Optional: false
+    Environment:  <none>
+    Mounts:
+      /app/images from shared-share (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-lqz9f (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  shared-share:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  share-claim
+    ReadOnly:   false
+  kube-api-access-lqz9f:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Guaranteed
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age               From               Message
+  ----     ------     ----              ----               -------
+  Normal   Scheduled  28s               default-scheduler  Successfully assigned project/proj01-dep-58bb84444c-qvhbj to k3d-k3s-default-server-0
+  Normal   Pulled     27s               kubelet            Container image "rvlq/project:3c95d1542d8d3e8c9607e39598f9e7eb36dd5919" already present on machine
+  Normal   Created    27s               kubelet            Created container proj01
+  Normal   Started    27s               kubelet            Started container proj01
+  Warning  Unhealthy  8s (x2 over 18s)  kubelet            Readiness probe failed: HTTP probe failed with statuscode: 500
+rvl@eb: e402 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-58bb84444c-qvhbj   0/1     Running   0          46s
+proj02-dep-6b695b6457-9k4b7   1/1     Running   0          46s
+rvl@eb: e402 $ kubectl apply -f manifests/persistent/pg-statefulset.yaml 
+statefulset.apps/postgres-ss created
+rvl@eb: e402 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+proj01-dep-58bb84444c-qvhbj   0/1     Running   0          70s
+proj02-dep-6b695b6457-9k4b7   1/1     Running   0          70s
+postgres-ss-0                 1/1     Running   0          5s
+rvl@eb: e402 $ kubectl get pods
+NAME                          READY   STATUS    RESTARTS      AGE
+proj02-dep-6b695b6457-9k4b7   1/1     Running   0             99s
+postgres-ss-0                 1/1     Running   0             34s
+proj01-dep-58bb84444c-qvhbj   1/1     Running   1 (29s ago)   99s
+rvl@eb: e402 $ 

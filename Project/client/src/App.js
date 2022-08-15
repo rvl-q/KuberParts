@@ -43,6 +43,8 @@ const App = () => {
       // date: new Date().toISOString(),
       // important: Math.random() > 0.5,
       // id: (todos && (todos.length + 1)) || 1,
+      done: false,
+      id: 0,
     }
 
     console.log('todo object:', todoObject)
@@ -64,7 +66,7 @@ const App = () => {
   return (
     <div>
       <h1>Todos!</h1>
-        <h2>Exercise 2.10: Project v1.3</h2>
+        <h2>Exercise 4.02: Project v1.7</h2>
           <img className='App-displayed'  src={TODO_IMAGE_URL} alt='daily pic'/>
           <p></p>
           <form onSubmit={addTodo}>

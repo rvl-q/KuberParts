@@ -4,6 +4,7 @@ on:
   push:
     branches-ignore:
       - 'main'
+      - 'part4'
     paths:
       - 'Project/**'  
       - '.github/workflows/branch.yaml'  

@@ -16,10 +16,17 @@ const IMAGE_PATH = "./images/image.jpg";
 //   views: `${Deno.cwd()}/views/`,
 // });
 
-const root = async ({ request, response }) => {
+const root = ({ request, response }) => {
   console.log("Method", request.method);
   // response.body = await todoController.viewTodos({ request });
   response.body = "OK";
+};
+
+const check = async ({ response }) => {
+  console.log("Health check");
+  response.status = await todoController.dbAlive();
+  // response.status = 200;
+  response.body = "";
 };
 
 const getTodos = async ({ request, response }) => {
@@ -50,6 +57,7 @@ router.get("/", root);
 router.get("/images/image.jpg", getImage);
 router.get("/todos", getTodos);
 router.post("/todos", newTodo);
+router.get("/healthz", check);
 
 // for local testing before they share the same port
 app.use(oakCors());

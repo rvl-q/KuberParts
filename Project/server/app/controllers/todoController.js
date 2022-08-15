@@ -1,5 +1,7 @@
 // import { renderFile } from "https://deno.land/x/eta@v1.12.3/mod.ts";
 // import * as requestUtils from "../utils/requestUtils.js";
+import { doze } from 'https://deno.land/x/doze/mod.ts';
+
 
 import { executeQuery } from "../database/database.js";
 
@@ -12,67 +14,142 @@ const MAX_LENGTH = 140;
 const initial_todos = [
   {
     id: 1,
-    content: "Exercise 3.03: Project v1.4",
+    content: "Exercise 4.02: Project v1.7",
   },
   {
     id: 2,
-    content: "Exercise 3.04: Project v1.41",
+    content: "Exercise 4.04: Project v1.8",
   },
   {
     id: 3,
-    content: "Exercise 3.05: Project v1.42",
+    content: "Exercise 4.05: Project v1.9",
   },
   {
     id: 4,
-    content: "Exercise 3.03: Project v1.4 pers. volume!",
+    content: "Exercise 4.06: Project v2.0",
+  },
+  {
+    id: 5,
+    content: "Exercise 4.08: Project v2.1",
+  },
+  {
+    id: 6,
+    content: "Part 5",
   },
 ];
 
+let db_present = false;
+let db_init_in_progress = false;
+
 const initTodoTable = async () => {
-  // let item;
-  let db1_response = await executeQuery(
-    `CREATE TABLE IF NOT EXISTS todos(
-      id SERIAL PRIMARY KEY,
-      content VARCHAR(140)
-    );`,
-  );
-  // console.log("db setup response:\n", db1_response);
-  db1_response = await executeQuery(
-    `SELECT COUNT(content) FROM
-      todos
-    ;`,
-  );
-  // console.log("number of rows...", db1_response);
-  // { rows: [ { count: 1n } ] }
-  const n = Number(db1_response.rows[0].count);
-  // console.log("...Number of rows:", n);
-
-  // array.forEach((value) => {
-  //   console.log(value);
-  // });
-
-  if (n < 1) {
-    initial_todos.forEach(async (item) => {
-      // console.log("item is:", item);
-      // console.log(item.id, " , ", item.content);
-      // Adding a few initial Todos, if db empty
-      db1_response = await executeQuery(
-        `INSERT INTO todos (content) VALUES ('${item.content}');`,
+  if (db_init_in_progress){
+    return;
+  }
+  db_init_in_progress = true;
+  while (!db_present){
+    try {  
+      // let item;
+      let db1_response = await executeQuery(
+        `CREATE TABLE IF NOT EXISTS todos(
+          id SERIAL PRIMARY KEY,
+          content VARCHAR(140)
+        );`,
       );
-      // console.log("response was", db1_response);
-    });
+      console.log("db setup response:\n", db1_response);
+
+      db1_response = await executeQuery(
+        `ALTER TABLE todos ADD COLUMN IF NOT EXISTS
+          "done" BOOLEAN NOT NULL DEFAULT FALSE;`,
+      );
+      console.log("db add new column response:\n", db1_response);
+      // if ('error' in db1_response){
+      //   throw 'db NOT ready!';
+      // }
+      
+      db1_response = await executeQuery(
+        `SELECT COUNT(content) FROM
+          todos
+        ;`,
+      );
+      if ('error' in db1_response){
+        throw 'db NOT ready 1!';
+      }
+
+      // console.log("number of rows...", db1_response);
+      // { rows: [ { count: 1n } ] }
+      const n = Number(db1_response.rows[0].count);
+      console.log("...Number of rows:", n);
+
+      // array.forEach((value) => {
+      //   console.log(value);
+      // });
+
+      if (n < 1) {
+        initial_todos.forEach(async (item) => {
+          // console.log("item is:", item);
+          // console.log(item.id, " , ", item.content);
+          // Adding a few initial Todos, if db empty
+          db1_response = await executeQuery(
+            `INSERT INTO todos (content) VALUES ('${item.content}');`,
+          );
+          // console.log("response was", db1_response);
+        });
+      }
+      if ('error' in db1_response){
+        throw 'db NOT ready 2!';
+      }
+
+      db1_response = await executeQuery(
+        `SELECT COUNT(content) FROM
+          todos
+        ;`,
+      );
+      if ('error' in db1_response){
+        throw 'db NOT ready 3!';
+      }
+
+      console.log('almost done');
+      db_init_in_progress = false;
+      db_present = true;
+      console.log('db setup done!');
+  
+
+    } catch(e) {
+      console.log('error:', e)
+      await doze(5);
+      // console.log('error: after doze!')
+    }
+  }
+};
+
+const dbAlive = async () => {
+  console.log("inner health check", db_present);
+
+  if (!db_present) {
+    console.log('db not present error...');
+    if (!db_init_in_progress){
+      initTodoTable();
+    }
+    return 500
   }
 
-  db1_response = await executeQuery(
-    `SELECT COUNT(content) FROM
-      todos
-    ;`,
-  );
-  // console.log("AFTER!\nnumber of rows...", db1_response);
-  // // { rows: [ { count: 1n } ] }
-  // const nn = Number(db1_response.rows[0].count);
-  // console.log("...Number of rows:", nn);
+  try {
+    const db1_response = await executeQuery(
+      `SELECT COUNT(content) FROM
+        todos
+      ;`,
+    );
+    if ('error' in db1_response){
+      throw 'db NOT ready @dbAlive!';
+    }
+  } catch(e) {
+    console.log('healthz err', e);
+    db_present = false;
+    return 500
+  }
+  return 200;
 };
+
 
 // const listTodos = async ({ request, response }) => {
 // const listTodos = async ({ response }) => {
@@ -102,7 +179,8 @@ const listTodos = async ({ request }) => {
 
 const newTodo = async ({ request, response }) => {
   const newTodo = {
-    id: 9,
+    id: 999,
+    done: false,
     content: "dummy empty todo",
   };
 
@@ -131,12 +209,15 @@ const newTodo = async ({ request, response }) => {
       newTodo.content = todoText;
 
       // refactor to params ASAP!
-      await executeQuery(
-        `INSERT INTO todos (content) VALUES ($1);`,
+      const new_id = await executeQuery(
+        `INSERT INTO todos (content) VALUES ($1)
+          RETURNING id;`,
         todoText,
       );
-
-      // console.log("Updated todos!");
+      
+      const id = new_id.rows[0].id;
+      console.log("Updated todos! id:", id);
+      newTodo.id = id;
       response.body = newTodo;
     } else {
       console.log("Rejected!");
@@ -151,4 +232,4 @@ const newTodo = async ({ request, response }) => {
 };
 
 // export { listTodos, newTodo, viewTodos, initTodoTable };
-export { initTodoTable, listTodos, newTodo };
+export { initTodoTable, listTodos, newTodo, dbAlive };

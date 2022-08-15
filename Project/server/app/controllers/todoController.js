@@ -180,6 +180,7 @@ const listTodos = async ({ request }) => {
 const newTodo = async ({ request, response }) => {
   const newTodo = {
     id: 999,
+    done: false,
     content: "dummy empty todo",
   };
 

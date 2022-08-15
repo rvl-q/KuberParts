@@ -12,7 +12,10 @@ const MAXAGE = 86400000
 // const MAXAGE = 100000 // for faster debugging
 
 const pathFound = existsSync(IMAGE_PATH)
-console.log(pathFound)
+console.log('filr present:', pathFound)
+if (!pathFound) {
+  await Deno.create(IMAGE_PATH);
+}
 
 const serveImage = async () => {
   console.log("serving image...");

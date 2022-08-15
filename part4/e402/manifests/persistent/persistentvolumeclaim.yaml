@@ -4,7 +4,7 @@ metadata:
   name: share-claim
   namespace: project
 spec:
-  storageClassName: man-proj
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:

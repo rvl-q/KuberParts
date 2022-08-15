@@ -1,5 +1,6 @@
 import { dayOfYear } from "https://deno.land/std@0.144.0/datetime/mod.ts";
 import { writableStreamFromWriter } from "https://deno.land/std@0.144.0/streams/mod.ts";
+import {existsSync} from "https://deno.land/std/fs/mod.ts";
 
 // const responseDetails = {
 //   headers: { "Content-Type": "image/jpg" },
@@ -10,10 +11,15 @@ const IMAGE_PATH = "./images/image.jpg";
 const MAXAGE = 86400000
 // const MAXAGE = 100000 // for faster debugging
 
+const pathFound = existsSync(IMAGE_PATH)
+console.log(pathFound)
+
 const serveImage = async () => {
   console.log("serving image...");
   const file = await Deno.stat(IMAGE_PATH);
+  console.log("...serving image..2");
   if (file.isFile) {
+    console.log("...serving image..3");
     const file_time = file.mtime;
     const now = new Date();
     const diff_time = now - file_time;

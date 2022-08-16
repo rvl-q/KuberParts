@@ -89,7 +89,7 @@ const App = () => {
         } />
         <Route path="/healthz" element={<h1>Exercise 4.02: Project v1.7 healthz test</h1>} />
     </Routes>
-  )
+  ) // test
 }
 
 export default App

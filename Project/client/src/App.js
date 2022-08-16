@@ -7,6 +7,8 @@ import './App.css';
 
 import axios from 'axios'
 
+import { Routes, Route } from 'react-router-dom'
+
 const App = () => {
 
   // const TODO_BACKEND_URL = "http://localhost:8081/todos";
@@ -64,24 +66,29 @@ const App = () => {
  
   // http://localhost:8081/images/image.jpg
   return (
-    <div>
-      <h1>Todos!</h1>
-        <h2>Exercise 4.02: Project v1.7</h2>
-          <img className='App-displayed'  src={TODO_IMAGE_URL} alt='daily pic'/>
-          <p></p>
-          <form onSubmit={addTodo}>
-            <input
-              value={newTodo}
-              onChange={handleTodoChange}
-            />
-            <button type="submit">Create TODO!</button>
-          </form>
-          <ul>
-            {todos.map(todo => 
-              <Todo key={todo.id} todo={todo} />
-            )}
-          </ul>
-    </div>
+    <Routes>
+        <Route path="/" element={
+        <div>
+          <h1>Todos!</h1>
+            <h2>Exercise 4.02: Project v1.7</h2>
+              <img className='App-displayed'  src={TODO_IMAGE_URL} alt='daily pic'/>
+              <p></p>
+              <form onSubmit={addTodo}>
+                <input
+                  value={newTodo}
+                  onChange={handleTodoChange}
+                />
+                <button type="submit">Create TODO!</button>
+              </form>
+              <ul>
+                {todos.map(todo => 
+                  <Todo key={todo.id} todo={todo} />
+                )}
+              </ul>
+        </div>
+        } />
+        <Route path="/healthz" element={<h1>Exercise 4.02: Project v1.7 healthz test</h1>} />
+    </Routes>
   )
 }
 

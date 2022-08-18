@@ -2,10 +2,6 @@ import { dayOfYear } from "https://deno.land/std@0.144.0/datetime/mod.ts";
 import { writableStreamFromWriter } from "https://deno.land/std@0.144.0/streams/mod.ts";
 import {existsSync} from "https://deno.land/std/fs/mod.ts";
 
-// const responseDetails = {
-//   headers: { "Content-Type": "image/jpg" },
-// };
-
 const IMAGE_URL = "https://picsum.photos/800";
 const IMAGE_PATH = "./images/image.jpg";
 const MAXAGE = 86400000
@@ -56,9 +52,6 @@ const serveImage = async () => {
       await fileResponse.body.pipeTo(writableStream);
     }
   }
-
-  // const img = await Deno.readFile(IMAGE_PATH);
-  // return new Response(img, responseDetails);
 };
 
 export { serveImage };

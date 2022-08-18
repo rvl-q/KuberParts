@@ -9,3 +9,7 @@
   width: 400px;
   height: 400px;
 }
+
+.App-todolist {
+  text-align: left;
+}

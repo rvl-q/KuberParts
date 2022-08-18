@@ -1,11 +1,11 @@
-name: Release application
+name: Release Project front
 
 on:
   push:
     branches-ignore:
       - 'main'
     paths:
-      - 'Project/client/src/**'  
+      - 'Project/client/**'  
       - '.github/workflows/proj-f.yaml' #
 
 jobs:

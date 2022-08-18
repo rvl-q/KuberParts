@@ -5,7 +5,6 @@ import { doze } from 'https://deno.land/x/doze/mod.ts';
 const POSTGRES_USERNAME = Deno.env.get("POSTGRES_USERNAME");
 const POSTGRES_DATABASE = Deno.env.get("POSTGRES_DATABASE");
 const POSTGRES_PASSWORD = Deno.env.get("POSTGRES_PASSWORD");
-
 const CONCURRENT_CONNECTIONS = 2;
 
 const connectionPool = new Pool({

@@ -1,0 +1,1417 @@
+rvl@eb: Project $ 
+rvl@eb: Project $ git pull
+remote: Enumerating objects: 12, done.
+remote: Counting objects: 100% (12/12), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 12 (delta 11), reused 11 (delta 10), pack-reused 0
+Unpacking objects: 100% (12/12), 897 bytes | 112.00 KiB/s, done.
+From github.com:rvl-q/KuberParts
+   bab5a8d..c46ab36  part4      -> origin/part4
+Updating bab5a8d..c46ab36
+Fast-forward
+ Project/manifests/client/kustomization.yaml | 2 +-
+ Project/manifests/server/kustomization.yaml | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d18h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             103m
+proj02-dep-cd996b9f6-pqbk5     1/1     Running     0             97m
+proj02-dep-cd996b9f6-7tvkx     1/1     Running     0             97m
+proj02-dep-cd996b9f6-gcpd7     1/1     Running     0             97m
+proj02-dep-cd996b9f6-ljdtp     1/1     Running     0             97m
+proj01-dep-745f85cffc-cl9ff    1/1     Running     0             63m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             63m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             61m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             61m
+rvl@eb: Project $ kubectl apply -k manifests/default/
+namespace/project unchanged
+service/postgres-svc unchanged
+service/proj01-svc unchanged
+service/proj02-svc unchanged
+persistentvolumeclaim/share-claim unchanged
+statefulset.apps/postgres-ss configured
+cronjob.batch/daily-todo unchanged
+analysistemplate.argoproj.io/cpu-rate unchanged
+rollout.argoproj.io/proj01-dep configured
+rollout.argoproj.io/proj02-dep configured
+ingress.networking.k8s.io/prj-back-ingress unchanged
+ingress.networking.k8s.io/prj-front-ingress unchanged
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d18h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             103m
+proj02-dep-cd996b9f6-pqbk5     1/1     Running     0             97m
+proj02-dep-cd996b9f6-7tvkx     1/1     Running     0             97m
+proj02-dep-cd996b9f6-ljdtp     1/1     Running     0             97m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             63m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             61m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             61m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             11s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             11s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d18h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             104m
+proj02-dep-cd996b9f6-7tvkx     1/1     Running     0             98m
+proj02-dep-cd996b9f6-ljdtp     1/1     Running     0             98m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             64m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             62m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             62m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             49s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             49s
+proj02-dep-7d6f89f4cb-vgrb6    0/1     Running     0             9s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d18h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             105m
+proj02-dep-cd996b9f6-7tvkx     1/1     Running     0             99m
+proj02-dep-cd996b9f6-ljdtp     1/1     Running     0             99m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             65m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             62m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             62m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             92s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             92s
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             52s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             105m
+proj02-dep-cd996b9f6-7tvkx     1/1     Running     0             99m
+proj02-dep-cd996b9f6-ljdtp     1/1     Running     0             99m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             65m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             63m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             63m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             2m9s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             2m9s
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             89s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             107m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             67m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             65m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             65m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             3m56s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             3m56s
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             3m16s
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             36s
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             36s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             108m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             68m
+proj01-dep-745f85cffc-jfg47    1/1     Running     0             66m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             66m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             4m40s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             4m40s
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             4m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             80s
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             80s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             109m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             69m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             66m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             5m14s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             5m14s
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             4m34s
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             114s
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             114s
+proj01-dep-7c8ff8f767-mhbt8    0/1     Running     0             4s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (43h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             109m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             69m
+proj01-dep-745f85cffc-7qj25    1/1     Running     0             67m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             6m11s
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             6m11s
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             5m31s
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             2m51s
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             2m51s
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             61s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             114m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             74m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             11m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             11m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             10m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             7m44s
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             7m44s
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             5m54s
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             44s
+rvl@eb: Project $ kubectl describe rollouts
+Name:         proj02-dep
+Namespace:    project
+Labels:       <none>
+Annotations:  rollout.argoproj.io/revision: 2
+API Version:  argoproj.io/v1alpha1
+Kind:         Rollout
+Metadata:
+  Creation Timestamp:  2022-08-18T12:06:14Z
+  Generation:          2
+  Managed Fields:
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:rollout.argoproj.io/revision:
+    Manager:      Go-http-client
+    Operation:    Update
+    Time:         2022-08-18T12:06:14Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:replicas:
+        f:selector:
+          .:
+          f:matchLabels:
+            .:
+            f:app:
+        f:strategy:
+          .:
+          f:canary:
+            .:
+            f:steps:
+        f:template:
+          .:
+          f:metadata:
+            .:
+            f:labels:
+              .:
+              f:app:
+          f:spec:
+            .:
+            f:containers:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-08-18T12:06:14Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:HPAReplicas:
+        f:availableReplicas:
+        f:blueGreen:
+        f:canary:
+        f:conditions:
+        f:currentPodHash:
+        f:currentStepHash:
+        f:currentStepIndex:
+        f:observedGeneration:
+        f:phase:
+        f:readyReplicas:
+        f:replicas:
+        f:selector:
+        f:stableRS:
+        f:updatedReplicas:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-08-18T13:47:17Z
+  Resource Version:  1288777
+  UID:               df3656dd-97d3-4a22-87a9-f08c7bf757af
+Spec:
+  Replicas:  4
+  Selector:
+    Match Labels:
+      App:  proj02
+  Strategy:
+    Canary:
+      Steps:
+        Set Weight:  25
+        Pause:
+          Duration:  30s
+        Set Weight:  50
+        Pause:
+          Duration:  30s
+        Analysis:
+          Templates:
+            Template Name:  cpu-rate
+  Template:
+    Metadata:
+      Labels:
+        App:  proj02
+    Spec:
+      Containers:
+        Image:              rvlq/proj-front:bab5a8d9d540610334d76ed5f98e4a88cc7997c4
+        Image Pull Policy:  Always
+        Name:               proj02
+        Readiness Probe:
+          Http Get:
+            Path:                 /
+            Port:                 80
+          Initial Delay Seconds:  5
+          Period Seconds:         10
+        Resources:
+          Limits:
+            Cpu:     500m
+            Memory:  256Mi
+Status:
+  HPA Replicas:        4
+  Available Replicas:  4
+  Blue Green:
+  Canary:
+  Conditions:
+    Last Transition Time:  2022-08-18T13:45:07Z
+    Last Update Time:      2022-08-18T13:45:07Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                False
+    Type:                  Paused
+    Last Transition Time:  2022-08-18T13:47:17Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               Rollout has minimum availability
+    Reason:                AvailableReason
+    Status:                True
+    Type:                  Available
+    Last Transition Time:  2022-08-18T13:47:17Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               RolloutCompleted
+    Reason:                RolloutCompleted
+    Status:                True
+    Type:                  Completed
+    Last Transition Time:  2022-08-18T13:45:07Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               ReplicaSet "proj02-dep-7d6f89f4cb" has successfully progressed.
+    Reason:                NewReplicaSetAvailable
+    Status:                True
+    Type:                  Progressing
+  Current Pod Hash:        7d6f89f4cb
+  Current Step Hash:       7df9c5b8b4
+  Current Step Index:      5
+  Observed Generation:     2
+  Phase:                   Healthy
+  Ready Replicas:          4
+  Replicas:                4
+  Selector:                app=proj02
+  Stable RS:               7d6f89f4cb
+  Updated Replicas:        4
+Events:
+  Type    Reason                 Age                From                 Message
+  ----    ------                 ----               ----                 -------
+  Normal  RolloutUpdated         11m                rollouts-controller  Rollout updated to revision 2
+  Normal  NewReplicaSetCreated   11m                rollouts-controller  Created ReplicaSet proj02-dep-7d6f89f4cb (revision 2)
+  Normal  ScalingReplicaSet      11m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 4 to 3
+  Normal  ScalingReplicaSet      11m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 0 to 1
+  Normal  RolloutStepCompleted   11m                rollouts-controller  Rollout step 1/5 completed (setWeight: 25)
+  Normal  RolloutStepCompleted   10m                rollouts-controller  Rollout step 2/5 completed (pause: 30s)
+  Normal  ScalingReplicaSet      10m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 3 to 2
+  Normal  ScalingReplicaSet      10m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 1 to 2
+  Normal  RolloutStepCompleted   10m                rollouts-controller  Rollout step 3/5 completed (setWeight: 50)
+  Normal  RolloutPaused          10m (x2 over 11m)  rollouts-controller  Rollout is paused (CanaryPauseStep)
+  Normal  RolloutStepCompleted   10m                rollouts-controller  Rollout step 4/5 completed (pause: 30s)
+  Normal  RolloutResumed         10m (x2 over 10m)  rollouts-controller  Rollout is resumed
+  Normal  AnalysisRunRunning     10m                rollouts-controller  Step Analysis Run 'proj02-dep-7d6f89f4cb-2-4' Status New: 'Running' Previous: ''
+  Normal  AnalysisRunSuccessful  8m11s              rollouts-controller  Step Analysis Run 'proj02-dep-7d6f89f4cb-2-4' Status New: 'Successful' Previous: 'Running'
+  Normal  RolloutStepCompleted   8m11s              rollouts-controller  Rollout step 5/5 completed (analysis)
+  Normal  ScalingReplicaSet      8m11s              rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 2 to 1
+  Normal  ScalingReplicaSet      8m11s              rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 2 to 4
+  Normal  ScalingReplicaSet      8m1s               rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 1 to 0
+  Normal  RolloutCompleted       8m1s               rollouts-controller  Rollout completed update to revision 2 (7d6f89f4cb): Completed all 5 canary steps
+
+
+Name:         proj01-dep
+Namespace:    project
+Labels:       <none>
+Annotations:  rollout.argoproj.io/revision: 4
+API Version:  argoproj.io/v1alpha1
+Kind:         Rollout
+Metadata:
+  Creation Timestamp:  2022-08-18T11:36:32Z
+  Generation:          5
+  Managed Fields:
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:rollout.argoproj.io/revision:
+    Manager:      Go-http-client
+    Operation:    Update
+    Time:         2022-08-18T11:40:15Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:replicas:
+        f:selector:
+          .:
+          f:matchLabels:
+            .:
+            f:app:
+        f:strategy:
+          .:
+          f:canary:
+            .:
+            f:steps:
+        f:template:
+          .:
+          f:metadata:
+            .:
+            f:labels:
+              .:
+              f:app:
+          f:spec:
+            .:
+            f:containers:
+            f:volumes:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-08-18T11:40:15Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:HPAReplicas:
+        f:availableReplicas:
+        f:blueGreen:
+        f:canary:
+        f:conditions:
+        f:controllerPause:
+        f:currentPodHash:
+        f:currentStepHash:
+        f:currentStepIndex:
+        f:message:
+        f:observedGeneration:
+        f:pauseConditions:
+        f:phase:
+        f:readyReplicas:
+        f:replicas:
+        f:selector:
+        f:stableRS:
+        f:updatedReplicas:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-08-18T13:54:17Z
+  Resource Version:  1289255
+  UID:               379b830b-6f63-4fec-b985-616b8ab6b7c8
+Spec:
+  Replicas:  4
+  Selector:
+    Match Labels:
+      App:  proj01
+  Strategy:
+    Canary:
+      Steps:
+        Set Weight:  25
+        Pause:
+          Duration:  5m
+        Set Weight:  50
+        Pause:
+          Duration:  5m
+        Set Weight:  75
+        Pause:
+          Duration:  5m
+        Analysis:
+          Templates:
+            Template Name:  cpu-rate
+  Template:
+    Metadata:
+      Labels:
+        App:  proj01
+    Spec:
+      Containers:
+        Env From:
+          Secret Ref:
+            Name:           pg-secrets
+        Image:              rvlq/project:bab5a8d9d540610334d76ed5f98e4a88cc7997c4
+        Image Pull Policy:  IfNotPresent
+        Liveness Probe:
+          Failure Threshold:  5
+          Http Get:
+            Path:                            /healthz
+            Port:                            9999
+          Initial Delay Seconds:             20
+          Period Seconds:                    10
+          Termination Grace Period Seconds:  60
+        Name:                                proj01
+        Readiness Probe:
+          Http Get:
+            Path:                 /healthz
+            Port:                 9999
+          Initial Delay Seconds:  5
+          Period Seconds:         10
+        Resources:
+          Limits:
+            Cpu:     100m
+            Memory:  128Mi
+          Requests:
+            Cpu:     20m
+            Memory:  64Mi
+        Volume Mounts:
+          Mount Path:  /app/images
+          Name:        shared-share
+      Volumes:
+        Name:  shared-share
+        Persistent Volume Claim:
+          Claim Name:  share-claim
+Status:
+  HPA Replicas:        4
+  Available Replicas:  4
+  Blue Green:
+  Canary:
+  Conditions:
+    Last Transition Time:  2022-08-18T13:43:47Z
+    Last Update Time:      2022-08-18T13:43:47Z
+    Message:               RolloutCompleted
+    Reason:                RolloutCompleted
+    Status:                False
+    Type:                  Completed
+    Last Transition Time:  2022-08-18T13:54:17Z
+    Last Update Time:      2022-08-18T13:54:17Z
+    Message:               Rollout has minimum availability
+    Reason:                AvailableReason
+    Status:                True
+    Type:                  Available
+    Last Transition Time:  2022-08-18T13:54:17Z
+    Last Update Time:      2022-08-18T13:54:17Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                Unknown
+    Type:                  Progressing
+    Last Transition Time:  2022-08-18T13:54:17Z
+    Last Update Time:      2022-08-18T13:54:17Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                True
+    Type:                  Paused
+  Controller Pause:        true
+  Current Pod Hash:        7c8ff8f767
+  Current Step Hash:       86fdf7c6
+  Current Step Index:      5
+  Message:                 CanaryPauseStep
+  Observed Generation:     5
+  Pause Conditions:
+    Reason:          CanaryPauseStep
+    Start Time:      2022-08-18T13:54:17Z
+  Phase:             Paused
+  Ready Replicas:    4
+  Replicas:          4
+  Selector:          app=proj01
+  Stable RS:         745f85cffc
+  Updated Replicas:  3
+Events:
+  Type    Reason                Age                  From                 Message
+  ----    ------                ----                 ----                 -------
+  Normal  RolloutUpdated        11m                  rollouts-controller  Rollout updated to revision 4
+  Normal  NewReplicaSetCreated  11m                  rollouts-controller  Created ReplicaSet proj01-dep-7c8ff8f767 (revision 4)
+  Normal  ScalingReplicaSet     11m                  rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 4 to 3
+  Normal  ScalingReplicaSet     11m                  rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 0 to 1
+  Normal  RolloutStepCompleted  11m                  rollouts-controller  Rollout step 1/7 completed (setWeight: 25)
+  Normal  RolloutStepCompleted  6m21s                rollouts-controller  Rollout step 2/7 completed (pause: 5m)
+  Normal  ScalingReplicaSet     6m21s                rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 3 to 2
+  Normal  ScalingReplicaSet     6m21s                rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 1 to 2
+  Normal  RolloutStepCompleted  6m11s                rollouts-controller  Rollout step 3/7 completed (setWeight: 50)
+  Normal  RolloutStepCompleted  71s                  rollouts-controller  Rollout step 4/7 completed (pause: 5m)
+  Normal  RolloutResumed        71s (x2 over 6m21s)  rollouts-controller  Rollout is resumed
+  Normal  ScalingReplicaSet     71s                  rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 2 to 1
+  Normal  ScalingReplicaSet     71s                  rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 2 to 3
+  Normal  RolloutStepCompleted  61s                  rollouts-controller  Rollout step 5/7 completed (setWeight: 75)
+  Normal  RolloutPaused         61s (x3 over 11m)    rollouts-controller  Rollout is paused (CanaryPauseStep)
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             25h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             117m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             77m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             13m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             13m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             12m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             9m53s
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             9m53s
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             8m3s
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             2m53s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             26h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             120m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             80m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             16m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             16m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             15m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             12m
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             12m
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             11m
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             5m54s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             26h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             120m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             80m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             16m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             16m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             15m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             13m
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             13m
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             11m
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             6m12s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             26h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             120m
+proj01-dep-745f85cffc-cgnvd    1/1     Running     0             80m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             17m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             17m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             16m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             13m
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             13m
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             11m
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             6m45s
+rvl@eb: Project $ kubectl describe rollouts
+Name:         proj02-dep
+Namespace:    project
+Labels:       <none>
+Annotations:  rollout.argoproj.io/revision: 2
+API Version:  argoproj.io/v1alpha1
+Kind:         Rollout
+Metadata:
+  Creation Timestamp:  2022-08-18T12:06:14Z
+  Generation:          2
+  Managed Fields:
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:rollout.argoproj.io/revision:
+    Manager:      Go-http-client
+    Operation:    Update
+    Time:         2022-08-18T12:06:14Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:replicas:
+        f:selector:
+          .:
+          f:matchLabels:
+            .:
+            f:app:
+        f:strategy:
+          .:
+          f:canary:
+            .:
+            f:steps:
+        f:template:
+          .:
+          f:metadata:
+            .:
+            f:labels:
+              .:
+              f:app:
+          f:spec:
+            .:
+            f:containers:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-08-18T12:06:14Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:HPAReplicas:
+        f:availableReplicas:
+        f:blueGreen:
+        f:canary:
+        f:conditions:
+        f:currentPodHash:
+        f:currentStepHash:
+        f:currentStepIndex:
+        f:observedGeneration:
+        f:phase:
+        f:readyReplicas:
+        f:replicas:
+        f:selector:
+        f:stableRS:
+        f:updatedReplicas:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-08-18T13:47:17Z
+  Resource Version:  1288777
+  UID:               df3656dd-97d3-4a22-87a9-f08c7bf757af
+Spec:
+  Replicas:  4
+  Selector:
+    Match Labels:
+      App:  proj02
+  Strategy:
+    Canary:
+      Steps:
+        Set Weight:  25
+        Pause:
+          Duration:  30s
+        Set Weight:  50
+        Pause:
+          Duration:  30s
+        Analysis:
+          Templates:
+            Template Name:  cpu-rate
+  Template:
+    Metadata:
+      Labels:
+        App:  proj02
+    Spec:
+      Containers:
+        Image:              rvlq/proj-front:bab5a8d9d540610334d76ed5f98e4a88cc7997c4
+        Image Pull Policy:  Always
+        Name:               proj02
+        Readiness Probe:
+          Http Get:
+            Path:                 /
+            Port:                 80
+          Initial Delay Seconds:  5
+          Period Seconds:         10
+        Resources:
+          Limits:
+            Cpu:     500m
+            Memory:  256Mi
+Status:
+  HPA Replicas:        4
+  Available Replicas:  4
+  Blue Green:
+  Canary:
+  Conditions:
+    Last Transition Time:  2022-08-18T13:45:07Z
+    Last Update Time:      2022-08-18T13:45:07Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                False
+    Type:                  Paused
+    Last Transition Time:  2022-08-18T13:47:17Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               Rollout has minimum availability
+    Reason:                AvailableReason
+    Status:                True
+    Type:                  Available
+    Last Transition Time:  2022-08-18T13:47:17Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               RolloutCompleted
+    Reason:                RolloutCompleted
+    Status:                True
+    Type:                  Completed
+    Last Transition Time:  2022-08-18T13:45:07Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               ReplicaSet "proj02-dep-7d6f89f4cb" has successfully progressed.
+    Reason:                NewReplicaSetAvailable
+    Status:                True
+    Type:                  Progressing
+  Current Pod Hash:        7d6f89f4cb
+  Current Step Hash:       7df9c5b8b4
+  Current Step Index:      5
+  Observed Generation:     2
+  Phase:                   Healthy
+  Ready Replicas:          4
+  Replicas:                4
+  Selector:                app=proj02
+  Stable RS:               7d6f89f4cb
+  Updated Replicas:        4
+Events:
+  Type    Reason                 Age                From                 Message
+  ----    ------                 ----               ----                 -------
+  Normal  RolloutUpdated         17m                rollouts-controller  Rollout updated to revision 2
+  Normal  NewReplicaSetCreated   17m                rollouts-controller  Created ReplicaSet proj02-dep-7d6f89f4cb (revision 2)
+  Normal  ScalingReplicaSet      17m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 4 to 3
+  Normal  ScalingReplicaSet      17m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 0 to 1
+  Normal  RolloutStepCompleted   17m                rollouts-controller  Rollout step 1/5 completed (setWeight: 25)
+  Normal  RolloutStepCompleted   16m                rollouts-controller  Rollout step 2/5 completed (pause: 30s)
+  Normal  ScalingReplicaSet      16m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 3 to 2
+  Normal  ScalingReplicaSet      16m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 1 to 2
+  Normal  RolloutStepCompleted   16m                rollouts-controller  Rollout step 3/5 completed (setWeight: 50)
+  Normal  RolloutPaused          16m (x2 over 17m)  rollouts-controller  Rollout is paused (CanaryPauseStep)
+  Normal  RolloutStepCompleted   15m                rollouts-controller  Rollout step 4/5 completed (pause: 30s)
+  Normal  RolloutResumed         15m (x2 over 16m)  rollouts-controller  Rollout is resumed
+  Normal  AnalysisRunRunning     15m                rollouts-controller  Step Analysis Run 'proj02-dep-7d6f89f4cb-2-4' Status New: 'Running' Previous: ''
+  Normal  AnalysisRunSuccessful  13m                rollouts-controller  Step Analysis Run 'proj02-dep-7d6f89f4cb-2-4' Status New: 'Successful' Previous: 'Running'
+  Normal  RolloutStepCompleted   13m                rollouts-controller  Rollout step 5/5 completed (analysis)
+  Normal  ScalingReplicaSet      13m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 2 to 1
+  Normal  ScalingReplicaSet      13m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 2 to 4
+  Normal  ScalingReplicaSet      13m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 1 to 0
+  Normal  RolloutCompleted       13m                rollouts-controller  Rollout completed update to revision 2 (7d6f89f4cb): Completed all 5 canary steps
+
+
+Name:         proj01-dep
+Namespace:    project
+Labels:       <none>
+Annotations:  rollout.argoproj.io/revision: 4
+API Version:  argoproj.io/v1alpha1
+Kind:         Rollout
+Metadata:
+  Creation Timestamp:  2022-08-18T11:36:32Z
+  Generation:          5
+  Managed Fields:
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:rollout.argoproj.io/revision:
+    Manager:      Go-http-client
+    Operation:    Update
+    Time:         2022-08-18T11:40:15Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:replicas:
+        f:selector:
+          .:
+          f:matchLabels:
+            .:
+            f:app:
+        f:strategy:
+          .:
+          f:canary:
+            .:
+            f:steps:
+        f:template:
+          .:
+          f:metadata:
+            .:
+            f:labels:
+              .:
+              f:app:
+          f:spec:
+            .:
+            f:containers:
+            f:volumes:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-08-18T11:40:15Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:HPAReplicas:
+        f:availableReplicas:
+        f:blueGreen:
+        f:canary:
+          .:
+          f:currentStepAnalysisRunStatus:
+            .:
+            f:name:
+            f:status:
+        f:conditions:
+        f:currentPodHash:
+        f:currentStepHash:
+        f:currentStepIndex:
+        f:message:
+        f:observedGeneration:
+        f:phase:
+        f:readyReplicas:
+        f:replicas:
+        f:selector:
+        f:stableRS:
+        f:updatedReplicas:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-08-18T13:59:17Z
+  Resource Version:  1289534
+  UID:               379b830b-6f63-4fec-b985-616b8ab6b7c8
+Spec:
+  Replicas:  4
+  Selector:
+    Match Labels:
+      App:  proj01
+  Strategy:
+    Canary:
+      Steps:
+        Set Weight:  25
+        Pause:
+          Duration:  5m
+        Set Weight:  50
+        Pause:
+          Duration:  5m
+        Set Weight:  75
+        Pause:
+          Duration:  5m
+        Analysis:
+          Templates:
+            Template Name:  cpu-rate
+  Template:
+    Metadata:
+      Labels:
+        App:  proj01
+    Spec:
+      Containers:
+        Env From:
+          Secret Ref:
+            Name:           pg-secrets
+        Image:              rvlq/project:bab5a8d9d540610334d76ed5f98e4a88cc7997c4
+        Image Pull Policy:  IfNotPresent
+        Liveness Probe:
+          Failure Threshold:  5
+          Http Get:
+            Path:                            /healthz
+            Port:                            9999
+          Initial Delay Seconds:             20
+          Period Seconds:                    10
+          Termination Grace Period Seconds:  60
+        Name:                                proj01
+        Readiness Probe:
+          Http Get:
+            Path:                 /healthz
+            Port:                 9999
+          Initial Delay Seconds:  5
+          Period Seconds:         10
+        Resources:
+          Limits:
+            Cpu:     100m
+            Memory:  128Mi
+          Requests:
+            Cpu:     20m
+            Memory:  64Mi
+        Volume Mounts:
+          Mount Path:  /app/images
+          Name:        shared-share
+      Volumes:
+        Name:  shared-share
+        Persistent Volume Claim:
+          Claim Name:  share-claim
+Status:
+  HPA Replicas:        4
+  Available Replicas:  4
+  Blue Green:
+  Canary:
+    Current Step Analysis Run Status:
+      Name:    proj01-dep-7c8ff8f767-4-6
+      Status:  Running
+  Conditions:
+    Last Transition Time:  2022-08-18T13:43:47Z
+    Last Update Time:      2022-08-18T13:43:47Z
+    Message:               RolloutCompleted
+    Reason:                RolloutCompleted
+    Status:                False
+    Type:                  Completed
+    Last Transition Time:  2022-08-18T13:54:17Z
+    Last Update Time:      2022-08-18T13:54:17Z
+    Message:               Rollout has minimum availability
+    Reason:                AvailableReason
+    Status:                True
+    Type:                  Available
+    Last Transition Time:  2022-08-18T13:59:17Z
+    Last Update Time:      2022-08-18T13:59:17Z
+    Message:               ReplicaSet "proj01-dep-7c8ff8f767" is progressing.
+    Reason:                ReplicaSetUpdated
+    Status:                True
+    Type:                  Progressing
+    Last Transition Time:  2022-08-18T13:59:17Z
+    Last Update Time:      2022-08-18T13:59:17Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                False
+    Type:                  Paused
+  Current Pod Hash:        7c8ff8f767
+  Current Step Hash:       86fdf7c6
+  Current Step Index:      6
+  Message:                 more replicas need to be updated
+  Observed Generation:     5
+  Phase:                   Progressing
+  Ready Replicas:          4
+  Replicas:                4
+  Selector:                app=proj01
+  Stable RS:               745f85cffc
+  Updated Replicas:        3
+Events:
+  Type    Reason                Age                  From                 Message
+  ----    ------                ----                 ----                 -------
+  Normal  RolloutUpdated        17m                  rollouts-controller  Rollout updated to revision 4
+  Normal  NewReplicaSetCreated  17m                  rollouts-controller  Created ReplicaSet proj01-dep-7c8ff8f767 (revision 4)
+  Normal  ScalingReplicaSet     17m                  rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 4 to 3
+  Normal  ScalingReplicaSet     17m                  rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 0 to 1
+  Normal  RolloutStepCompleted  17m                  rollouts-controller  Rollout step 1/7 completed (setWeight: 25)
+  Normal  RolloutStepCompleted  12m                  rollouts-controller  Rollout step 2/7 completed (pause: 5m)
+  Normal  ScalingReplicaSet     12m                  rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 3 to 2
+  Normal  ScalingReplicaSet     12m                  rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 1 to 2
+  Normal  RolloutStepCompleted  11m                  rollouts-controller  Rollout step 3/7 completed (setWeight: 50)
+  Normal  RolloutStepCompleted  6m50s                rollouts-controller  Rollout step 4/7 completed (pause: 5m)
+  Normal  ScalingReplicaSet     6m50s                rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 2 to 1
+  Normal  ScalingReplicaSet     6m50s                rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 2 to 3
+  Normal  RolloutStepCompleted  6m40s                rollouts-controller  Rollout step 5/7 completed (setWeight: 75)
+  Normal  RolloutPaused         6m40s (x3 over 17m)  rollouts-controller  Rollout is paused (CanaryPauseStep)
+  Normal  RolloutStepCompleted  100s                 rollouts-controller  Rollout step 6/7 completed (pause: 5m)
+  Normal  RolloutResumed        100s (x3 over 12m)   rollouts-controller  Rollout is resumed
+  Normal  AnalysisRunRunning    100s                 rollouts-controller  Step Analysis Run 'proj01-dep-7c8ff8f767-4-6' Status New: 'Running' Previous: ''
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d1h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             26h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             122m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             18m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             18m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             17m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             15m
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             15m
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             13m
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             8m13s
+proj01-dep-7c8ff8f767-8zfq4    1/1     Running     0             63s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d2h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             26h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             131m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             28m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             28m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             27m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             24m
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             24m
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             22m
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             17m
+proj01-dep-7c8ff8f767-8zfq4    1/1     Running     0             10m
+rvl@eb: Project $ kubectl describe rollouts
+Name:         proj02-dep
+Namespace:    project
+Labels:       <none>
+Annotations:  rollout.argoproj.io/revision: 2
+API Version:  argoproj.io/v1alpha1
+Kind:         Rollout
+Metadata:
+  Creation Timestamp:  2022-08-18T12:06:14Z
+  Generation:          2
+  Managed Fields:
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:rollout.argoproj.io/revision:
+    Manager:      Go-http-client
+    Operation:    Update
+    Time:         2022-08-18T12:06:14Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:replicas:
+        f:selector:
+          .:
+          f:matchLabels:
+            .:
+            f:app:
+        f:strategy:
+          .:
+          f:canary:
+            .:
+            f:steps:
+        f:template:
+          .:
+          f:metadata:
+            .:
+            f:labels:
+              .:
+              f:app:
+          f:spec:
+            .:
+            f:containers:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-08-18T12:06:14Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:HPAReplicas:
+        f:availableReplicas:
+        f:blueGreen:
+        f:canary:
+        f:conditions:
+        f:currentPodHash:
+        f:currentStepHash:
+        f:currentStepIndex:
+        f:observedGeneration:
+        f:phase:
+        f:readyReplicas:
+        f:replicas:
+        f:selector:
+        f:stableRS:
+        f:updatedReplicas:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-08-18T13:47:17Z
+  Resource Version:  1288777
+  UID:               df3656dd-97d3-4a22-87a9-f08c7bf757af
+Spec:
+  Replicas:  4
+  Selector:
+    Match Labels:
+      App:  proj02
+  Strategy:
+    Canary:
+      Steps:
+        Set Weight:  25
+        Pause:
+          Duration:  30s
+        Set Weight:  50
+        Pause:
+          Duration:  30s
+        Analysis:
+          Templates:
+            Template Name:  cpu-rate
+  Template:
+    Metadata:
+      Labels:
+        App:  proj02
+    Spec:
+      Containers:
+        Image:              rvlq/proj-front:bab5a8d9d540610334d76ed5f98e4a88cc7997c4
+        Image Pull Policy:  Always
+        Name:               proj02
+        Readiness Probe:
+          Http Get:
+            Path:                 /
+            Port:                 80
+          Initial Delay Seconds:  5
+          Period Seconds:         10
+        Resources:
+          Limits:
+            Cpu:     500m
+            Memory:  256Mi
+Status:
+  HPA Replicas:        4
+  Available Replicas:  4
+  Blue Green:
+  Canary:
+  Conditions:
+    Last Transition Time:  2022-08-18T13:45:07Z
+    Last Update Time:      2022-08-18T13:45:07Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                False
+    Type:                  Paused
+    Last Transition Time:  2022-08-18T13:47:17Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               Rollout has minimum availability
+    Reason:                AvailableReason
+    Status:                True
+    Type:                  Available
+    Last Transition Time:  2022-08-18T13:47:17Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               RolloutCompleted
+    Reason:                RolloutCompleted
+    Status:                True
+    Type:                  Completed
+    Last Transition Time:  2022-08-18T13:45:07Z
+    Last Update Time:      2022-08-18T13:47:17Z
+    Message:               ReplicaSet "proj02-dep-7d6f89f4cb" has successfully progressed.
+    Reason:                NewReplicaSetAvailable
+    Status:                True
+    Type:                  Progressing
+  Current Pod Hash:        7d6f89f4cb
+  Current Step Hash:       7df9c5b8b4
+  Current Step Index:      5
+  Observed Generation:     2
+  Phase:                   Healthy
+  Ready Replicas:          4
+  Replicas:                4
+  Selector:                app=proj02
+  Stable RS:               7d6f89f4cb
+  Updated Replicas:        4
+Events:
+  Type    Reason                 Age                From                 Message
+  ----    ------                 ----               ----                 -------
+  Normal  RolloutUpdated         28m                rollouts-controller  Rollout updated to revision 2
+  Normal  NewReplicaSetCreated   28m                rollouts-controller  Created ReplicaSet proj02-dep-7d6f89f4cb (revision 2)
+  Normal  ScalingReplicaSet      28m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 4 to 3
+  Normal  ScalingReplicaSet      28m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 0 to 1
+  Normal  RolloutStepCompleted   28m                rollouts-controller  Rollout step 1/5 completed (setWeight: 25)
+  Normal  RolloutStepCompleted   27m                rollouts-controller  Rollout step 2/5 completed (pause: 30s)
+  Normal  ScalingReplicaSet      27m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 3 to 2
+  Normal  ScalingReplicaSet      27m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 1 to 2
+  Normal  RolloutStepCompleted   27m                rollouts-controller  Rollout step 3/5 completed (setWeight: 50)
+  Normal  RolloutPaused          27m (x2 over 28m)  rollouts-controller  Rollout is paused (CanaryPauseStep)
+  Normal  RolloutStepCompleted   26m                rollouts-controller  Rollout step 4/5 completed (pause: 30s)
+  Normal  RolloutResumed         26m (x2 over 27m)  rollouts-controller  Rollout is resumed
+  Normal  AnalysisRunRunning     26m                rollouts-controller  Step Analysis Run 'proj02-dep-7d6f89f4cb-2-4' Status New: 'Running' Previous: ''
+  Normal  AnalysisRunSuccessful  24m                rollouts-controller  Step Analysis Run 'proj02-dep-7d6f89f4cb-2-4' Status New: 'Successful' Previous: 'Running'
+  Normal  RolloutStepCompleted   24m                rollouts-controller  Rollout step 5/5 completed (analysis)
+  Normal  ScalingReplicaSet      24m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 2 to 1
+  Normal  ScalingReplicaSet      24m                rollouts-controller  Scaled up ReplicaSet proj02-dep-7d6f89f4cb (revision 2) from 2 to 4
+  Normal  ScalingReplicaSet      24m                rollouts-controller  Scaled down ReplicaSet proj02-dep-cd996b9f6 (revision 1) from 1 to 0
+  Normal  RolloutCompleted       24m                rollouts-controller  Rollout completed update to revision 2 (7d6f89f4cb): Completed all 5 canary steps
+
+
+Name:         proj01-dep
+Namespace:    project
+Labels:       <none>
+Annotations:  rollout.argoproj.io/revision: 4
+API Version:  argoproj.io/v1alpha1
+Kind:         Rollout
+Metadata:
+  Creation Timestamp:  2022-08-18T11:36:32Z
+  Generation:          5
+  Managed Fields:
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          f:rollout.argoproj.io/revision:
+    Manager:      Go-http-client
+    Operation:    Update
+    Time:         2022-08-18T11:40:15Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:replicas:
+        f:selector:
+          .:
+          f:matchLabels:
+            .:
+            f:app:
+        f:strategy:
+          .:
+          f:canary:
+            .:
+            f:steps:
+        f:template:
+          .:
+          f:metadata:
+            .:
+            f:labels:
+              .:
+              f:app:
+          f:spec:
+            .:
+            f:containers:
+            f:volumes:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-08-18T11:40:15Z
+    API Version:  argoproj.io/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        .:
+        f:HPAReplicas:
+        f:availableReplicas:
+        f:blueGreen:
+        f:canary:
+        f:conditions:
+        f:currentPodHash:
+        f:currentStepHash:
+        f:currentStepIndex:
+        f:observedGeneration:
+        f:phase:
+        f:readyReplicas:
+        f:replicas:
+        f:selector:
+        f:stableRS:
+        f:updatedReplicas:
+    Manager:         Go-http-client
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-08-18T14:01:27Z
+  Resource Version:  1289693
+  UID:               379b830b-6f63-4fec-b985-616b8ab6b7c8
+Spec:
+  Replicas:  4
+  Selector:
+    Match Labels:
+      App:  proj01
+  Strategy:
+    Canary:
+      Steps:
+        Set Weight:  25
+        Pause:
+          Duration:  5m
+        Set Weight:  50
+        Pause:
+          Duration:  5m
+        Set Weight:  75
+        Pause:
+          Duration:  5m
+        Analysis:
+          Templates:
+            Template Name:  cpu-rate
+  Template:
+    Metadata:
+      Labels:
+        App:  proj01
+    Spec:
+      Containers:
+        Env From:
+          Secret Ref:
+            Name:           pg-secrets
+        Image:              rvlq/project:bab5a8d9d540610334d76ed5f98e4a88cc7997c4
+        Image Pull Policy:  IfNotPresent
+        Liveness Probe:
+          Failure Threshold:  5
+          Http Get:
+            Path:                            /healthz
+            Port:                            9999
+          Initial Delay Seconds:             20
+          Period Seconds:                    10
+          Termination Grace Period Seconds:  60
+        Name:                                proj01
+        Readiness Probe:
+          Http Get:
+            Path:                 /healthz
+            Port:                 9999
+          Initial Delay Seconds:  5
+          Period Seconds:         10
+        Resources:
+          Limits:
+            Cpu:     100m
+            Memory:  128Mi
+          Requests:
+            Cpu:     20m
+            Memory:  64Mi
+        Volume Mounts:
+          Mount Path:  /app/images
+          Name:        shared-share
+      Volumes:
+        Name:  shared-share
+        Persistent Volume Claim:
+          Claim Name:  share-claim
+Status:
+  HPA Replicas:        4
+  Available Replicas:  4
+  Blue Green:
+  Canary:
+  Conditions:
+    Last Transition Time:  2022-08-18T13:59:17Z
+    Last Update Time:      2022-08-18T13:59:17Z
+    Message:               Rollout is paused
+    Reason:                RolloutPaused
+    Status:                False
+    Type:                  Paused
+    Last Transition Time:  2022-08-18T14:01:27Z
+    Last Update Time:      2022-08-18T14:01:27Z
+    Message:               RolloutCompleted
+    Reason:                RolloutCompleted
+    Status:                True
+    Type:                  Completed
+    Last Transition Time:  2022-08-18T13:59:17Z
+    Last Update Time:      2022-08-18T14:01:27Z
+    Message:               ReplicaSet "proj01-dep-7c8ff8f767" has successfully progressed.
+    Reason:                NewReplicaSetAvailable
+    Status:                True
+    Type:                  Progressing
+    Last Transition Time:  2022-08-18T14:01:27Z
+    Last Update Time:      2022-08-18T14:01:27Z
+    Message:               Rollout has minimum availability
+    Reason:                AvailableReason
+    Status:                True
+    Type:                  Available
+  Current Pod Hash:        7c8ff8f767
+  Current Step Hash:       86fdf7c6
+  Current Step Index:      7
+  Observed Generation:     5
+  Phase:                   Healthy
+  Ready Replicas:          4
+  Replicas:                4
+  Selector:                app=proj01
+  Stable RS:               7c8ff8f767
+  Updated Replicas:        4
+Events:
+  Type    Reason                Age                From                 Message
+  ----    ------                ----               ----                 -------
+  Normal  RolloutUpdated        28m                rollouts-controller  Rollout updated to revision 4
+  Normal  NewReplicaSetCreated  28m                rollouts-controller  Created ReplicaSet proj01-dep-7c8ff8f767 (revision 4)
+  Normal  ScalingReplicaSet     28m                rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 4 to 3
+  Normal  ScalingReplicaSet     28m                rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 0 to 1
+  Normal  RolloutStepCompleted  28m                rollouts-controller  Rollout step 1/7 completed (setWeight: 25)
+  Normal  RolloutStepCompleted  23m                rollouts-controller  Rollout step 2/7 completed (pause: 5m)
+  Normal  ScalingReplicaSet     23m                rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 3 to 2
+  Normal  ScalingReplicaSet     23m                rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 1 to 2
+  Normal  RolloutStepCompleted  22m                rollouts-controller  Rollout step 3/7 completed (setWeight: 50)
+  Normal  RolloutStepCompleted  17m                rollouts-controller  Rollout step 4/7 completed (pause: 5m)
+  Normal  ScalingReplicaSet     17m                rollouts-controller  Scaled down ReplicaSet proj01-dep-745f85cffc (revision 3) from 2 to 1
+  Normal  ScalingReplicaSet     17m                rollouts-controller  Scaled up ReplicaSet proj01-dep-7c8ff8f767 (revision 4) from 2 to 3
+  Normal  RolloutStepCompleted  17m                rollouts-controller  Rollout step 5/7 completed (setWeight: 75)
+  Normal  RolloutPaused         17m (x3 over 28m)  rollouts-controller  Rollout is paused (CanaryPauseStep)
+  Normal  RolloutStepCompleted  12m                rollouts-controller  Rollout step 6/7 completed (pause: 5m)
+  Normal  RolloutResumed        12m (x3 over 23m)  rollouts-controller  Rollout is resumed
+  Normal  AnalysisRunRunning    12m                rollouts-controller  Step Analysis Run 'proj01-dep-7c8ff8f767-4-6' Status New: 'Running' Previous: ''
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27677520--1-hblfd   0/1     Completed   2             2d2h
+postgres-ss-0                  1/1     Running     2 (44h ago)   2d19h
+daily-todo-27678960--1-s4w2l   0/1     Completed   0             26h
+daily-todo-27680400--1-fbxdz   0/1     Completed   0             133m
+proj02-dep-7d6f89f4cb-nldnv    1/1     Running     0             29m
+proj01-dep-7c8ff8f767-ppmg5    1/1     Running     0             29m
+proj02-dep-7d6f89f4cb-vgrb6    1/1     Running     0             28m
+proj02-dep-7d6f89f4cb-f5qmx    1/1     Running     0             26m
+proj02-dep-7d6f89f4cb-pxntx    1/1     Running     0             26m
+proj01-dep-7c8ff8f767-mhbt8    1/1     Running     0             24m
+proj01-dep-7c8ff8f767-ftvpr    1/1     Running     0             19m
+proj01-dep-7c8ff8f767-8zfq4    1/1     Running     0             12m
+rvl@eb: Project $ 
+

@@ -27,6 +27,13 @@ spec:
           # volumeMounts: # Mount volume
           # - name: shared-share
           #   mountPath: /app/images
+          readinessProbe:
+            initialDelaySeconds: 5 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
+            httpGet:
+               path: /
+               port: 80
+
           resources:
             limits:
               memory: "256Mi"

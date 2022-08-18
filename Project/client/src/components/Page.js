@@ -34,9 +34,6 @@ import axios from 'axios'
 
     const todoObject = {
       content: newTodo,
-      // date: new Date().toISOString(),
-      // important: Math.random() > 0.5,
-      // id: (todos && (todos.length + 1)) || 1,
       done: false,
       id: 0,
     }

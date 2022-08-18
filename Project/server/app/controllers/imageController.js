@@ -56,9 +56,6 @@ const serveImage = async () => {
       await fileResponse.body.pipeTo(writableStream);
     }
   }
-
-  // const img = await Deno.readFile(IMAGE_PATH);
-  // return new Response(img, responseDetails);
 };
 
 export { serveImage };

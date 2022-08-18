@@ -17,6 +17,9 @@ spec:
         - setWeight: 50
         - pause:
             duration: 30s
+        - analysis:
+            templates:
+            - templateName: cpu-rate
   template:
     metadata:
       labels:

@@ -12,10 +12,6 @@ const PORT = Deno.env.get("PORT");
 
 const IMAGE_PATH = "./images/image.jpg";
 
-// configure({
-//   views: `${Deno.cwd()}/views/`,
-// });
-
 const root = ({ request, response }) => {
   console.log("Method", request.method);
   // response.body = await todoController.viewTodos({ request });

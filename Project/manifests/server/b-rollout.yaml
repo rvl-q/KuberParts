@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: proj01-dep
+  namespace: project
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: proj01
+  strategy:
+      canary:
+        steps:
+        - setWeight: 25
+        - pause:
+            duration: 30s
+        - setWeight: 50
+        - pause:
+            duration: 30s
+        - analysis:
+          templates:
+          - templateName: cpu-rate
+  template:
+    metadata:
+      labels:
+        app: proj01
+    spec:
+      volumes:
+        - name: shared-share
+          persistentVolumeClaim:
+            claimName: share-claim
+      containers:
+        - name: proj01
+          imagePullPolicy: IfNotPresent
+          image: IMAGE_PLACEHOLDER
+          readinessProbe:
+            initialDelaySeconds: 5 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
+            httpGet:
+               path: /healthz
+               port: 9999
+          livenessProbe:
+            initialDelaySeconds: 20 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
+            httpGet:
+               path: /healthz
+               port: 9999
+            failureThreshold: 5
+            # Override pod-level terminationGracePeriodSeconds #
+            terminationGracePeriodSeconds: 60
+          envFrom:
+            - secretRef:
+                name: pg-secrets
+          volumeMounts: # Mount volume
+          - name: shared-share
+            mountPath: /app/images
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "20m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

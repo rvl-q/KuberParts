@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: proj02-dep
+  namespace: project
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: proj02
+  strategy:
+      canary:
+        steps:
+        - setWeight: 25
+        - pause:
+            duration: 30s
+        - setWeight: 50
+        - pause:
+            duration: 30s
+  template:
+    metadata:
+      labels:
+        app: proj02
+    spec:
+      containers:
+        - name: proj02
+          imagePullPolicy: Always
+          image: IMAGE_PLACEHOLDER
+          readinessProbe:
+            initialDelaySeconds: 5 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
+            httpGet:
+               path: /
+               port: 80
+
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"

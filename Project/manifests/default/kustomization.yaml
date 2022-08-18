@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - cronjob.yaml
+- analysistemplate.yaml
 bases:
   - "../client"
   - "../server"

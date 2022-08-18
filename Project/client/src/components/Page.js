@@ -59,7 +59,7 @@ import axios from 'axios'
   return(
   <div>
   <h1>Todos!</h1>
-    <h2>Exercise 4.02: Project v1.7</h2>
+    <h2>Exercise 4.04: Project v1.8</h2>
       <img className='App-displayed'  src={TODO_IMAGE_URL} alt='daily pic'/>
       <p></p>
       <form onSubmit={addTodo}>

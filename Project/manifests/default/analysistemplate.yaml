@@ -5,7 +5,7 @@ metadata:
 spec:
   metrics:
   - name: cpu-rate
-    initialDelay: 2m
+    initialDelay: 5m
     # successCondition: result < 0.002 # this did fail
     successCondition: result < 0.02
     provider:
@@ -13,5 +13,5 @@ spec:
         address: http://kube-prometheus-stack-1657-prometheus.prometheus.svc.cluster.local:9090 # DNS name for my Prometheus, find yours with kubectl describe svc ...
         query: |
           scalar(
-            sum(rate(container_cpu_usage_seconds_total{namespace="project"}[10m]))
+            sum(rate(container_cpu_usage_seconds_total{namespace="project"}[5m]))
           )

@@ -11,8 +11,8 @@ spec:
   ports:
     - port: 1234
       protocol: TCP
-      # targetPort: 3000
-      targetPort: 80  # trying nginx
+      targetPort: 3000
+      # targetPort: 80  # trying nginx
     # - name: http
     #   nodePort: 31337 # This is the port that is available outside. Value for nodePort can be between 30000-32767
     #   protocol: TCP

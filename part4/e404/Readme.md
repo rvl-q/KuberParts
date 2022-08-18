@@ -21,6 +21,8 @@ spec:
           )
 ```
 
+![Screenshot of Prometheus analysis graph](Screenshot%20from%202022-08-18%2017-26-50.png)
+
 Backend rollout:
 ```
 apiVersion: argoproj.io/v1alpha1

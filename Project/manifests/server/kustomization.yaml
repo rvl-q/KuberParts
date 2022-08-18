@@ -1,11 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
 # - b-deployment.yaml
+resources:
 - b-rollout.yaml
 - b-service.yaml
 - b-ingress.yaml
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/project
-  newTag: 1efe1e0f5c17a8f91ec45863b44b3d4ef04d4b97
+  newTag: 2bf3fbe6733021c07515c1e81792c1f60e151a7f

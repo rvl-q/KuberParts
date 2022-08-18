@@ -28,8 +28,8 @@ spec:
           # - name: shared-share
           #   mountPath: /app/images
           readinessProbe:
-            initialDelaySeconds: 10 # Initial delay until the readiness is tested
-            periodSeconds: 5 # How often to test
+            initialDelaySeconds: 5 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
             httpGet:
                path: /
                port: 80

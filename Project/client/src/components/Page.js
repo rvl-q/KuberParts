@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Todo from './Todo'
 import axios from 'axios'
 
-  const TODO_BACKEND_URL = "http://localhost:8081/todos";
+export const TODO_BACKEND_URL = "http://localhost:8081/todos";
   const TODO_IMAGE_URL = "http://localhost:8081/images/image.jpg";
   const TODO_BACKEND_PATH = "/todos";
   const TODO_IMAGE_PATH = "/images/image.jpg";
@@ -11,8 +11,8 @@ import axios from 'axios'
   // const TODO_IMAGE_URL = "http://localhost:8081/images/image.jpg";
 //   const TODO_BACKEND_URL = host + TODO_BACKEND_PATH;
 //   const TODO_IMAGE_URL = host + TODO_IMAGE_PATH;
-
   // const [showAll, setShowAll] = useState(true)
+
 
   const Page = () => {
     const [todos, setTodos] = useState([])
@@ -77,4 +77,3 @@ import axios from 'axios'
   )
 }
 export default Page
-

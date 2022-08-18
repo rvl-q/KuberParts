@@ -13,10 +13,6 @@ const MAX_LENGTH = 140;
 
 const initial_todos = [
   {
-    id: 1,
-    content: "Exercise 4.02: Project v1.7",
-  },
-  {
     id: 2,
     content: "Exercise 4.04: Project v1.8",
   },
@@ -62,9 +58,6 @@ const initTodoTable = async () => {
           "done" BOOLEAN NOT NULL DEFAULT FALSE;`,
       );
       console.log("db add new column response:\n", db1_response);
-      // if ('error' in db1_response){
-      //   throw 'db NOT ready!';
-      // }
       
       db1_response = await executeQuery(
         `SELECT COUNT(content) FROM

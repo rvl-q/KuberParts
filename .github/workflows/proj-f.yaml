@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - 'main'
     paths:
-      - 'Project/client/src/**'  
+      - 'Project/client/**'  
       - '.github/workflows/proj-f.yaml' #
 
 jobs:

@@ -194,6 +194,9 @@ const putTodo = async ({ params, response }) => {
   try {
     const nid = +(params.id);
     console.log("PUT requeset to id", nid);
+    if (isNaN(nid)){
+      throw 'bad id';
+    }
     let db_response = await executeQuery(
       `SELECT done FROM
         todos
@@ -202,10 +205,17 @@ const putTodo = async ({ params, response }) => {
     );
     if (db_response && db_response.rows && db_response.rows[0]){
       console.log('todo exists', nid, db_response);
+      db_response = await executeQuery(
+        `UPDATE todos
+          SET done=$1
+          WHERE id=$2
+        ;`, true, nid
+      );
     }
     response.status = 201;
     response.body = db_response.rows;
-  } catch {
+  } catch(error) {
+    console.log('error->', error, '<-error')
     response.status = 503;
     const bad = {
       id: 666666666,

@@ -8,4 +8,4 @@ resources:
 images:
 - name: IMAGE_PLACEHOLDER
   newName: rvlq/project
-  newTag: 5efac703488725a708ea4c8af375ce3919765c06
+  newTag: 7f016f92f288a8988a1400d7c6f5cdeb00d8fb88

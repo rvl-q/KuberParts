@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proj01-dep
+  namespace: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proj01
+  template:
+    metadata:
+      labels:
+        app: proj01
+    spec:
+      volumes:
+        - name: shared-share
+          persistentVolumeClaim:
+            claimName: share-claim
+      containers:
+        - name: proj01
+          imagePullPolicy: IfNotPresent
+          image: IMAGE_PLACEHOLDER
+          readinessProbe:
+            initialDelaySeconds: 5 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
+            httpGet:
+               path: /healthz
+               port: 9999
+          livenessProbe:
+            initialDelaySeconds: 20 # Initial delay until the readiness is tested
+            periodSeconds: 10 # How often to test
+            httpGet:
+               path: /healthz
+               port: 9999
+            failureThreshold: 5
+            # Override pod-level terminationGracePeriodSeconds #
+            terminationGracePeriodSeconds: 60
+
+          # image: rvlq/project:latest
+          # image: rvlq/project:v1.2
+          envFrom:
+            - secretRef:
+                name: pg-secrets
+          volumeMounts: # Mount volume
+          - name: shared-share
+            mountPath: /app/images
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

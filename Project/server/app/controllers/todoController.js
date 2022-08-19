@@ -175,18 +175,30 @@ const getTodo = async ({ params, response }) => {
   console.log("Parameters were as follows:");
   console.log(params);
   console.log(`The value of the id extracted from path is: ${params.id}`);
+  try {
+    const nid = +(params.id);
+    console.log("PUT requeset to id", nid);
+    if (isNaN(nid)){
+      throw 'bad id';
+    }
 
-  let _db_todos = [];
-  const db_response = await executeQuery(
-    `SELECT * FROM
-      todos
-      WHERE id=1
-    ;`,
-  );
-  response.status = 201;
-  response.body = db_response.rows;
-  _db_todos = db_response.rows;
-  return _db_todos;
+    let _db_todos = [];
+    const db_response = await executeQuery(
+      `SELECT * FROM
+        todos
+        WHERE id=$1
+      ;`, nid
+    );
+    response.status = 201;
+    response.body = db_response.rows;
+    _db_todos = db_response.rows;
+    return _db_todos;
+  } catch {
+    const empty = []
+    response.status = 401;
+    response.body = empty;
+    return empty
+  }
 };
 
 const putTodo = async ({ params, response }) => {
@@ -209,8 +221,19 @@ const putTodo = async ({ params, response }) => {
         `UPDATE todos
           SET done=$1
           WHERE id=$2
+          RETURNING *
         ;`, true, nid
       );
+      console.log('test of RETURNING *:', db_response);
+      db_response = await executeQuery(
+        `SELECT * FROM
+          todos
+          WHERE id=$1
+        ;`, nid
+      );
+    } else {
+      console.log('todo does not exist', nid, db_response);
+      throw 'something went wrong'
     }
     response.status = 201;
     response.body = db_response.rows;
@@ -228,14 +251,24 @@ const putTodo = async ({ params, response }) => {
 
 const delTodo = async ({ params, response }) => {
   console.log("DELETE requeset not yet implemented");
-  const db_response = await executeQuery(
-    `SELECT * FROM
-      todos
-      WHERE id=1
-    ;`,
-  );
-  response.status = 201;
-  response.body = db_response.rows;
+  try {
+    const nid = +(params.id);
+    console.log("PUT requeset to id", nid);
+    if (isNaN(nid)){
+      throw 'bad id';
+    }
+    const db_response = await executeQuery(
+      `DELETE FROM
+        todos
+        WHERE id=1
+      ;`,
+    );
+    response.status = 201;
+    response.body = db_response.rows;
+  } catch(error) {
+    console.log('error->', error, '<-error')
+    response.status = 503;
+  }
 };
 
 const newTodo = async ({ request, response }) => {

@@ -36,8 +36,9 @@ const getTodo = async ({ params, response }) => {
   console.log(resp_l)
 };
 
-const putTodo = ({ params, response }) => {
-  todoController.putTodo({ params, response });
+const putTodo = async ({ params, response }) => {
+  console.log("before inner PUT");
+  await todoController.putTodo({ params, response });
 };
 
 const delTodo = ({ params, response }) => {

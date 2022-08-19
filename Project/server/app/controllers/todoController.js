@@ -179,7 +179,7 @@ const getTodo = async ({ params, response }) => {
   try {
     let _db_todos = [];
     const nid = +(params.id);
-    console.log("PUT requeset to id", nid);
+    console.log("GET requeset to id", nid);
     if (isNaN(nid)){
       throw 'bad id';
     }

@@ -1,10 +1,32 @@
-2022-08-19 05:31:18	db setup done!
-2022-08-19 05:36:52	serving image...
-2022-08-19 05:36:52	...serving image..2
-2022-08-19 05:36:52	...serving image..3
-2022-08-19 05:36:52	GET requeset to: http://localhost:8081/todos
-2022-08-19 05:37:03	GET requeset to: http://localhost:8081/todos
-2022-08-19 05:37:13	Parameters were as follows:
-2022-08-19 05:37:13	{ id: "1" }
-2022-08-19 05:37:13	The value of the id extracted from path is: 1
-2022-08-19 05:37:13	[ { id: 1, content: "Exercise 4.02: Project v1.7", done: false } ]
+2022-08-19 16:28:42	
+Parameters were as follows:
+2022-08-19 16:28:42	
+{ id: "3" }
+2022-08-19 16:28:42	
+The value of the id extracted from path is: 3
+2022-08-19 16:28:42	
+PUT requeset to id 3
+2022-08-19 16:28:42	
+[ { id: 3, content: "Exercise 4.05: Project v1.9", done: true } ]
+2022-08-19 16:31:57	
+serving image...
+2022-08-19 16:31:57	
+GET requeset to: http://localhost:8081/todosShow context
+2022-08-19 16:32:12	
+DELETE requeset not yet fully tested
+2022-08-19 16:32:12	
+DELETE requeset to id 3
+2022-08-19 16:32:12	
+DELETE requeset pre query
+2022-08-19 16:32:12	
+DELETE requeset post query { rows: [] }
+2022-08-19 16:32:57	
+Parameters were as follows:
+2022-08-19 16:32:57	
+{ id: "3" }
+2022-08-19 16:32:57	
+The value of the id extracted from path is: 3
+2022-08-19 16:32:57	
+PUT requeset to id 3
+2022-08-19 16:32:57	
+[]

@@ -116,7 +116,7 @@ const initTodoTable = async () => {
 };
 
 const dbAlive = async () => {
-  console.log("inner health check", db_present);
+  // console.log("inner health check", db_present);
 
   if (!db_present) {
     console.log('db not present error...');

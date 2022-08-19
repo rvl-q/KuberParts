@@ -264,7 +264,7 @@ const delTodo = async ({ params, response }) => {
       ;`, nid
     );
     console.log("DELETE requeset post query", db_response);
-    response.status = 201;
+    response.status = 202;
     response.body = db_response.rows;
   } catch(error) {
     console.log('error->', error, '<-error')

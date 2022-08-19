@@ -19,11 +19,11 @@ const handleDone = async (id) => {
 const handleDel = async (id) => {
   try{
     console.log('TODO_BACKEND_URL/id')
-    console.log(`${TODO_BACKEND_URL}/:${id}`)
+    console.log(`${TODO_BACKEND_URL}/${id}`)
     const { data } = await axios.delete(`${TODO_BACKEND_URL}/${id}`)
-    console.log('put for id:',id)
+    console.log('delete for id:',id)
   } catch(err) {
-    console.log('not yet... @id', id)
+    console.log('not yet fully workin?... @id', id)
   }
 }
 

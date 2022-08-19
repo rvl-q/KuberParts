@@ -154,6 +154,7 @@ const listTodos = async ({ request }) => {
   const db_response = await executeQuery(
     `SELECT * FROM
       todos
+      ORDER BY id
     ;`,
   );
 

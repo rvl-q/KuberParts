@@ -23,8 +23,8 @@ const executeQuery = async (query, ...args) => {
 
   try {
 
-    console.log('...try connection pool:', connectionPool);
-    console.log('connectionPool.connect:', connectionPool.connect);
+    // console.log('...try connection pool:', connectionPool);
+    // console.log('connectionPool.connect:', connectionPool.connect);
 
     client = await connectionPool.connect();
     const result = await client.queryObject(query, ...args);
@@ -49,7 +49,7 @@ const executeQuery = async (query, ...args) => {
       console.log("inner connection error:\n",e);
     }
     // connectionPool.end()
-    console.log("after connection error");
+    // console.log("after connection error");
 
   } finally {
     if (client) {

@@ -7,7 +7,9 @@ import { TODO_BACKEND_URL } from './Page';
 
 const handleDone = async (id) => {
   try{
-    const { data } = await axios.put(`${TODO_BACKEND_URL}/${id}`)
+    console.log('TODO_BACKEND_URL/id')
+    console.log(`${TODO_BACKEND_URL}/:${id}`)
+    const { data } = await axios.put(`${TODO_BACKEND_URL}/:${id}`)
     console.log('put for id:',id)
   } catch(err) {
     console.log('not yet... @id', id)

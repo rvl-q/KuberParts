@@ -16,9 +16,9 @@ if (!pathFound) {
 const serveImage = async () => {
   console.log("serving image...");
   const file = await Deno.stat(IMAGE_PATH);
-  console.log("...serving image..2");
+  // console.log("...serving image..2");
   if (file.isFile) {
-    console.log("...serving image..3");
+    // console.log("...serving image..3");
     const file_time = file.mtime;
     const now = new Date();
     const diff_time = now - file_time;

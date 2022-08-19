@@ -116,7 +116,7 @@ const initTodoTable = async () => {
 };
 
 const dbAlive = async () => {
-  console.log("inner health check", db_present);
+  // console.log("inner health check", db_present);
 
   if (!db_present) {
     console.log('db not present error...');
@@ -154,6 +154,7 @@ const listTodos = async ({ request }) => {
   const db_response = await executeQuery(
     `SELECT * FROM
       todos
+      ORDER BY id
     ;`,
   );
 
@@ -168,6 +169,108 @@ const listTodos = async ({ request }) => {
   // return initial_todos;
   // response.body = initial_todos; // auto json!
   // return new Response(JSON.stringify(todos), jsonResponseDetails);
+};
+
+const getTodo = async ({ params, response }) => {
+  // console.log("GET requeset to...");
+  console.log("Parameters were as follows:");
+  console.log(params);
+  console.log(`The value of the id extracted from path is: ${params.id}`);
+  try {
+    let _db_todos = [];
+    const nid = +(params.id);
+    console.log("GET requeset to id", nid);
+    if (isNaN(nid)){
+      throw 'bad id';
+    }
+    const db_response = await executeQuery(
+      `SELECT * FROM
+        todos
+        WHERE id=$1
+      ;`, nid
+    );
+    response.status = 201;
+    response.body = db_response.rows;
+    _db_todos = db_response.rows;
+    return _db_todos;
+  } catch {
+    response.status = 401;
+    response.body = _db_todos;
+    return _db_todos;
+  }
+};
+
+const putTodo = async ({ params, response }) => {
+  console.log("PUT requeset to...",params);
+  try {
+    const nid = +(params.id);
+    console.log("PUT requeset to id", nid);
+    if (isNaN(nid)){
+      throw 'bad id';
+    }
+    let db_response = await executeQuery(
+      `SELECT done FROM
+        todos
+        WHERE id=$1
+      ;`, nid
+    );
+    if (db_response && db_response.rows && db_response.rows[0] && ( 'done' in db_response.rows[0])){
+      console.log('todo exists', nid, db_response);
+      db_response = await executeQuery(
+        `UPDATE todos
+          SET done=$1
+          WHERE id=$2
+          RETURNING *
+        ;`, true, nid
+      );
+      // console.log('test of RETURNING *:', db_response);
+      // db_response = await executeQuery(
+      //   `SELECT * FROM
+      //     todos
+      //     WHERE id=$1
+      //   ;`, nid
+      // );
+    } else {
+      console.log('todo does not exist', nid, db_response);
+      throw 'something went wrong'
+    }
+    console.log('todo with id', nid, 'is set to done');
+    response.status = 201;
+    response.body = db_response.rows;
+  } catch(error) {
+    console.log('error->', error, '<-error')
+    response.status = 503;
+    const bad = {
+      id: 666666666,
+      done: true,
+      content: "",  
+    }
+    response.body = bad;
+  }
+};
+
+const delTodo = async ({ params, response }) => {
+  console.log("DELETE requeset not yet fully tested");
+  try {
+    const nid = +(params.id);
+    console.log("DELETE requeset to id", nid);
+    if (isNaN(nid)){
+      throw 'bad id';
+    }
+    console.log("DELETE requeset pre query");
+    const db_response = await executeQuery(
+      `DELETE FROM
+        todos
+        WHERE id=$1
+      ;`, nid
+    );
+    console.log("DELETE requeset post query", db_response);
+    response.status = 202;
+    response.body = db_response.rows;
+  } catch(error) {
+    console.log('error->', error, '<-error')
+    response.status = 503;
+  }
 };
 
 const newTodo = async ({ request, response }) => {
@@ -225,4 +328,4 @@ const newTodo = async ({ request, response }) => {
 };
 
 // export { listTodos, newTodo, viewTodos, initTodoTable };
-export { initTodoTable, listTodos, newTodo, dbAlive };
+export { initTodoTable, listTodos, getTodo, putTodo, delTodo, newTodo, dbAlive };

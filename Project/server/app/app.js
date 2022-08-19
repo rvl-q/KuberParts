@@ -19,7 +19,7 @@ const root = ({ request, response }) => {
 };
 
 const check = async ({ response }) => {
-  console.log("Health check");
+  // console.log("Health check");
   response.status = await todoController.dbAlive();
   // response.status = 200;
   response.body = "";
@@ -28,6 +28,21 @@ const check = async ({ response }) => {
 const getTodos = async ({ request, response }) => {
   const resp_l = await todoController.listTodos({ request, response });
   response.body = resp_l;
+};
+
+const getTodo = async ({ params, response }) => {
+  const resp_l = await todoController.getTodo({ params, response });
+  // response.body = resp_l;
+  console.log(resp_l)
+};
+
+const putTodo = async ({ params, response }) => {
+  console.log("before inner PUT");
+  await todoController.putTodo({ params, response });
+};
+
+const delTodo = async ({ params, response }) => {
+  await todoController.delTodo({ params, response });
 };
 
 const newTodo = async ({ context, request, response }) => {
@@ -52,6 +67,9 @@ todoController.initTodoTable();
 router.get("/", root);
 router.get("/images/image.jpg", getImage);
 router.get("/todos", getTodos);
+router.get("/todos/:id", getTodo);
+router.put("/todos/:id", putTodo);
+router.delete("/todos/:id", delTodo);
 router.post("/todos", newTodo);
 router.get("/healthz", check);
 

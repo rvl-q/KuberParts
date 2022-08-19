@@ -1,0 +1,23 @@
+2022-08-19 16:58:29 serving image...
+2022-08-19 16:58:29 GET requeset to: http://localhost:8081/todos
+2022-08-19 16:58:49 before inner PUT
+2022-08-19 16:58:49 PUT requeset to... { id: "14" }
+2022-08-19 16:58:49 PUT requeset to id 14
+2022-08-19 16:58:49 todo exists 14 { rows: [ { done: false } ] }
+2022-08-19 16:58:49 todo with id 14 is set to done
+2022-08-19 16:59:02 Parameters were as follows:
+2022-08-19 16:59:02 { id: "14" }
+2022-08-19 16:59:02 The value of the id extracted from path is: 14
+2022-08-19 16:59:02 GET requeset to id 14
+2022-08-19 16:59:02 [ { id: 14, content: "put", done: true } ]
+2022-08-19 16:59:39 serving image...
+2022-08-19 16:59:39 GET requeset to: http://localhost:8081/todos
+2022-08-19 16:59:43 DELETE requeset not yet fully tested
+2022-08-19 16:59:43 DELETE requeset to id 14
+2022-08-19 16:59:43 DELETE requeset pre query
+2022-08-19 16:59:43 DELETE requeset post query { rows: [] }
+2022-08-19 17:00:07 Parameters were as follows:
+2022-08-19 17:00:07 { id: "14" }
+2022-08-19 17:00:07 The value of the id extracted from path is: 14
+2022-08-19 17:00:07 GET requeset to id 14
+2022-08-19 17:00:07 []

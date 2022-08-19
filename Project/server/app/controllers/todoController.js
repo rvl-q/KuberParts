@@ -190,9 +190,10 @@ const getTodo = async ({ params, response }) => {
 };
 
 const putTodo = async ({ params, response }) => {
-  console.log("PUT requeset to...");
+  console.log("PUT requeset to...",params);
   try {
-    const nid = +params.id;
+    const nid = +(params.id);
+    console.log("PUT requeset to id", nid);
     let db_response = await executeQuery(
       `SELECT done FROM
         todos

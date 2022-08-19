@@ -9,7 +9,7 @@ const handleDone = async (id) => {
   try{
     console.log('TODO_BACKEND_URL/id')
     console.log(`${TODO_BACKEND_URL}/:${id}`)
-    const { data } = await axios.put(`${TODO_BACKEND_URL}/:${id}`)
+    const { data } = await axios.put(`${TODO_BACKEND_URL}/${id}`)
     console.log('put for id:',id)
   } catch(err) {
     console.log('not yet... @id', id)

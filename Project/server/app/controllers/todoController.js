@@ -170,6 +170,25 @@ const listTodos = async ({ request }) => {
   // return new Response(JSON.stringify(todos), jsonResponseDetails);
 };
 
+const getTodo = async ({ params, response }) => {
+  // console.log("GET requeset to...");
+  console.log("Parameters were as follows:");
+  console.log(params);
+  console.log(`The value of the id extracted from path is: ${params.id}`);
+
+  let _db_todos = [];
+  const db_response = await executeQuery(
+    `SELECT * FROM
+      todos
+      WHERE id=1
+    ;`,
+  );
+  response.status = 201;
+  response.body = db_response.rows;
+  _db_todos = db_response.rows;
+  return _db_todos;
+};
+
 const newTodo = async ({ request, response }) => {
   const newTodo = {
     id: 999,
@@ -225,4 +244,4 @@ const newTodo = async ({ request, response }) => {
 };
 
 // export { listTodos, newTodo, viewTodos, initTodoTable };
-export { initTodoTable, listTodos, newTodo, dbAlive };
+export { initTodoTable, listTodos, getTodo, newTodo, dbAlive };

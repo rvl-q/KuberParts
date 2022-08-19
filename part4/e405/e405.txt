@@ -1,0 +1,10 @@
+2022-08-19 05:31:18	db setup done!
+2022-08-19 05:36:52	serving image...
+2022-08-19 05:36:52	...serving image..2
+2022-08-19 05:36:52	...serving image..3
+2022-08-19 05:36:52	GET requeset to: http://localhost:8081/todos
+2022-08-19 05:37:03	GET requeset to: http://localhost:8081/todos
+2022-08-19 05:37:13	Parameters were as follows:
+2022-08-19 05:37:13	{ id: "1" }
+2022-08-19 05:37:13	The value of the id extracted from path is: 1
+2022-08-19 05:37:13	[ { id: 1, content: "Exercise 4.02: Project v1.7", done: false } ]

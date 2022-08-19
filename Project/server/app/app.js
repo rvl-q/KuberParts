@@ -36,6 +36,14 @@ const getTodo = async ({ params, response }) => {
   console.log(resp_l)
 };
 
+const putTodo = ({ params, response }) => {
+  todoController.putTodo({ params, response });
+};
+
+const delTodo = ({ params, response }) => {
+  todoController.delTodo({ params, response });
+};
+
 const newTodo = async ({ context, request, response }) => {
   // console.log("before new todo");
   await todoController.newTodo({ context, request, response });
@@ -59,6 +67,8 @@ router.get("/", root);
 router.get("/images/image.jpg", getImage);
 router.get("/todos", getTodos);
 router.get("/todos/:id", getTodo);
+router.put("/todos/:id", putTodo);
+router.delete("/todos/:id", delTodo);
 router.post("/todos", newTodo);
 router.get("/healthz", check);
 

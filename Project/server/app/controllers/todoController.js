@@ -189,6 +189,44 @@ const getTodo = async ({ params, response }) => {
   return _db_todos;
 };
 
+const putTodo = async ({ params, response }) => {
+  console.log("PUT requeset to...");
+  try {
+    const nid = +params.id;
+    let db_response = await executeQuery(
+      `SELECT done FROM
+        todos
+        WHERE id=$1
+      ;`, nid
+    );
+    if (db_response && db_response.rows && db_response.rows[0]){
+      console.log('todo exists', nid, db_response);
+    }
+    response.status = 201;
+    response.body = db_response.rows;
+  } catch {
+    response.status = 503;
+    const bad = {
+      id: 666666666,
+      done: true,
+      content: "",  
+    }
+    response.body = bad;
+  }
+};
+
+const delTodo = async ({ params, response }) => {
+  console.log("DELETE requeset not yet implemented");
+  const db_response = await executeQuery(
+    `SELECT * FROM
+      todos
+      WHERE id=1
+    ;`,
+  );
+  response.status = 201;
+  response.body = db_response.rows;
+};
+
 const newTodo = async ({ request, response }) => {
   const newTodo = {
     id: 999,
@@ -244,4 +282,4 @@ const newTodo = async ({ request, response }) => {
 };
 
 // export { listTodos, newTodo, viewTodos, initTodoTable };
-export { initTodoTable, listTodos, getTodo, newTodo, dbAlive };
+export { initTodoTable, listTodos, getTodo, putTodo, delTodo, newTodo, dbAlive };

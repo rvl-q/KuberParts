@@ -214,7 +214,7 @@ const putTodo = async ({ params, response }) => {
         WHERE id=$1
       ;`, nid
     );
-    if (db_response && db_response.rows && db_response.rows[0]){
+    if (db_response && db_response.rows && db_response.rows[0] && ( 'done' in db_response.rows[0])){
       console.log('todo exists', nid, db_response);
       db_response = await executeQuery(
         `UPDATE todos
@@ -234,6 +234,7 @@ const putTodo = async ({ params, response }) => {
       console.log('todo does not exist', nid, db_response);
       throw 'something went wrong'
     }
+    console.log('todo with id', nid, 'is set to done');
     response.status = 201;
     response.body = db_response.rows;
   } catch(error) {

@@ -177,13 +177,12 @@ const getTodo = async ({ params, response }) => {
   console.log(params);
   console.log(`The value of the id extracted from path is: ${params.id}`);
   try {
+    let _db_todos = [];
     const nid = +(params.id);
     console.log("PUT requeset to id", nid);
     if (isNaN(nid)){
       throw 'bad id';
     }
-
-    let _db_todos = [];
     const db_response = await executeQuery(
       `SELECT * FROM
         todos
@@ -195,10 +194,9 @@ const getTodo = async ({ params, response }) => {
     _db_todos = db_response.rows;
     return _db_todos;
   } catch {
-    const empty = []
     response.status = 401;
-    response.body = empty;
-    return empty
+    response.body = _db_todos;
+    return _db_todos;
   }
 };
 
@@ -225,13 +223,13 @@ const putTodo = async ({ params, response }) => {
           RETURNING *
         ;`, true, nid
       );
-      console.log('test of RETURNING *:', db_response);
-      db_response = await executeQuery(
-        `SELECT * FROM
-          todos
-          WHERE id=$1
-        ;`, nid
-      );
+      // console.log('test of RETURNING *:', db_response);
+      // db_response = await executeQuery(
+      //   `SELECT * FROM
+      //     todos
+      //     WHERE id=$1
+      //   ;`, nid
+      // );
     } else {
       console.log('todo does not exist', nid, db_response);
       throw 'something went wrong'

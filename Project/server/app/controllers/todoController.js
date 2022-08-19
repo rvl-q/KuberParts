@@ -249,19 +249,21 @@ const putTodo = async ({ params, response }) => {
 };
 
 const delTodo = async ({ params, response }) => {
-  console.log("DELETE requeset not yet implemented");
+  console.log("DELETE requeset not yet fully tested");
   try {
     const nid = +(params.id);
-    console.log("PUT requeset to id", nid);
+    console.log("DELETE requeset to id", nid);
     if (isNaN(nid)){
       throw 'bad id';
     }
+    console.log("DELETE requeset pre query");
     const db_response = await executeQuery(
       `DELETE FROM
         todos
-        WHERE id=1
-      ;`,
+        WHERE id=$1
+      ;`, nid
     );
+    console.log("DELETE requeset post query", db_response);
     response.status = 201;
     response.body = db_response.rows;
   } catch(error) {

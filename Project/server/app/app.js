@@ -41,8 +41,8 @@ const putTodo = async ({ params, response }) => {
   await todoController.putTodo({ params, response });
 };
 
-const delTodo = ({ params, response }) => {
-  todoController.delTodo({ params, response });
+const delTodo = async ({ params, response }) => {
+  await todoController.delTodo({ params, response });
 };
 
 const newTodo = async ({ context, request, response }) => {

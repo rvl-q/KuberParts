@@ -9,7 +9,7 @@ import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 import * as nats from "https://deno.land/x/nats/src/mod.ts";
 
 // import the connect function
-import { connect } from "https://deno.land/x/nats/src/mod.ts";
+import { connect, StringCodec } from "https://deno.land/x/nats/src/mod.ts";
 
 // to create a connection to a nats-server:
 const nc = await connect({ servers: "nats://my-nats.default:4222" });

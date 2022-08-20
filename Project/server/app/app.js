@@ -11,6 +11,15 @@ import * as nats from "https://deno.land/x/nats/src/mod.ts";
 // import the connect function
 import { connect } from "https://deno.land/x/nats/src/mod.ts";
 
+// to create a connection to a nats-server:
+const nc = await connect({ servers: "nats://my-nats.default:4222" });
+
+// create a codec
+const sc = StringCodec();
+
+// todo_status
+nc.publish("todo_status", sc.encode("hello world"));
+
 const app = new Application();
 const router = new Router();
 const PORT = Deno.env.get("PORT");
@@ -53,6 +62,7 @@ const delTodo = async ({ params, response }) => {
 const newTodo = async ({ context, request, response }) => {
   // console.log("before new todo");
   await todoController.newTodo({ context, request, response });
+  nc.publish("todo_status", sc.encode("new todo!"));
   // console.log("after new todo");
 };
 

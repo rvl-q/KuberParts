@@ -12,7 +12,7 @@ import * as nats from "https://deno.land/x/nats/src/mod.ts";
 import { connect, StringCodec } from "https://deno.land/x/nats/src/mod.ts";
 
 // to create a connection to a nats-server:
-const nc = await connect({ servers: "nats://my-nats.default:4222" });
+const nc = await connect({ servers: "nats://my-nats-0.default:4222" });
 
 // create a codec
 const sc = StringCodec();

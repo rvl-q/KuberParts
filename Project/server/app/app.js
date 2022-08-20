@@ -20,7 +20,7 @@ console.log('beafter nats', nc)
 const sc = StringCodec();
 
 // todo_status
-nc.publish("todo_status", sc.encode("hello world"));
+nc.publish("tododata", sc.encode("hello world"));
 
 const app = new Application();
 const router = new Router();

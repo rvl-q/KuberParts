@@ -12,7 +12,9 @@ import * as nats from "https://deno.land/x/nats/src/mod.ts";
 import { connect, StringCodec } from "https://deno.land/x/nats/src/mod.ts";
 
 // to create a connection to a nats-server:
-const nc = await connect({ servers: "nats://my-nats-0.default:4222" });
+console.log('before nats')
+const nc = await connect({ servers: "nats://my-nats.default:4222" });
+console.log('beafter nats', nc)
 
 // create a codec
 const sc = StringCodec();
@@ -60,10 +62,10 @@ const delTodo = async ({ params, response }) => {
 };
 
 const newTodo = async ({ context, request, response }) => {
-  // console.log("before new todo");
+  console.log("before new todo");
   await todoController.newTodo({ context, request, response });
   nc.publish("todo_status", sc.encode("new todo!"));
-  // console.log("after new todo");
+  console.log("after new todo");
 };
 
 const getImage = async ({ request, response }) => {

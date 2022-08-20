@@ -6,6 +6,11 @@ import * as imageController from "./controllers/imageController.js";
 // import * as requestUtils from "./utils/requestUtils.js";
 import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
+import * as nats from "https://deno.land/x/nats/src/mod.ts";
+
+// import the connect function
+import { connect } from "../../src/mod.ts";
+
 const app = new Application();
 const router = new Router();
 const PORT = Deno.env.get("PORT");

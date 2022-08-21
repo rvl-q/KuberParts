@@ -4,7 +4,7 @@ metadata:
   name: proj01-dep
   namespace: project
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: proj01

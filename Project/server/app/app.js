@@ -11,6 +11,8 @@ import * as nats from "https://deno.land/x/nats/src/mod.ts";
 // import the connect function
 import { connect, StringCodec } from "https://deno.land/x/nats/src/mod.ts";
 
+const HOSTNAME = process.env.HOSTNAME
+
 // to create a connection to a nats-server:
 console.log('before nats')
 const nc = await connect({ servers: "nats://my-nats.default:4222" });
@@ -20,7 +22,7 @@ console.log('beafter nats', nc)
 const sc = StringCodec();
 
 // todo_status
-nc.publish("todo_status", sc.encode("Starting backend server!"));
+nc.publish("todo_status", sc.encode(`Starting backend server! ${HOSTNAME}`));
 
 const app = new Application();
 const router = new Router();
@@ -64,7 +66,8 @@ const delTodo = async ({ params, response }) => {
 const newTodo = async ({ context, request, response }) => {
   console.log("before new todo");
   const controllerResponse = await todoController.newTodo({ context, request, response });
-  nc.publish("todo_status", sc.encode("Received new todo:\n",JSON.stringify(controllerResponse,null,2)));
+  console.log(JSON.stringify(controllerResponse,null,2))
+  nc.publish("todo_status", sc.encode("Received new todo:\n"+JSON.stringify(controllerResponse,null,2)));
   console.log("after new todo");
 };
 

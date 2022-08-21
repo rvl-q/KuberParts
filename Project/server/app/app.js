@@ -64,7 +64,7 @@ const delTodo = async ({ params, response }) => {
 const newTodo = async ({ context, request, response }) => {
   console.log("before new todo");
   const controllerResponse = await todoController.newTodo({ context, request, response });
-  nc.publish("todo_status", sc.encode(JSON.stringify(controllerResponse)));
+  nc.publish("todo_status", sc.encode("Received new todo:\n",JSON.stringify(controllerResponse,null,2)));
   console.log("after new todo");
 };
 

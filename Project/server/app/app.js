@@ -11,7 +11,8 @@ import * as nats from "https://deno.land/x/nats/src/mod.ts";
 // import the connect function
 import { connect, StringCodec } from "https://deno.land/x/nats/src/mod.ts";
 
-const HOSTNAME = process.env.HOSTNAME
+// const HOSTNAME = process.env.HOSTNAME
+const HOSTNAME = Deno.env.get("HOSTNAME");
 
 // to create a connection to a nats-server:
 console.log('before nats')

@@ -63,7 +63,7 @@ const putTodo = async ({ params, response }) => {
 
 const delTodo = async ({ params, response }) => {
   const controllerResponse = await todoController.delTodo({ params, response });
-  nc.publish("todo_status", sc.encode("Todo deletion requested:\n"+controllerResponse));
+  nc.publish("todo_status", sc.encode("Todo deletion requested:\n"+JSON.stringify(controllerResponse,null,2)));
 };
 
   const newTodo = async ({ context, request, response }) => {

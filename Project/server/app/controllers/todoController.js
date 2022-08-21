@@ -248,7 +248,10 @@ const putTodo = async ({ params, response }) => {
       content: "",  
     }
     response.body = bad;
-    return {id: nid, success: false}
+    const resp = {
+      id: nid, success: false
+    }
+    return resp
   }
 };
 
@@ -270,11 +273,13 @@ const delTodo = async ({ params, response }) => {
     console.log("DELETE requeset post query", db_response);
     response.status = 202;
     response.body = db_response.rows;
-    return {id: nid, success: true}
+    const resp = {id: nid, success: true}
+    return resp
   } catch(error) {
     console.log('error->', error, '<-error')
     response.status = 503;
-    return {id: 'unknown', success: false}
+    const resp = {id: 'unknown', success: false}
+    return resp
   }
 };
 

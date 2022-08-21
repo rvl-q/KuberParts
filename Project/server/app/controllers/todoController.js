@@ -202,8 +202,9 @@ const getTodo = async ({ params, response }) => {
 
 const putTodo = async ({ params, response }) => {
   console.log("PUT requeset to...",params);
+  let nid = -1
   try {
-    const nid = +(params.id);
+    nid = +(params.id);
     console.log("PUT requeset to id", nid);
     if (isNaN(nid)){
       throw 'bad id';
@@ -237,6 +238,7 @@ const putTodo = async ({ params, response }) => {
     console.log('todo with id', nid, 'is set to done');
     response.status = 201;
     response.body = db_response.rows;
+    return db_response.rows[0];
   } catch(error) {
     console.log('error->', error, '<-error')
     response.status = 503;
@@ -246,6 +248,7 @@ const putTodo = async ({ params, response }) => {
       content: "",  
     }
     response.body = bad;
+    return {id: nid, success: false}
   }
 };
 
@@ -267,9 +270,11 @@ const delTodo = async ({ params, response }) => {
     console.log("DELETE requeset post query", db_response);
     response.status = 202;
     response.body = db_response.rows;
+    return {id: nid, success: true}
   } catch(error) {
     console.log('error->', error, '<-error')
     response.status = 503;
+    return {id: 'unknown', success: false}
   }
 };
 

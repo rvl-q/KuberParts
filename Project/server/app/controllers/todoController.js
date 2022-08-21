@@ -315,11 +315,15 @@ const newTodo = async ({ request, response }) => {
       console.log("Updated todos! id:", id);
       newTodo.id = id;
       response.body = newTodo;
+      return newTodo
     } else {
       console.log("Rejected!");
       // response.status = 400; // maybe not a good idea...
       response.status = 422; // better?
       response.body = { bad_request: "422" };
+      newTodo.id = -1;
+      newTodo.content = "Rejected!";
+      return newTodo
     }
   }
 

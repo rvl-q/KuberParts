@@ -20,7 +20,7 @@ console.log('beafter nats', nc)
 const sc = StringCodec();
 
 // todo_status
-nc.publish("tododata", sc.encode("hello world"));
+nc.publish("todo_status", sc.encode("Starting backend server!"));
 
 const app = new Application();
 const router = new Router();
@@ -63,8 +63,8 @@ const delTodo = async ({ params, response }) => {
 
 const newTodo = async ({ context, request, response }) => {
   console.log("before new todo");
-  await todoController.newTodo({ context, request, response });
-  nc.publish("todo_status", sc.encode("new todo!"));
+  const controllerResponse = await todoController.newTodo({ context, request, response });
+  nc.publish("todo_status", sc.encode(JSON.stringify(controllerResponse)));
   console.log("after new todo");
 };
 

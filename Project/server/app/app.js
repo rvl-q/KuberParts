@@ -6,6 +6,25 @@ import * as imageController from "./controllers/imageController.js";
 // import * as requestUtils from "./utils/requestUtils.js";
 import { oakCors } from "https://deno.land/x/cors@v1.2.2/mod.ts";
 
+// import * as nats from "https://deno.land/x/nats/src/mod.ts";
+
+// import the connect function
+import { connect, StringCodec } from "https://deno.land/x/nats/src/mod.ts";
+
+// const HOSTNAME = process.env.HOSTNAME
+const HOSTNAME = Deno.env.get("HOSTNAME");
+
+// to create a connection to a nats-server:
+console.log('before nats')
+const nc = await connect({ servers: "nats://my-nats.default:4222" });
+console.log('beafter nats', nc)
+
+// create a codec
+const sc = StringCodec();
+
+// todo_status
+nc.publish("todo_status", sc.encode(`Starting backend server! ${HOSTNAME}`));
+
 const app = new Application();
 const router = new Router();
 const PORT = Deno.env.get("PORT");
@@ -38,17 +57,21 @@ const getTodo = async ({ params, response }) => {
 
 const putTodo = async ({ params, response }) => {
   console.log("before inner PUT");
-  await todoController.putTodo({ params, response });
+  const controllerResponse = await todoController.putTodo({ params, response });
+  nc.publish("todo_status", sc.encode("Todo mark as done:\n"+JSON.stringify(controllerResponse,null,2)));
 };
 
 const delTodo = async ({ params, response }) => {
-  await todoController.delTodo({ params, response });
+  const controllerResponse = await todoController.delTodo({ params, response });
+  nc.publish("todo_status", sc.encode("Todo deletion requested:\n"+JSON.stringify(controllerResponse,null,2)));
 };
 
-const newTodo = async ({ context, request, response }) => {
-  // console.log("before new todo");
-  await todoController.newTodo({ context, request, response });
-  // console.log("after new todo");
+  const newTodo = async ({ context, request, response }) => {
+  console.log("before new todo");
+  const controllerResponse = await todoController.newTodo({ context, request, response });
+  console.log(JSON.stringify(controllerResponse,null,2))
+  nc.publish("todo_status", sc.encode("Received new todo:\n"+JSON.stringify(controllerResponse,null,2)));
+  console.log("after new todo");
 };
 
 const getImage = async ({ request, response }) => {

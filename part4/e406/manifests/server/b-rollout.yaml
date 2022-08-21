@@ -1,13 +1,25 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: proj01-dep
   namespace: project
 spec:
-  replicas: 3
+  replicas: 4
   selector:
     matchLabels:
       app: proj01
+  strategy:
+    canary:
+      steps:
+      - setWeight: 25
+      - pause:
+          duration: 1m
+      - setWeight: 50
+      - pause:
+          duration: 1m
+      - analysis:
+          templates:
+          - templateName: cpu-rate
   template:
     metadata:
       labels:
@@ -36,9 +48,6 @@ spec:
             failureThreshold: 5
             # Override pod-level terminationGracePeriodSeconds #
             terminationGracePeriodSeconds: 60
-
-          # image: rvlq/project:latest
-          # image: rvlq/project:v1.2
           envFrom:
             - secretRef:
                 name: pg-secrets
@@ -46,6 +55,9 @@ spec:
           - name: shared-share
             mountPath: /app/images
           resources:
+            requests:
+              memory: "64Mi"
+              cpu: "20m"
             limits:
               memory: "128Mi"
               cpu: "100m"

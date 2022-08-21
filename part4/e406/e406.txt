@@ -1,0 +1,59 @@
+rvl@eb: Project $ kubectl apply -k manifests/broadcaster/
+secret/telegram-bot-token unchanged
+deployment.apps/broadcaster created
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS        AGE
+daily-todo-27681840--1-wzzrz   0/1     Completed   0               2d1h
+postgres-ss-0                  1/1     Running     2 (4d19h ago)   5d18h
+daily-todo-27683280--1-frlkc   0/1     Completed   0               18h
+proj02-dep-86597cb478-qbw48    1/1     Running     0               42h
+daily-todo-27684720--1-gpbg2   0/1     Completed   0               95m
+proj01-dep-785485bd56-tdlpl    1/1     Running     0               29m
+proj01-dep-785485bd56-f6pxq    1/1     Running     0               29m
+proj01-dep-785485bd56-bcgn5    1/1     Running     0               29m
+broadcaster-55847ddffc-scftv   1/1     Running     0               12s
+broadcaster-55847ddffc-8d697   1/1     Running     0               12s
+broadcaster-55847ddffc-bvcnv   1/1     Running     0               12s
+broadcaster-55847ddffc-6htn6   1/1     Running     0               12s
+broadcaster-55847ddffc-kt9tp   1/1     Running     0               12s
+broadcaster-55847ddffc-d9fln   1/1     Running     0               12s
+rvl@eb: Project $ kubectl apply -k manifests/server/
+service/proj01-svc unchanged
+deployment.apps/proj01-dep configured
+ingress.networking.k8s.io/prj-back-ingress unchanged
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS              RESTARTS        AGE
+daily-todo-27681840--1-wzzrz   0/1     Completed           0               2d1h
+postgres-ss-0                  1/1     Running             2 (4d19h ago)   5d18h
+daily-todo-27683280--1-frlkc   0/1     Completed           0               18h
+proj02-dep-86597cb478-qbw48    1/1     Running             0               42h
+daily-todo-27684720--1-gpbg2   0/1     Completed           0               99m
+proj01-dep-785485bd56-tdlpl    1/1     Running             0               33m
+proj01-dep-785485bd56-f6pxq    1/1     Running             0               33m
+proj01-dep-785485bd56-bcgn5    1/1     Running             0               32m
+broadcaster-55847ddffc-scftv   1/1     Running             0               3m36s
+broadcaster-55847ddffc-8d697   1/1     Running             0               3m36s
+broadcaster-55847ddffc-bvcnv   1/1     Running             0               3m36s
+broadcaster-55847ddffc-6htn6   1/1     Running             0               3m36s
+broadcaster-55847ddffc-kt9tp   1/1     Running             0               3m36s
+broadcaster-55847ddffc-d9fln   1/1     Running             0               3m36s
+proj01-dep-58756449d9-x5mpn    0/1     ContainerCreating   0               3s
+rvl@eb: Project $ kubectl get pods
+NAME                           READY   STATUS      RESTARTS        AGE
+daily-todo-27681840--1-wzzrz   0/1     Completed   0               2d1h
+postgres-ss-0                  1/1     Running     2 (4d19h ago)   5d18h
+daily-todo-27683280--1-frlkc   0/1     Completed   0               18h
+proj02-dep-86597cb478-qbw48    1/1     Running     0               42h
+daily-todo-27684720--1-gpbg2   0/1     Completed   0               101m
+broadcaster-55847ddffc-scftv   1/1     Running     0               6m2s
+broadcaster-55847ddffc-8d697   1/1     Running     0               6m2s
+broadcaster-55847ddffc-bvcnv   1/1     Running     0               6m2s
+broadcaster-55847ddffc-6htn6   1/1     Running     0               6m2s
+broadcaster-55847ddffc-kt9tp   1/1     Running     0               6m2s
+broadcaster-55847ddffc-d9fln   1/1     Running     0               6m2s
+proj01-dep-58756449d9-x5mpn    1/1     Running     0               2m29s
+proj01-dep-58756449d9-x7ndf    1/1     Running     0               2m19s
+proj01-dep-58756449d9-qd4tm    1/1     Running     0               2m9s
+rvl@eb: Project $ curl -X DELETE http://localhost:8081/todos/444
+[]rvl@eb: Project $ curl -X DELETE http://localhost:8081/todos/todo
+rvl@eb: Project $ 

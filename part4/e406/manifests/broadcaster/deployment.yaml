@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: broadcaster
+  namespace: project
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      app: broadcaster
+  template:
+    metadata:
+      labels:
+        app: broadcaster
+    spec:
+      containers:
+        - name: broadcaster
+          image: rvlq/broadcaster@sha256:ff8f435239a458ddba34c9a8ab9d825f40a9c5671eb0ad8706000dc5325fa8be
+          env:
+            - name: NATS_URL
+              value: nats://my-nats.default:4222
+            - name: TELEGRAM_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: telegram-bot-token
+                  key: TOKEN                  
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

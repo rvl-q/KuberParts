@@ -1,0 +1,147 @@
+Before:
+
+rvl@eb: Project $ kubectl get namespaces
+NAME              STATUS   AGE
+default           Active   63d
+kube-system       Active   63d
+kube-public       Active   63d
+kube-node-lease   Active   63d
+prometheus        Active   48d
+loki-stack        Active   48d
+exercises         Active   9d
+project           Active   6d17h
+argo-rollouts     Active   6d14h
+rvl@eb: Project $ kubectl get all -n prometheus 
+NAME                                                                  READY   STATUS    RESTARTS         AGE
+pod/kube-prometheus-stack-1657-operator-6b5b44b5c6-4mk47              1/1     Running   6 (5d17h ago)    48d
+pod/kube-prometheus-stack-1657015078-prometheus-node-exporter-csbck   1/1     Running   11 (24h ago)     48d
+pod/alertmanager-kube-prometheus-stack-1657-alertmanager-0            2/2     Running   14 (24h ago)     48d
+pod/kube-prometheus-stack-1657015078-prometheus-node-exporter-d2wbz   1/1     Running   11 (24h ago)     48d
+pod/kube-prometheus-stack-1657015078-grafana-75fc54dc-psppg           3/3     Running   18 (5d17h ago)   48d
+pod/kube-prometheus-stack-1657015078-kube-state-metrics-68dd56t5p9k   1/1     Running   9 (24h ago)      48d
+pod/kube-prometheus-stack-1657015078-prometheus-node-exporter-mcrmh   1/1     Running   13 (24h ago)     48d
+pod/prometheus-kube-prometheus-stack-1657-prometheus-0                2/2     Running   13 (24h ago)     48d
+
+NAME                                                                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+service/kube-prometheus-stack-1657015078-prometheus-node-exporter   ClusterIP   10.43.87.68     <none>        9100/TCP                     48d
+service/kube-prometheus-stack-1657015078-grafana                    ClusterIP   10.43.182.203   <none>        80/TCP                       48d
+service/kube-prometheus-stack-1657-alertmanager                     ClusterIP   10.43.130.182   <none>        9093/TCP                     48d
+service/kube-prometheus-stack-1657015078-kube-state-metrics         ClusterIP   10.43.214.223   <none>        8080/TCP                     48d
+service/kube-prometheus-stack-1657-prometheus                       ClusterIP   10.43.159.122   <none>        9090/TCP                     48d
+service/kube-prometheus-stack-1657-operator                         ClusterIP   10.43.8.50      <none>        443/TCP                      48d
+service/alertmanager-operated                                       ClusterIP   None            <none>        9093/TCP,9094/TCP,9094/UDP   48d
+service/prometheus-operated                                         ClusterIP   None            <none>        9090/TCP                     48d
+
+NAME                                                                       DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/kube-prometheus-stack-1657015078-prometheus-node-exporter   3         3         3       3            3           <none>          48d
+
+NAME                                                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/kube-prometheus-stack-1657-operator                   1/1     1            1           48d
+deployment.apps/kube-prometheus-stack-1657015078-grafana              1/1     1            1           48d
+deployment.apps/kube-prometheus-stack-1657015078-kube-state-metrics   1/1     1            1           48d
+
+NAME                                                                             DESIRED   CURRENT   READY   AGE
+replicaset.apps/kube-prometheus-stack-1657-operator-6b5b44b5c6                   1         1         1       48d
+replicaset.apps/kube-prometheus-stack-1657015078-grafana-75fc54dc                1         1         1       48d
+replicaset.apps/kube-prometheus-stack-1657015078-kube-state-metrics-68dd567978   1         1         1       48d
+
+NAME                                                                    READY   AGE
+statefulset.apps/alertmanager-kube-prometheus-stack-1657-alertmanager   1/1     48d
+statefulset.apps/prometheus-kube-prometheus-stack-1657-prometheus       1/1     48d
+rvl@eb: Project $ kubectl get all -n loki-stack 
+NAME                      READY   STATUS    RESTARTS        AGE
+pod/loki-promtail-z6qrl   1/1     Running   6 (5d17h ago)   48d
+pod/loki-promtail-qd58r   1/1     Running   6 (5d17h ago)   48d
+pod/loki-promtail-2nz2p   1/1     Running   6 (5d17h ago)   48d
+pod/loki-0                1/1     Running   16 (24h ago)    48d
+
+NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/loki-memberlist   ClusterIP   None           <none>        7946/TCP   48d
+service/loki-headless     ClusterIP   None           <none>        3100/TCP   48d
+service/loki              ClusterIP   10.43.230.46   <none>        3100/TCP   48d
+
+NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/loki-promtail   3         3         3       3            3           <none>          48d
+
+NAME                    READY   AGE
+statefulset.apps/loki   1/1     48d
+rvl@eb: Project $ kubectl get all -n argo-rollouts 
+NAME                                READY   STATUS    RESTARTS      AGE
+pod/argo-rollouts-845b79ff9-c5nv5   1/1     Running   3 (24h ago)   6d14h
+
+NAME                            TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+service/argo-rollouts-metrics   ClusterIP   10.43.110.96   <none>        8090/TCP   6d14h
+
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/argo-rollouts   1/1     1            1           6d14h
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/argo-rollouts-845b79ff9   1         1         1       6d14h
+rvl@eb: Project $ kubectl get all -n default 
+NAME                               READY   STATUS    RESTARTS      AGE
+pod/my-nats-box-54c676d4fc-z5vpc   1/1     Running   0             2d20h
+pod/my-nats-0                      3/3     Running   2 (24h ago)   2d20h
+
+NAME                   TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                                                 AGE
+service/kubernetes     ClusterIP   10.43.0.1    <none>        443/TCP                                                 63d
+service/postgres-svc   ClusterIP   None         <none>        5432/TCP                                                50d
+service/my-nats        ClusterIP   None         <none>        4222/TCP,6222/TCP,8222/TCP,7777/TCP,7422/TCP,7522/TCP   2d20h
+
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/my-nats-box   1/1     1            1           2d20h
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/my-nats-box-54c676d4fc   1         1         1       2d20h
+
+NAME                       READY   AGE
+statefulset.apps/my-nats   1/1     2d20h
+rvl@eb: Project $ 
+rvl@eb: Project $ kubectl get all -n kube-
+kube-node-lease  kube-public      kube-system      
+rvl@eb: Project $ kubectl get all -n kube-system 
+NAME                                          READY   STATUS      RESTARTS         AGE
+pod/helm-install-traefik-crd--1-sfn8d         0/1     Completed   0                63d
+pod/helm-install-traefik--1-wp99n             0/1     Completed   1                63d
+pod/svclb-traefik-xpwdt                       2/2     Running     14 (5d17h ago)   63d
+pod/local-path-provisioner-84bb864455-p8z72   1/1     Running     10 (5d17h ago)   63d
+pod/svclb-traefik-jp9jl                       2/2     Running     14 (5d17h ago)   63d
+pod/svclb-traefik-d6vdl                       2/2     Running     14 (5d17h ago)   63d
+pod/coredns-96cc4f57d-nk7c8                   1/1     Running     15 (24h ago)     63d
+pod/metrics-server-ff9dbcb6c-7ltw2            1/1     Running     27 (24h ago)     63d
+pod/traefik-56c4b88c4b-2vbfq                  1/1     Running     24 (24h ago)     63d
+
+NAME                                                         TYPE           CLUSTER-IP     EXTERNAL-IP                        PORT(S)                        AGE
+service/kube-dns                                             ClusterIP      10.43.0.10     <none>                             53/UDP,53/TCP,9153/TCP         63d
+service/metrics-server                                       ClusterIP      10.43.13.135   <none>                             443/TCP                        63d
+service/kube-prometheus-stack-1657-kube-etcd                 ClusterIP      None           <none>                             2379/TCP                       48d
+service/kube-prometheus-stack-1657-kube-scheduler            ClusterIP      None           <none>                             10251/TCP                      48d
+service/kube-prometheus-stack-1657-kube-controller-manager   ClusterIP      None           <none>                             10257/TCP                      48d
+service/kube-prometheus-stack-1657-coredns                   ClusterIP      None           <none>                             9153/TCP                       48d
+service/kube-prometheus-stack-1657-kube-proxy                ClusterIP      None           <none>                             10249/TCP                      48d
+service/kube-prometheus-stack-1657-kubelet                   ClusterIP      None           <none>                             10250/TCP,10255/TCP,4194/TCP   48d
+service/traefik                                              LoadBalancer   10.43.8.231    172.28.0.2,172.28.0.3,172.28.0.4   80:31819/TCP,443:32201/TCP     63d
+
+NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE
+daemonset.apps/svclb-traefik   3         3         3       3            3           <none>          63d
+
+NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/local-path-provisioner   1/1     1            1           63d
+deployment.apps/coredns                  1/1     1            1           63d
+deployment.apps/metrics-server           1/1     1            1           63d
+deployment.apps/traefik                  1/1     1            1           63d
+
+NAME                                                DESIRED   CURRENT   READY   AGE
+replicaset.apps/local-path-provisioner-84bb864455   1         1         1       63d
+replicaset.apps/coredns-96cc4f57d                   1         1         1       63d
+replicaset.apps/metrics-server-ff9dbcb6c            1         1         1       63d
+replicaset.apps/traefik-56c4b88c4b                  1         1         1       63d
+
+NAME                                 COMPLETIONS   DURATION   AGE
+job.batch/helm-install-traefik-crd   1/1           35s        63d
+job.batch/helm-install-traefik       1/1           38s        63d
+rvl@eb: Project $ kubectl get all -n kube-public 
+No resources found in kube-public namespace.
+rvl@eb: Project $ kubectl get all -n kube-node-lease 
+No resources found in kube-node-lease namespace.
+rvl@eb: Project $ 
+

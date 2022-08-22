@@ -3,3 +3,7 @@ kind: Kustomization
 resources:
 - deployment.yaml
 - secret.yaml
+images:
+- name: IMAGE_PLACEHOLDER
+  newName: rvlq/broadcaster
+  newTag: fdafd7088d04892815ed037cf30ca4f61c7af2f7

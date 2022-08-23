@@ -56,7 +56,7 @@ export const TODO_BACKEND_URL = "http://localhost:8081/todos";
   return(
   <div>
   <h1>Todos!</h1>
-    <h2>Exercise 4.04: Project v1.8</h2>
+    <h2>Exercise 4.08: Project v2.1</h2>
       <img className='App-displayed'  src={TODO_IMAGE_URL} alt='daily pic'/>
       <p></p>
       <form onSubmit={addTodo}>

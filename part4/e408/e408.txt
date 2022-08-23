@@ -22,3 +22,13 @@ flux create helmrelease my-nats --chart nats \
   --chart-version 0.17.5 \
   --namespace default \
   --export
+
+
+
+(combined from similar events): kustomize build failed: accumulating resources: accumulation err='accumulating resources from 
+'../broadcaster': read /tmp/kustomization-1037449073/Project/manifests/broadcaster: is a directory': recursed accumulation of 
+path '/tmp/kustomization-1037449073/Project/manifests/broadcaster': accumulating resources: accumulation err='accumulating 
+resources from 'secret.yaml': open /tmp/kustomization-1037449073/Project/manifests/broadcaster/secret.yaml: no such file or 
+directory': must build at directory: not a valid directory: evalsymlink failure on 
+'/tmp/kustomization-1037449073/Project/manifests/broadcaster/secret.yaml' : 
+lstat /tmp/kustomization-1037449073/Project/manifests/broadcaster/secret.yaml: no such file or directory

@@ -1,0 +1,24 @@
+https://fluxcd.io/docs/use-cases/helm/
+
+helm repo add nats https://nats-io.github.io/k8s/helm/charts/
+
+helm repo add traefik https://helm.traefik.io/traefik
+helm install my-traefik traefik/traefik \
+  --version 9.18.2 \
+  --namespace traefik
+
+flux create source helm traefik --url https://helm.traefik.io/traefik --namespace traefik
+flux create helmrelease my-traefik --chart traefik \
+  --source HelmRepository/traefik \
+  --chart-version 9.18.2 \
+  --namespace traefik
+
+flux create source helm nats --url https://nats-io.github.io/k8s/helm/charts/ --namespace default --export nats-helm.yaml
+
+helm install my-nats nats/nats
+
+flux create helmrelease my-nats --chart nats \
+  --source HelmRepository/nats \
+  --chart-version 0.17.5 \
+  --namespace default \
+  --export

@@ -4,6 +4,7 @@ resources:
 - namespace.yaml
 - cronjob.yaml
 - analysistemplate.yaml
+- secret.enc.yaml
 bases:
   - "../client"
   - "../server"

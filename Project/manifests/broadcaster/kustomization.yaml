@@ -2,4 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
 - deployment.yaml
-- secret.yaml
+- secret.enc.yaml
+images:
+- name: IMAGE_PLACEHOLDER
+  newName: rvlq/broadcaster
+  newTag: d5dddef2c2f14f1091cf08f770e1c0fcf92fa8b3

@@ -1,6 +1,6 @@
 # Exercise 4.07: GitOpsify Cluster
 
-Fokkowed the example, in this repo: https://github.com/rvl-q/dwk-kube-cluster
+Followed the example, in this repo: https://github.com/rvl-q/dwk-kube-cluster
 
 `hashgenerator` appeared, but did not go away without delering it in the cluster.
 

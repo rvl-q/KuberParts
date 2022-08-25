@@ -16,4 +16,6 @@ spec:
       containers:
         - name: countdown-controller
           image: rvlq/dwk-app10-controller:latest
+          # image: rvlq/dwk-app10-controller:go
+          # image: sasumaki/dwk-app10:sha-666420
           # image: jakousa/dwk-app10-controller:sha-4256579

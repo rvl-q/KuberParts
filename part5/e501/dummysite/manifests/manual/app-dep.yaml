@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dummysite-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dummysite-app
+  template:
+    metadata:
+      labels:
+        app: dummysite-app
+    spec:
+      containers:
+        - name: dummysite-app
+          image: rvlq/dummy:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"

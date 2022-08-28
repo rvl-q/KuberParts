@@ -1,0 +1,54 @@
+rvl@eb: e502 $ 
+rvl@eb: e502 $ kubectl config set-context --current --namespace=project 
+Context "k3d-k3s-default" modified.
+rvl@eb: e502 $ kubectl get po
+NAME                           READY   STATUS      RESTARTS         AGE
+daily-todo-27690480--1-ndvbf   0/1     Completed   0                3d6h
+daily-todo-27691920--1-2fn84   0/1     Completed   0                2d1h
+broadcaster-7684c88cbd-l9wnf   1/1     Running     2 (46h ago)      5d5h
+broadcaster-7684c88cbd-dpxrb   1/1     Running     3 (46h ago)      5d16h
+broadcaster-7684c88cbd-nwklq   1/1     Running     4 (46h ago)      5d5h
+broadcaster-7684c88cbd-tv224   1/1     Running     3 (46h ago)      5d16h
+broadcaster-7684c88cbd-2xd54   1/1     Running     4 (46h ago)      5d16h
+postgres-ss-0                  1/1     Running     2 (46h ago)      5d5h
+broadcaster-7684c88cbd-qcz5w   1/1     Running     4 (46h ago)      5d16h
+daily-todo-27693360--1-7nkmr   0/1     Completed   0                22h
+proj02-dep-588857d6b8-bgprs    1/1     Running     0                46h
+proj01-dep-58756449d9-nbl7d    1/1     Running     30 (7h45m ago)   5d16h
+proj01-dep-58756449d9-6wd74    1/1     Running     30 (7h45m ago)   5d16h
+proj01-dep-58756449d9-8scst    1/1     Running     30 (5h6m ago)    5d16h
+rvl@eb: e502 $ kubectl get po
+NAME                           READY   STATUS        RESTARTS         AGE
+daily-todo-27691920--1-2fn84   0/1     Completed     0                2d1h
+postgres-ss-0                  1/1     Running       2 (46h ago)      5d5h
+daily-todo-27693360--1-7nkmr   0/1     Completed     0                23h
+proj01-dep-58756449d9-8scst    1/1     Running       30 (5h27m ago)   5d16h
+daily-todo-27694800--1-5fxfg   0/1     Completed     0                18m
+proj01-dep-58756449d9-pr5ks    1/1     Running       0                17m
+broadcaster-78c89cc444-nbfhx   2/2     Running       0                36s
+broadcaster-78c89cc444-fck8x   2/2     Running       0                36s
+broadcaster-78c89cc444-swxg4   2/2     Running       0                36s
+broadcaster-78c89cc444-drdds   2/2     Running       0                33s
+broadcaster-7684c88cbd-pmrm4   1/1     Terminating   0                17m
+broadcaster-78c89cc444-drnn2   2/2     Running       0                32s
+broadcaster-7684c88cbd-5m4p5   1/1     Terminating   0                17m
+broadcaster-78c89cc444-74trp   2/2     Running       0                32s
+proj02-dep-7cc597ff4d-bhrpf    2/2     Running       0                36s
+proj01-dep-59fb86494b-8j7fp    2/2     Running       0                36s
+proj01-dep-59fb86494b-bmttc    1/2     Running       0                16s
+rvl@eb: e502 $ kubectl get po
+NAME                           READY   STATUS      RESTARTS      AGE
+daily-todo-27691920--1-2fn84   0/1     Completed   0             2d1h
+postgres-ss-0                  1/1     Running     2 (46h ago)   5d5h
+daily-todo-27693360--1-7nkmr   0/1     Completed   0             23h
+daily-todo-27694800--1-5fxfg   0/1     Completed   0             20m
+broadcaster-78c89cc444-nbfhx   2/2     Running     0             2m39s
+broadcaster-78c89cc444-fck8x   2/2     Running     0             2m39s
+broadcaster-78c89cc444-swxg4   2/2     Running     0             2m39s
+broadcaster-78c89cc444-drdds   2/2     Running     0             2m36s
+broadcaster-78c89cc444-drnn2   2/2     Running     0             2m35s
+broadcaster-78c89cc444-74trp   2/2     Running     0             2m35s
+proj02-dep-7cc597ff4d-bhrpf    2/2     Running     0             2m39s
+proj01-dep-59fb86494b-8j7fp    2/2     Running     0             2m39s
+proj01-dep-59fb86494b-bmttc    2/2     Running     0             2m19s
+proj01-dep-59fb86494b-jdlbq    2/2     Running     0             119s

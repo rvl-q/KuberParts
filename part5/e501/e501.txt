@@ -1,0 +1,142 @@
+rvl@eb: dummysite $ kubectl apply -f manifests/deployment.yaml 
+deployment.apps/dummysite-controller-dep created
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS    RESTARTS      AGE
+my-nats-0                                  3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running   2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-969bx   1/1     Running   0             106s
+rvl@eb: dummysite $ kubectl apply -f manifests/dummysitex.yaml
+dummysite.stable.dwk/dummysite-gen created
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS    RESTARTS      AGE
+my-nats-0                                  3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running   2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-969bx   0/1     Error     1 (4s ago)    2m42s
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS    RESTARTS      AGE
+my-nats-0                                  3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running   2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-969bx   0/1     Error     1 (13s ago)   2m51s
+rvl@eb: dummysite $ kubectl delete -f manifests/deployment.yaml 
+deployment.apps "dummysite-controller-dep" deleted
+rvl@eb: dummysite $ kubectl get po
+NAME                           READY   STATUS    RESTARTS      AGE
+my-nats-0                      3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c   1/1     Running   2 (30h ago)   5d2h
+rvl@eb: dummysite $ 
+rvl@eb: dummysite $ kubectl get po
+NAME                           READY   STATUS    RESTARTS      AGE
+my-nats-0                      3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c   1/1     Running   2 (30h ago)   5d2h
+rvl@eb: dummysite $ kubectl apply -f manifests/deployment.yaml 
+deployment.apps/dummysite-controller-dep created
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS              RESTARTS      AGE
+my-nats-0                                  3/3     Running             6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running             2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-sg948   0/1     ContainerCreating   0             5s
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS    RESTARTS      AGE
+my-nats-0                                  3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running   2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-sg948   1/1     Running   0             13s
+dummysite-gen-dep-64477d69c6-rqzh8         1/1     Running   0             5s
+rvl@eb: dummysite $ kubectl delete -f manifests/dummysitex.yaml
+dummysite.stable.dwk "dummysite-gen" deleted
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS    RESTARTS      AGE
+my-nats-0                                  3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running   2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-sg948   1/1     Running   0             67s
+rvl@eb: dummysite $ kubectl apply -f manifests/dummysitex.yaml
+dummysite.stable.dwk/dummysite-gen created
+rvl@eb: dummysite $ kubectl get po
+NAME                                       READY   STATUS    RESTARTS      AGE
+my-nats-0                                  3/3     Running   6 (30h ago)   5d2h
+my-nats-box-54c676d4fc-4vp4c               1/1     Running   2 (30h ago)   5d2h
+dummysite-controller-dep-dc684686b-sg948   1/1     Running   0             119s
+dummysite-gen-dep-64477d69c6-tqp89         1/1     Running   0             3s
+rvl@eb: dummysite $ curl localhost:8081
+<!doctype html>
+<html>
+<head>
+    <title>Example Domain</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+    body {
+        background-color: #f0f0f2;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        
+    }
+    div {
+        width: 600px;
+        margin: 5em auto;
+        padding: 2em;
+        background-color: #fdfdff;
+        border-radius: 0.5em;
+        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+    }
+    a:link, a:visited {
+        color: #38488f;
+        text-decoration: none;
+    }
+    @media (max-width: 700px) {
+        div {
+            margin: 0 auto;
+            width: auto;
+        }
+    }
+    </style>    
+</head>
+
+<body>
+<div>
+    <h1>Example Domain</h1>
+    <p>This domain is for use in illustrative examples in documents. You may use this
+    domain in literature without prior coordination or asking for permission.</p>
+    <p><a href="https://www.iana.org/domains/example">More information...</a></p>
+</div>
+</body>
+</html>
+rvl@eb: dummysite $ 
+rvl@eb: dummysite $ kubectl get ingress
+NAME                CLASS    HOSTS   ADDRESS                            PORTS   AGE
+dummysite-gen-ing   <none>   *       172.18.0.2,172.18.0.3,172.18.0.4   80      3m14s
+rvl@eb: dummysite $ kubectl get service
+NAME                TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                                                 AGE
+kubernetes          ClusterIP   10.43.0.1       <none>        443/TCP                                                 5d5h
+my-nats             ClusterIP   None            <none>        4222/TCP,6222/TCP,8222/TCP,7777/TCP,7422/TCP,7522/TCP   5d2h
+dummysite-gen-svc   ClusterIP   10.43.241.140   <none>        2345/TCP                                                11m
+rvl@eb: dummysite $ kubectl config set-context --current --namespace=test
+Context "k3d-k3s-default" modified.
+rvl@eb: dummysite $ kubectl get all
+No resources found in test namespace.
+rvl@eb: dummysite $ kubectl apply -f manifests/dummysite.yaml
+dummysite.stable.dwk/dummysite-gen created
+rvl@eb: dummysite $ kubectl get all
+NAME                                     READY   STATUS    RESTARTS   AGE
+pod/dummysite-gen-dep-595cdc89f4-x4z25   1/1     Running   0          5s
+
+NAME                        TYPE        CLUSTER-IP    EXTERNAL-IP   PORT(S)    AGE
+service/dummysite-gen-svc   ClusterIP   10.43.239.5   <none>        2345/TCP   5s
+
+NAME                                READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dummysite-gen-dep   1/1     1            1           6s
+
+NAME                                           DESIRED   CURRENT   READY   AGE
+replicaset.apps/dummysite-gen-dep-595cdc89f4   1         1         1       6s
+rvl@eb: dummysite $ kubectl get ingress
+NAME                CLASS    HOSTS            ADDRESS                            PORTS   AGE
+dummysite-gen-ing   <none>   test.localhost   172.18.0.2,172.18.0.3,172.18.0.4   80      38s
+rvl@eb: dummysite $ curl test.localhost:8081| wc
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3723k  100 3723k    0     0  50.4M      0 --:--:-- --:--:-- --:--:-- 50.4M
+  39493  400405 3812592
+rvl@eb: dummysite $ 
+

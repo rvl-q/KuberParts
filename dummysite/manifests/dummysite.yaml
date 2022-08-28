@@ -1,0 +1,8 @@
+apiVersion: stable.dwk/v1
+kind: DummySite
+metadata:
+  name: dummysite-gen
+spec:
+  # website_url: https://example.com/
+  website_url: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.25/
+  image: rvlq/dummy:latest

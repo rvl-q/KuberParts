@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- f-deployment.yml
+# - f-rollout.yaml
+- f-service.yaml
+- f-ingress.yaml
+images:
+- name: IMAGE_PLACEHOLDER
+  newName: rvlq/proj-front
+  newTag: 2fc9c392e0b862398796abe0cff542bd36c310a5

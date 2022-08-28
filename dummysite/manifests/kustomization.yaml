@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# The controller doesn't have to work perfectly in all circumstances.
+# The following workflow should succeed:
+#*1. apply role, account and binding.
+# 2. apply deployment.
+# 3. apply DummySite
+resources:
+- clusterrole.yaml
+- serviceaccount.yaml
+- clusterrolebinding.yaml
+- resourcedefinition.yaml
+# 2.
+# - deployment.yaml
+# 3.
+# - dummysitex.yaml

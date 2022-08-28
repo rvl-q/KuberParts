@@ -1,21 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dummysite-controller-dep
+  name: dummysite-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dummysite-controller
+      app: dummysite-app
   template:
     metadata:
       labels:
-        app: dummysite-controller
+        app: dummysite-app
     spec:
-      serviceAccountName: dummysite-controller-account
       containers:
-        - name: dummysite-controller
-          image: rvlq/dwk-dummysite-controller:latest
+        - name: dummysite-app
+          image: rvlq/dummy:latest
           imagePullPolicy: Always
           resources:
             limits:

@@ -1,0 +1,18 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dummysite-test-ing
+  namespace: test
+spec:
+  rules: 
+  - host: test.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dummysite-gen-svc
+            port:
+              number: 2345

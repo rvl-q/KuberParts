@@ -25,7 +25,7 @@ spec:
 ```
 
 ![Screenshot example.com](ScreenshoExampleCom.png)
-Web page scraping not fully implemented, as focus was on the custom controller. Works OK for `example.com`, but below css and scripts are missing.
+Web page scraping not fully implemented, as focus was on the custom controller. Works OK for `example.com`, but below css and scripts are intentionally missing.
 ![Screenshot](Screensho.png)
 
 ## Test steps

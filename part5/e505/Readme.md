@@ -25,7 +25,8 @@ kubectl patch configmap/config-network \
 Ping-pong:
 ```
 $ kubectl apply -k manifests/
-
+  ...
+  
 $ kubectl get revisions,routes
 NAME                                            CONFIG NAME   K8S SERVICE NAME   GENERATION   READY   REASON   ACTUAL REPLICAS   DESIRED REPLICAS
 revision.serving.knative.dev/ping-pong-dwk-v0   ping-pong                        1            True             0                 0

@@ -1,0 +1,47 @@
+rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ kubectl get po
+No resources found in exercises namespace.
+rvl@eb: ping-pong $ kubectl get revisions,routes
+No resources found in exercises namespace.
+rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ kubectl apply -k manifests/
+secret/pg-secrets created
+service.serving.knative.dev/ping-pong created
+service/postgres-svc created
+statefulset.apps/postgres-ss created
+rvl@eb: ping-pong $ kubectl get po
+NAME                                           READY   STATUS    RESTARTS   AGE
+postgres-ss-0                                  1/1     Running   0          4s
+ping-pong-dwk-v0-deployment-75d7488ddb-spkxz   2/2     Running   0          2s
+rvl@eb: ping-pong $ kubectl get revisions,routes
+NAME                                            CONFIG NAME   K8S SERVICE NAME   GENERATION   READY   REASON   ACTUAL REPLICAS   DESIRED REPLICAS
+revision.serving.knative.dev/ping-pong-dwk-v0   ping-pong                        1            True             1                 1
+
+NAME                                  URL                                      READY   REASON
+route.serving.knative.dev/ping-pong   http://ping-pong.exercises.example.com   True    
+rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 5rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 6rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 7rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 8rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 9rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 10rvl@eb: ping-pong $ 
+rvl@eb: ping-pong $ kubectl get po
+NAME                                           READY   STATUS    RESTARTS   AGE
+postgres-ss-0                                  1/1     Running   0          63s
+ping-pong-dwk-v0-deployment-75d7488ddb-spkxz   2/2     Running   0          61s
+rvl@eb: ping-pong $ kubectl get po
+NAME                                           READY   STATUS        RESTARTS   AGE
+postgres-ss-0                                  1/1     Running       0          116s
+ping-pong-dwk-v0-deployment-75d7488ddb-spkxz   2/2     Terminating   0          114s
+rvl@eb: ping-pong $ kubectl get po
+NAME            READY   STATUS    RESTARTS   AGE
+postgres-ss-0   1/1     Running   0          2m20s
+rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 11rvl@eb: ping-kubectl get po
+NAME                                           READY   STATUS    RESTARTS   AGE
+postgres-ss-0                                  1/1     Running   0          2m30s
+ping-pong-dwk-v0-deployment-75d7488ddb-9l5n6   2/2     Running   0          4s
+rvl@eb: ping-pong $ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 12rvl@eb: ping-pong $ 
+

@@ -22,12 +22,19 @@ kubectl patch configmap/config-network \
   --patch '{"data":{"ingress-class":"contour.ingress.networking.knative.dev"}}'
 ```
 
-Busybox:
+Ping-pong:
 ```
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/kubernetes/master/hack/testdata/recursive/pod/pod/busybox.yaml
-```
+$ kubectl apply -k manifests/
 
-```
+$ kubectl get revisions,routes
+NAME                                            CONFIG NAME   K8S SERVICE NAME   GENERATION   READY   REASON   ACTUAL REPLICAS   DESIRED REPLICAS
+revision.serving.knative.dev/ping-pong-dwk-v0   ping-pong                        1            True             0                 0
+
+NAME                                  URL                                      READY   REASON
+route.serving.knative.dev/ping-pong   http://ping-pong.exercises.example.com   True    
+
+$ curl -H "Host: ping-pong.exercises.example.com" http://localhost:8081/pingpong
+pong 13
 ```
 
 [Possible logs](e505.txt)

@@ -1,0 +1,1296 @@
+Script started on 2022-08-28 23:24:26+03:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="155" LINES="44"]
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl apply -k github.com/fluxcd/flagger/kustomize/linkerd
+customresourcedefinition.apiextensions.k8s.io/alertproviders.flagger.app created
+customresourcedefinition.apiextensions.k8s.io/canaries.flagger.app created
+customresourcedefinition.apiextensions.k8s.io/metrictemplates.flagger.app created
+serviceaccount/flagger created
+clusterrole.rbac.authorization.k8s.io/flagger created
+clusterrolebinding.rbac.authorization.k8s.io/flagger created
+deployment.apps/flagger created
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n linkerd rollout status deploy/flagger
+deployment "flagger" successfully rolled out
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl create ns test && \
+>   kubectl apply -f https://run.linkerd.io/flagger.yml
+namespace/test created
+deployment.apps/load created
+configmap/frontend created
+deployment.apps/frontend created
+service/frontend created
+deployment.apps/podinfo created
+service/podinfo created
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test rollout status deploy podinfo
+deployment "podinfo" successfully rolled out
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test port-forward svc/frontend 8080
+Forwarding from 127.0.0.1:8080 -> 8080
+Forwarding from [::1]:8080 -> 8080
+Handling connection for 8080
+Handling connection for 8080
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl apply -f - <<EOF
+> apiVersion: flagger.app/v1beta1
+> kind: Canary
+> metadata:
+>   name: podinfo
+>   namespace: test
+> spec:
+>   targetRef:
+>     apiVersion: apps/v1
+>     kind: Deployment
+>     name: podinfo
+>   service:
+>     port: 9898
+>   analysis:
+>     interval: 10s
+>     threshold: 5
+>     stepWeight: 10
+>     maxWeight: 100
+>     metrics:
+>     - name: request-success-rate
+>       thresholdRange:
+>         min: 99
+>       interval: 1m
+>     - name: request-duration
+>       thresholdRange:
+>         max: 500
+>       interval: 1m
+> EOF
+canary.flagger.app/podinfo created
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ [22P(reverse-i-search)`':[Cp': kubectl apply -f - <<EOF
+apiVersion: flagger.app/v1beta1
+kind: Canary
+metadata:
+  name: podinfo
+  namespace: test
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: podinfo
+  service:
+    port: 9898
+  analysis:
+    interval: 10s
+    threshold: 5
+    stepWeight: 10
+    maxWeight: 100
+    metrics:
+    - name: request-success-rate
+      thresholdRange:
+        min: 99
+      interval: 1m
+    - name: request-duration
+      thresholdRange:
+        max: 500
+      interval: 1m
+EOF[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[1@o
+
+
+
+
+
+
+
+
+
+
+
+[C[C[C[C[A[A[C[C[C[C[C[C[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[1@d
+
+
+
+
+
+
+
+
+
+[C[C[C[C[C[C[C[C[C[C[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[6Ps': kubectl get pods 
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K
+[K[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl get pods [C[C[C[C[C-n test
+NAME                               READY   STATUS    RESTARTS   AGE
+load-7f97579865-tcpqq              2/2     Running   0          5m56s
+frontend-6957977dc7-7pp7t          2/2     Running   0          5m56s
+podinfo-primary-7b5496d9f6-7xnkx   2/2     Running   0          27s
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get ev --watch
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+6m38s       Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+6m38s       Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+6m38s       Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+6m38s       Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+6m38s       Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+6m38s       Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+6m37s       Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+6m37s       Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+6m38s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+6m38s       Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+6m37s       Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+6m37s       Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+6m37s       Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+6m37s       Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+6m37s       Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+6m37s       Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+6m37s       Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+6m37s       Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+6m36s       Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+6m36s       Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+6m36s       Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+6m36s       Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+6m36s       Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+6m36s       Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+6m36s       Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+6m36s       Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+6m36s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+6m36s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+6m36s       Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+6m36s       Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+6m36s       Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+6m35s       Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+6m35s       Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+6m35s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+6m35s       Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+6m35s       Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+6m31s       Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+6m31s       Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+6m31s       Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+6m31s       Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+6m30s       Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+6m30s       Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+6m29s       Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+6m29s       Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+6m29s       Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+69s         Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+69s         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+69s         Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+69s         Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+68s         Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+68s         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+68s         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+68s         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+68s         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+68s         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+68s         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+68s         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+68s         Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+63s         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+63s         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+63s         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+59s         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+59s         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+59s         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+59s         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+9s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+9s          Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+0s          Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+0s          Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+0s          Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+0s          Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+0s          Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+0s          Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get ev --watch[K[K[K[K[K[K[K[K
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+12m         Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+12m         Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+12m         Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+12m         Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+12m         Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+12m         Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+12m         Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+12m         Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+12m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+12m         Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+12m         Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+12m         Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+12m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+12m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+12m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+12m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+12m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+12m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+12m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+12m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+12m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+12m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+12m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+12m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+12m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+12m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+12m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+12m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+12m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+12m         Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+12m         Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+12m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+12m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+12m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+12m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+12m         Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+12m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+12m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+12m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+12m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+12m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+12m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+12m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+12m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+12m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+6m44s       Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+6m44s       Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+6m44s       Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+6m44s       Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+6m44s       Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+6m43s       Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+6m43s       Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+6m43s       Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+6m43s       Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+6m43s       Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+6m43s       Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+6m43s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+6m43s       Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+6m38s       Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+6m38s       Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+6m38s       Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+6m34s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+6m34s       Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+6m34s       Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+6m34s       Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+4m54s       Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+94s         Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ echo ???
+???
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get svc
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+frontend          ClusterIP   10.43.9.186     <none>        8080/TCP   17m
+podinfo-canary    ClusterIP   10.43.250.6     <none>        9898/TCP   11m
+podinfo-primary   ClusterIP   10.43.122.128   <none>        9898/TCP   11m
+podinfo           ClusterIP   10.43.160.200   <none>        9898/TCP   17m
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi check
+Error: unknown command "smi" for "linkerd"
+Run 'linkerd --help' for usage.
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl -sL https://linkerd.github.io/linkerd-smi/install | sh
+Downloading linkerd-smi-0.2.0-linux-amd64...
+https://github.com/linkerd/linkerd-smi/releases/download/v0.2.0/linkerd-smi-0.2.0-linux-amd64
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+ 16 33.7M   16 5647k    0     0  4546k      0  0:00:07  0:00:01  0:00:06 4546k 48 33.7M   48 16.2M    0     0  7418k      0  0:00:04  0:00:02  0:00:02 10.7M 80 33.7M   80 27.1M    0     0  8567k      0  0:00:04  0:00:03  0:00:01 10.8M100 33.7M  100 33.7M    0     0  9013k      0  0:00:03  0:00:03 --:--:-- 10.8M
+Download complete!
+
+Validating checksum...
+Checksum valid.
+
+Linkerd SMI v0.2.0 was successfully installed 🎉
+
+
+Add the linkerd bin folder to your path with:
+
+  export PATH=$PATH:/home/rvl/.linkerd2/bin
+
+Now run:
+
+  linkerd smi install | kubectl apply -f -   # install the SMI extension
+  linkerd smi check                          # validate everything worked!
+
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl -sL https://linkerd.github.io/linkerd-smi/install | sh[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clinkerd smi check[K
+linkerd-smi
+-----------
+[31;1m×[0m linkerd-smi extension Namespace exists
+    could not find the smi extension
+    see https://linkerd.io/2/checks/#l5d-smi-ns-exists for hints
+
+Status check results are [31;1m×[0m
+exit status 1
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi install | kubectl apply -f -
+namespace/linkerd-smi created
+deployment.apps/smi-adaptor created
+clusterrole.rbac.authorization.k8s.io/smi-adaptor created
+clusterrolebinding.rbac.authorization.k8s.io/smi-adaptor created
+serviceaccount/smi-adaptor created
+customresourcedefinition.apiextensions.k8s.io/trafficsplits.split.smi-spec.io created
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi install | kubectl apply -f -check[K
+linkerd-smi
+-----------
+[32;1m√[0m linkerd-smi extension Namespace exists
+[32;1m√[0m SMI extension service account exists
+[32;1m√[0m SMI extension pods are injected
+[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m-[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m\[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m|[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[1m/[0m smi-adaptor-5788b875d4-pf8p2 status is Pending [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[32;1m√[0m SMI extension pods are running
+[32;1m√[0m SMI extension proxies are healthy
+
+Status check results are [32;1m√[0m
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi checkinstall | kubectl apply -f -check[Kcurl -sL https://linkerd.github.io/linkerd-smi/install | sh[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Clinkerd smi check[Kkubectl -n test get svc[15Pecho ???kubectl -n test get ev
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+21m         Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+21m         Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+21m         Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+21m         Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+21m         Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+21m         Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+21m         Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+21m         Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+21m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+21m         Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+21m         Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+21m         Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+21m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+21m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+21m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+21m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+21m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+21m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+21m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+21m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+21m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+21m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+21m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+21m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+21m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+21m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+21m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+21m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+21m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+21m         Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+21m         Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+21m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+21m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+21m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+21m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+21m         Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+21m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+21m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+21m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+21m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+21m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+21m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+21m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+21m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+21m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+16m         Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+16m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+16m         Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+16m         Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+16m         Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+16m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+16m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+16m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+16m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+16m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+16m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+16m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+16m         Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+16m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+16m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+16m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+16m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+16m         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+16m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+16m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+14m         Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+79s         Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+14s         Normal    Created                 trafficsplit/podinfo                    Created Service Profile podinfo.test.svc.cluster.local
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test set image deployment/podinfo \
+>   podinfod=quay.io/stefanprodan/podinfo:1.7.1
+deployment.apps/podinfo image updated
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get ev --watch
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+26m         Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+26m         Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+26m         Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+26m         Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+26m         Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+26m         Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+26m         Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+26m         Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+26m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+26m         Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+26m         Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+26m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+26m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+26m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+26m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+26m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+26m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+26m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+26m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+26m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+26m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+26m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+26m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+26m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+26m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+26m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+26m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+26m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+26m         Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+26m         Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+26m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+26m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+26m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+26m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+26m         Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+26m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+26m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+26m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+26m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+26m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+26m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+26m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+26m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+26m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+20m         Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+20m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+20m         Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+20m         Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+20m         Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+20m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+20m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+20m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+20m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+20m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+20m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+20m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+20m         Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+20m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+20m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+20m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+20m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+20m         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+20m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+20m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+19m         Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+5m42s       Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+4m37s       Normal    Created                 trafficsplit/podinfo                    Created Service Profile podinfo.test.svc.cluster.local
+2s          Normal    Synced                  canary/podinfo                          New revision detected! Scaling up podinfo.test
+2s          Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-69c49997fd to 1
+2s          Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+2s          Normal    SuccessfulCreate        replicaset/podinfo-69c49997fd           Created pod: podinfo-69c49997fd-w968n
+1s          Normal    Scheduled               pod/podinfo-69c49997fd-w968n            Successfully assigned test/podinfo-69c49997fd-w968n to k3d-k3s-default-agent-1
+1s          Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+1s          Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-init
+1s          Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-init
+0s          Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+0s          Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-proxy
+0s          Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-proxy
+0s          Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:56:20 +0000 UTC: 1249a1049619390691329217af15fbe8911dcf2625b0be4f2a636ef6e9f99fb9
+0s          Normal    Pulling                 pod/podinfo-69c49997fd-w968n            Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+0s          Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.951617917s
+0s          Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container podinfod
+0s          Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container podinfod
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-8c47cb554 to 1
+0s          Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+0s          Normal    SuccessfulCreate        replicaset/podinfo-primary-8c47cb554    Created pod: podinfo-primary-8c47cb554-9sf8c
+0s          Normal    Scheduled               pod/podinfo-primary-8c47cb554-9sf8c     Successfully assigned test/podinfo-primary-8c47cb554-9sf8c to k3d-k3s-default-server-0
+0s          Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+0s          Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-init
+0s          Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-init
+0s          Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+0s          Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-proxy
+0s          Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-proxy
+0s          Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:58:20 +0000 UTC: 38ab3b8b3e5b2f5b05046854daf20b7de76be33c87e84b7be5d750d19569719e
+0s          Normal    Pulling                 pod/podinfo-primary-8c47cb554-9sf8c     Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+0s          Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.935557941s
+0s          Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container podinfod
+0s          Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container podinfod
+0s          Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-7b5496d9f6 to 0
+0s          Normal    SuccessfulDelete        replicaset/podinfo-primary-7b5496d9f6   Deleted pod: podinfo-primary-7b5496d9f6-7xnkx
+0s          Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container linkerd-proxy
+0s          Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container podinfod
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-69c49997fd to 0
+0s          Normal    SuccessfulDelete        replicaset/podinfo-69c49997fd           Deleted pod: podinfo-69c49997fd-w968n
+0s          Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container linkerd-proxy
+0s          Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container podinfod
+0s          Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Liveness probe failed: Get "http://10.42.2.229:4191/live": dial tcp 10.42.2.229:4191: connect: connection refused
+0s          Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Readiness probe failed: Get "http://10.42.2.229:4191/ready": dial tcp 10.42.2.229:4191: connect: connection refused
+0s          Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container podinfod
+0s          Warning   FailedKillPod           pod/podinfo-69c49997fd-w968n            error killing pod: failed to "KillContainer" for "podinfod" with KillContainerError: "rpc error: code = NotFound desc = an error occurred when try to find container \"a0a96f76569946e93fbd0bdfd6e9228a2b7e56790e26081f9ce68b6e2ef8815c\": not found"
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ watch kubectl -n test get canary
+[?1049h[22;0;0t[1;44r(B[m[4l[?7h[H[2JEvery 2,0s: kubectl -n test get canary[1;165HEB8560w20: Mon Aug 29 00:00:12 2022[3;1HNAME[11GSTATUS[23GWEIGHT   LASTTRANSITIONTIME[4dpodinfo   Succeeded   0[4;32H2022-08-28T20:58:18Z[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;194H9[44;199H[1;193H21[44;199H[1;194H3[44;199H[1;194H5[44;199H[1;194H7[44;199H[1;194H9[44;199H[1;193H32[44;199H[1;194H4[44;199H[1;194H6[44;199H[1;194H8[44;199H[1;193H40[44;199H[1;194H2[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;194H9[44;199H[1;193H51[44;199H[1;194H3[44;199H[1;194H5[44;199H[1;194H7[44;199H[1;191H1:00[44;199H[1;194H2[44;199H[1;194H4[44;199H[1;194H6[44;199H[1;194H8[44;199H[1;193H10[44;199H[1;194H2[44;199H[1;194H5[44;199H[1;194H7[44;199H[1;194H9[44;199H[1;193H21[44;199H[1;194H3[44;199H[1;194H5[44;199H[1;194H7[44;199H[1;193H30[44;199H[1;194H2[44;199H[1;194H4[44;199H[1;194H6[44;199H[1;194H8[44;199H[1;193H40[44;199H[1;194H3[44;199H[1;194H5[44;199H[1;194H7[44;199H[44;1H[?1049l[23;0;0t[?1l>]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get trafficsplit podinfo -o yaml
+apiVersion: split.smi-spec.io/v1alpha2
+kind: TrafficSplit
+metadata:
+  creationTimestamp: "2022-08-28T20:51:18Z"
+  generation: 12
+  name: podinfo
+  namespace: test
+  ownerReferences:
+  - apiVersion: flagger.app/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Canary
+    name: podinfo
+    uid: d84c1d9e-85f0-49ce-b464-c20554f42d9b
+  resourceVersion: "664247"
+  uid: 5624b166-bee6-411d-bdf7-e4367309ce90
+spec:
+  backends:
+  - service: podinfo-canary
+    weight: "0"
+  - service: podinfo-primary
+    weight: "100"
+  service: podinfo
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ watch linkerd viz -n test stat deploy --from deploy/load
+[?1049h[22;0;0t[1;44r(B[m[4l[?7h[H[2JEvery 2,0s: linkerd viz -n test stat deploy --from deploy/load[1;165HEB8560w20: Mon Aug 29 00:03:36 2022[3;1HNAME[3;19HMESHED   SUCCESS[42GRPS   LATENCY_P50   LATENCY_P95   LATENCY_P99   TCP_CONN[4dpodinfo[4;22H0/0[4;34H-[4;44H-[4;58H-[4;72H-[4;86H-[4;97H-[5dpodinfo-primary[22G1/1   100.00%   10.0rps[5;56H1ms[5;70H2ms[5;84H2ms[5;97H1[44;199H[1;194H9[44;199H[1;193H41[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;194H9[44;199H[1;193H52[44;199H[1;194H5[44;199H[1;194H8[44;199H[1;191H4:00[44;199H[1;194H3[44;199H[1;194H6[44;199H[1;194H9[44;199H[1;193H12[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;193H20[44;199H[1;194H3[44;199H[1;194H5[44;199H[1;194H8[44;199H[1;193H31[44;199H[1;194H4[44;199H[1;194H6[44;199H[1;194H9[44;199H[1;193H42[44;199H[1;194H5[44;199H[1;194H7[44;199H[1;193H50[44;199H[1;194H3[44;199H[1;194H6[44;199H[1;194H8[44;199H[1;191H5:01[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;194H9[44;199H[1;193H12[44;199H[1;194H5[44;199H[1;194H8[44;199H[1;193H20[44;199H[1;194H3[44;199H[1;194H6[44;199H[1;194H9[44;199H[1;193H31[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;193H40[44;199H[1;194H2[44;199H[1;194H5[44;199H[1;194H8[44;199H[1;193H51[44;199H[1;194H4[44;199H[1;194H6[44;199H[1;194H9[44;199H[1;191H6:02[44;199H[1;194H5[44;199H[1;194H7[44;199H[1;193H10[44;199H[1;194H3[44;199H[1;194H6[44;199H[1;194H8[44;199H[1;193H21[44;199H[1;194H4[44;199H[1;194H7[44;199H[1;194H9[44;199H[44;1H[?1049l[23;0;0t[?1l>]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl apply -k github.com/fluxcd/flagger/kustomize/linkerd
+customresourcedefinition.apiextensions.k8s.io/alertproviders.flagger.app unchanged
+customresourcedefinition.apiextensions.k8s.io/canaries.flagger.app unchanged
+customresourcedefinition.apiextensions.k8s.io/metrictemplates.flagger.app unchanged
+serviceaccount/flagger unchanged
+clusterrole.rbac.authorization.k8s.io/flagger unchanged
+clusterrolebinding.rbac.authorization.k8s.io/flagger unchanged
+deployment.apps/flagger configured
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n linkerd rollout status deploy/flagger
+deployment "flagger" successfully rolled out
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl apply -f https://run.linkerd.io/flagger.yml
+deployment.apps/load unchanged
+configmap/frontend unchanged
+deployment.apps/frontend unchanged
+service/frontend unchanged
+deployment.apps/podinfo configured
+service/podinfo configured
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test rollout status deploy podinfo
+deployment "podinfo" successfully rolled out
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl apply -f - <<EOF
+> apiVersion: flagger.app/v1beta1
+> kind: Canary
+> metadata:
+>   name: podinfo
+>   namespace: test
+> spec:
+>   targetRef:
+>     apiVersion: apps/v1
+>     kind: Deployment
+>     name: podinfo
+>   service:
+>     port: 9898
+>   analysis:
+>     interval: 10s
+>     threshold: 5
+>     stepWeight: 10
+>     maxWeight: 100
+>     metrics:
+>     - name: request-success-rate
+>       thresholdRange:
+>         min: 99
+>       interval: 1m
+>     - name: request-duration
+>       thresholdRange:
+>         max: 500
+>       interval: 1m
+> EOF
+canary.flagger.app/podinfo unchanged
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get ev --watch
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+41m         Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+41m         Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+41m         Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+41m         Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+41m         Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+41m         Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+41m         Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+41m         Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+41m         Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+41m         Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+41m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+41m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+41m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+41m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+41m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+41m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+41m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+41m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+41m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+41m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+41m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+41m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+41m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+41m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+41m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+41m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+41m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+41m         Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+41m         Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+41m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+41m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+41m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+41m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+41m         Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+41m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+41m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+41m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+41m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+41m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+41m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+41m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+41m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+41m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+36m         Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+36m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+36m         Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+36m         Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+36m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+36m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+36m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+36m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+36m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+36m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+36m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+36m         Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+36m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+36m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+36m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+36m         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+36m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+36m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+34m         Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+21m         Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+20m         Normal    Created                 trafficsplit/podinfo                    Created Service Profile podinfo.test.svc.cluster.local
+15m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-69c49997fd to 1
+15m         Normal    SuccessfulCreate        replicaset/podinfo-69c49997fd           Created pod: podinfo-69c49997fd-w968n
+15m         Normal    Scheduled               pod/podinfo-69c49997fd-w968n            Successfully assigned test/podinfo-69c49997fd-w968n to k3d-k3s-default-agent-1
+15m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+15m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-init
+15m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-init
+15m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+15m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-proxy
+15m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-proxy
+15m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:56:20 +0000 UTC: 1249a1049619390691329217af15fbe8911dcf2625b0be4f2a636ef6e9f99fb9
+15m         Normal    Pulling                 pod/podinfo-69c49997fd-w968n            Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+15m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.951617917s
+15m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container podinfod
+15m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container podinfod
+13m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-8c47cb554 to 1
+13m         Normal    SuccessfulCreate        replicaset/podinfo-primary-8c47cb554    Created pod: podinfo-primary-8c47cb554-9sf8c
+13m         Normal    Scheduled               pod/podinfo-primary-8c47cb554-9sf8c     Successfully assigned test/podinfo-primary-8c47cb554-9sf8c to k3d-k3s-default-server-0
+13m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+13m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-init
+13m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-init
+13m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+13m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-proxy
+13m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-proxy
+13m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:58:20 +0000 UTC: 38ab3b8b3e5b2f5b05046854daf20b7de76be33c87e84b7be5d750d19569719e
+13m         Normal    Pulling                 pod/podinfo-primary-8c47cb554-9sf8c     Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+13m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.935557941s
+13m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container podinfod
+13m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container podinfod
+13m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-7b5496d9f6 to 0
+13m         Normal    SuccessfulDelete        replicaset/podinfo-primary-7b5496d9f6   Deleted pod: podinfo-primary-7b5496d9f6-7xnkx
+13m         Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container linkerd-proxy
+13m         Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container podinfod
+13m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-69c49997fd to 0
+13m         Normal    SuccessfulDelete        replicaset/podinfo-69c49997fd           Deleted pod: podinfo-69c49997fd-w968n
+13m         Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container linkerd-proxy
+13m         Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Liveness probe failed: Get "http://10.42.2.229:4191/live": dial tcp 10.42.2.229:4191: connect: connection refused
+13m         Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Readiness probe failed: Get "http://10.42.2.229:4191/ready": dial tcp 10.42.2.229:4191: connect: connection refused
+13m         Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container podinfod
+13m         Warning   FailedKillPod           pod/podinfo-69c49997fd-w968n            error killing pod: failed to "KillContainer" for "podinfod" with KillContainerError: "rpc error: code = NotFound desc = an error occurred when try to find container \"a0a96f76569946e93fbd0bdfd6e9228a2b7e56790e26081f9ce68b6e2ef8815c\": not found"
+3m34s       Normal    Synced                  canary/podinfo                          New revision detected! Scaling up podinfo.test
+3m34s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+3m34s       Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+3m34s       Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-rkj9m
+3m33s       Normal    Scheduled               pod/podinfo-7bfd46f477-rkj9m            Successfully assigned test/podinfo-7bfd46f477-rkj9m to k3d-k3s-default-agent-0
+3m33s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+3m33s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container linkerd-init
+3m33s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container linkerd-init
+3m33s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+3m32s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container linkerd-proxy
+3m32s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container linkerd-proxy
+3m32s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:08:20 +0000 UTC: 49fbffee18d8b756b344e4f4538beb3f29536cfcbf6a4a68e27206b70665ed5f
+3m32s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "quay.io/stefanprodan/podinfo:1.7.0" already present on machine
+3m32s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container podinfod
+3m32s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container podinfod
+3m24s       Normal    Synced                  canary/podinfo                          (combined from similar events): Starting canary analysis for podinfo.test
+104s        Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-c56fd4756 to 1
+104s        Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+104s        Normal    SuccessfulCreate        replicaset/podinfo-primary-c56fd4756    Created pod: podinfo-primary-c56fd4756-fzmtg
+103s        Normal    Scheduled               pod/podinfo-primary-c56fd4756-fzmtg     Successfully assigned test/podinfo-primary-c56fd4756-fzmtg to k3d-k3s-default-agent-1
+103s        Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+103s        Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container linkerd-init
+103s        Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container linkerd-init
+103s        Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+103s        Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container linkerd-proxy
+103s        Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container linkerd-proxy
+103s        Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:10:09 +0000 UTC: e46bc9c452671ee31c7ca96e92c7da0eaed66393c31e1503645d54feebcbb495
+103s        Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "quay.io/stefanprodan/podinfo:1.7.0" already present on machine
+103s        Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container podinfod
+103s        Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container podinfod
+101s        Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-8c47cb554 to 0
+101s        Normal    SuccessfulDelete        replicaset/podinfo-primary-8c47cb554    Deleted pod: podinfo-primary-8c47cb554-9sf8c
+101s        Normal    Killing                 pod/podinfo-primary-8c47cb554-9sf8c     Stopping container linkerd-proxy
+101s        Normal    Killing                 pod/podinfo-primary-8c47cb554-9sf8c     Stopping container podinfod
+84s         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+84s         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-rkj9m
+84s         Normal    Killing                 pod/podinfo-7bfd46f477-rkj9m            Stopping container linkerd-proxy
+84s         Normal    Killing                 pod/podinfo-7bfd46f477-rkj9m            Stopping container podinfod
+84s         Warning   Unhealthy               pod/podinfo-7bfd46f477-rkj9m            Liveness probe failed: Get "http://10.42.1.72:4191/live": dial tcp 10.42.1.72:4191: connect: connection refused
+84s         Warning   Unhealthy               pod/podinfo-7bfd46f477-rkj9m            Readiness probe failed: Get "http://10.42.1.72:4191/ready": dial tcp 10.42.1.72:4191: connect: connection refused
+9s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get ev --watch[K[K[K[K[K[K[K[K
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+43m         Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+43m         Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+43m         Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+43m         Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+43m         Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+43m         Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+43m         Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+43m         Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+43m         Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+43m         Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+43m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+43m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+43m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+43m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+43m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+43m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+43m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+43m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+43m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+43m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+43m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+43m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+43m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+43m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+43m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+43m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+43m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+43m         Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+43m         Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+43m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+43m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+43m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+43m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+43m         Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+43m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+43m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+43m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+43m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+43m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+43m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+43m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+43m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+43m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+38m         Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+38m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+38m         Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+38m         Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+38m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+38m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+38m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+38m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+38m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+38m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+38m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+38m         Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+38m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+38m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+38m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+38m         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+38m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+38m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+36m         Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+23m         Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+21m         Normal    Created                 trafficsplit/podinfo                    Created Service Profile podinfo.test.svc.cluster.local
+17m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-69c49997fd to 1
+17m         Normal    SuccessfulCreate        replicaset/podinfo-69c49997fd           Created pod: podinfo-69c49997fd-w968n
+17m         Normal    Scheduled               pod/podinfo-69c49997fd-w968n            Successfully assigned test/podinfo-69c49997fd-w968n to k3d-k3s-default-agent-1
+17m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+17m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-init
+17m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-init
+17m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+17m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-proxy
+17m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-proxy
+17m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:56:20 +0000 UTC: 1249a1049619390691329217af15fbe8911dcf2625b0be4f2a636ef6e9f99fb9
+17m         Normal    Pulling                 pod/podinfo-69c49997fd-w968n            Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+17m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.951617917s
+17m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container podinfod
+17m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container podinfod
+15m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-8c47cb554 to 1
+15m         Normal    SuccessfulCreate        replicaset/podinfo-primary-8c47cb554    Created pod: podinfo-primary-8c47cb554-9sf8c
+15m         Normal    Scheduled               pod/podinfo-primary-8c47cb554-9sf8c     Successfully assigned test/podinfo-primary-8c47cb554-9sf8c to k3d-k3s-default-server-0
+15m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+15m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-init
+15m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-init
+15m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+15m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-proxy
+15m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-proxy
+15m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:58:20 +0000 UTC: 38ab3b8b3e5b2f5b05046854daf20b7de76be33c87e84b7be5d750d19569719e
+15m         Normal    Pulling                 pod/podinfo-primary-8c47cb554-9sf8c     Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+15m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.935557941s
+15m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container podinfod
+15m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container podinfod
+15m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-7b5496d9f6 to 0
+15m         Normal    SuccessfulDelete        replicaset/podinfo-primary-7b5496d9f6   Deleted pod: podinfo-primary-7b5496d9f6-7xnkx
+15m         Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container linkerd-proxy
+15m         Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container podinfod
+15m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-69c49997fd to 0
+15m         Normal    SuccessfulDelete        replicaset/podinfo-69c49997fd           Deleted pod: podinfo-69c49997fd-w968n
+15m         Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container linkerd-proxy
+15m         Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Liveness probe failed: Get "http://10.42.2.229:4191/live": dial tcp 10.42.2.229:4191: connect: connection refused
+15m         Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Readiness probe failed: Get "http://10.42.2.229:4191/ready": dial tcp 10.42.2.229:4191: connect: connection refused
+14m         Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container podinfod
+14m         Warning   FailedKillPod           pod/podinfo-69c49997fd-w968n            error killing pod: failed to "KillContainer" for "podinfod" with KillContainerError: "rpc error: code = NotFound desc = an error occurred when try to find container \"a0a96f76569946e93fbd0bdfd6e9228a2b7e56790e26081f9ce68b6e2ef8815c\": not found"
+5m21s       Normal    Synced                  canary/podinfo                          New revision detected! Scaling up podinfo.test
+5m21s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+5m21s       Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+5m21s       Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-rkj9m
+5m20s       Normal    Scheduled               pod/podinfo-7bfd46f477-rkj9m            Successfully assigned test/podinfo-7bfd46f477-rkj9m to k3d-k3s-default-agent-0
+5m20s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+5m20s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container linkerd-init
+5m20s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container linkerd-init
+5m20s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+5m19s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container linkerd-proxy
+5m19s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container linkerd-proxy
+5m19s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:08:20 +0000 UTC: 49fbffee18d8b756b344e4f4538beb3f29536cfcbf6a4a68e27206b70665ed5f
+5m19s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "quay.io/stefanprodan/podinfo:1.7.0" already present on machine
+5m19s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container podinfod
+5m19s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container podinfod
+5m11s       Normal    Synced                  canary/podinfo                          (combined from similar events): Starting canary analysis for podinfo.test
+3m31s       Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-c56fd4756 to 1
+3m31s       Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+3m31s       Normal    SuccessfulCreate        replicaset/podinfo-primary-c56fd4756    Created pod: podinfo-primary-c56fd4756-fzmtg
+3m30s       Normal    Scheduled               pod/podinfo-primary-c56fd4756-fzmtg     Successfully assigned test/podinfo-primary-c56fd4756-fzmtg to k3d-k3s-default-agent-1
+3m30s       Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+3m30s       Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container linkerd-init
+3m30s       Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container linkerd-init
+3m30s       Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+3m30s       Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container linkerd-proxy
+3m30s       Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container linkerd-proxy
+3m30s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:10:09 +0000 UTC: e46bc9c452671ee31c7ca96e92c7da0eaed66393c31e1503645d54feebcbb495
+3m30s       Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "quay.io/stefanprodan/podinfo:1.7.0" already present on machine
+3m30s       Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container podinfod
+3m30s       Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container podinfod
+3m28s       Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-8c47cb554 to 0
+3m28s       Normal    SuccessfulDelete        replicaset/podinfo-primary-8c47cb554    Deleted pod: podinfo-primary-8c47cb554-9sf8c
+3m28s       Normal    Killing                 pod/podinfo-primary-8c47cb554-9sf8c     Stopping container linkerd-proxy
+3m28s       Normal    Killing                 pod/podinfo-primary-8c47cb554-9sf8c     Stopping container podinfod
+3m11s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+3m11s       Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-rkj9m
+3m11s       Normal    Killing                 pod/podinfo-7bfd46f477-rkj9m            Stopping container linkerd-proxy
+3m11s       Normal    Killing                 pod/podinfo-7bfd46f477-rkj9m            Stopping container podinfod
+3m11s       Warning   Unhealthy               pod/podinfo-7bfd46f477-rkj9m            Liveness probe failed: Get "http://10.42.1.72:4191/live": dial tcp 10.42.1.72:4191: connect: connection refused
+3m11s       Warning   Unhealthy               pod/podinfo-7bfd46f477-rkj9m            Readiness probe failed: Get "http://10.42.1.72:4191/ready": dial tcp 10.42.1.72:4191: connect: connection refused
+116s        Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test set image deployment/podinfo \
+>   podinfod=quay.io/stefanprodan/podinfo:1.7.1
+deployment.apps/podinfo image updated
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get ev --watch
+LAST SEEN   TYPE      REASON                  OBJECT                                  MESSAGE
+46m         Normal    ScalingReplicaSet       deployment/load                         Scaled up replica set load-7f97579865 to 1
+46m         Normal    ScalingReplicaSet       deployment/frontend                     Scaled up replica set frontend-6957977dc7 to 1
+46m         Normal    Injected                deployment/load                         Linkerd sidecar proxy injected
+46m         Normal    Injected                deployment/frontend                     Linkerd sidecar proxy injected
+46m         Normal    SuccessfulCreate        replicaset/load-7f97579865              Created pod: load-7f97579865-tcpqq
+46m         Normal    SuccessfulCreate        replicaset/frontend-6957977dc7          Created pod: frontend-6957977dc7-7pp7t
+46m         Normal    Scheduled               pod/load-7f97579865-tcpqq               Successfully assigned test/load-7f97579865-tcpqq to k3d-k3s-default-agent-1
+46m         Normal    Scheduled               pod/frontend-6957977dc7-7pp7t           Successfully assigned test/frontend-6957977dc7-7pp7t to k3d-k3s-default-agent-1
+46m         Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-9hjbs
+46m         Normal    Scheduled               pod/podinfo-7bfd46f477-9hjbs            Successfully assigned test/podinfo-7bfd46f477-9hjbs to k3d-k3s-default-agent-1
+46m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+46m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-init
+46m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-init
+46m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+46m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-init
+46m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-init
+46m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+46m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-init
+46m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+46m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+46m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container linkerd-proxy
+46m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container linkerd-proxy
+46m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-init
+46m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container linkerd-proxy
+46m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: e73fd94a5954eaaccc80ff8d9fb5fc254341956014339978191e9f7a9731c231
+46m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:01 +0000 UTC: 678d219f4871c3a30b7f6c21363558da0789c56fd6a665ab187389ea7dbf2aaf
+46m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container linkerd-proxy
+46m         Normal    Pulling                 pod/load-7f97579865-tcpqq               Pulling image "buoyantio/slow_cooker:1.2.0"
+46m         Normal    Pulling                 pod/frontend-6957977dc7-7pp7t           Pulling image "nginx:alpine"
+46m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+46m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container linkerd-proxy
+46m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:30:02 +0000 UTC: 2448cca841a6012fb42bd49ed4d96003447268b1dc58735cc9651084f6bb2121
+46m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container linkerd-proxy
+46m         Normal    Pulling                 pod/podinfo-7bfd46f477-9hjbs            Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+46m         Normal    Pulled                  pod/podinfo-7bfd46f477-9hjbs            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 3.946679109s
+46m         Normal    Pulled                  pod/load-7f97579865-tcpqq               Successfully pulled image "buoyantio/slow_cooker:1.2.0" in 5.087340784s
+46m         Normal    Created                 pod/podinfo-7bfd46f477-9hjbs            Created container podinfod
+46m         Normal    Created                 pod/load-7f97579865-tcpqq               Created container slow-cooker
+45m         Normal    Started                 pod/podinfo-7bfd46f477-9hjbs            Started container podinfod
+45m         Normal    Started                 pod/load-7f97579865-tcpqq               Started container slow-cooker
+45m         Normal    Pulled                  pod/frontend-6957977dc7-7pp7t           Successfully pulled image "nginx:alpine" in 6.559775616s
+45m         Normal    Created                 pod/frontend-6957977dc7-7pp7t           Created container nginx
+45m         Normal    Started                 pod/frontend-6957977dc7-7pp7t           Started container nginx
+40m         Warning   Synced                  canary/podinfo                          podinfo-primary.test not ready: waiting for rollout to finish: observed deployment generation less than desired generation
+40m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-7b5496d9f6 to 1
+40m         Normal    SuccessfulCreate        replicaset/podinfo-primary-7b5496d9f6   Created pod: podinfo-primary-7b5496d9f6-7xnkx
+40m         Normal    Scheduled               pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully assigned test/podinfo-primary-7b5496d9f6-7xnkx to k3d-k3s-default-agent-0
+40m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+40m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-init
+40m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-init
+40m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+40m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container linkerd-proxy
+40m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container linkerd-proxy
+40m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:35:29 +0000 UTC: 2096610e50c40302d4d4559c59bbc0d41a33664d173be8a9e1da35edbe885702
+40m         Normal    Pulling                 pod/podinfo-primary-7b5496d9f6-7xnkx    Pulling image "quay.io/stefanprodan/podinfo:1.7.0"
+40m         Normal    Pulled                  pod/podinfo-primary-7b5496d9f6-7xnkx    Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.0" in 4.275008823s
+40m         Normal    Created                 pod/podinfo-primary-7b5496d9f6-7xnkx    Created container podinfod
+40m         Normal    Started                 pod/podinfo-primary-7b5496d9f6-7xnkx    Started container podinfod
+40m         Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-9hjbs
+40m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container linkerd-proxy
+40m         Normal    Killing                 pod/podinfo-7bfd46f477-9hjbs            Stopping container podinfod
+38m         Warning   Synced                  canary/podinfo                          TrafficSplit podinfo.test create error: the server could not find the requested resource (post trafficsplits.split.smi-spec.io)
+25m         Normal    Synced                  canary/podinfo                          all the metrics providers are available!
+24m         Normal    Created                 trafficsplit/podinfo                    Created Service Profile podinfo.test.svc.cluster.local
+19m         Normal    SuccessfulCreate        replicaset/podinfo-69c49997fd           Created pod: podinfo-69c49997fd-w968n
+19m         Normal    Scheduled               pod/podinfo-69c49997fd-w968n            Successfully assigned test/podinfo-69c49997fd-w968n to k3d-k3s-default-agent-1
+19m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+19m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-init
+19m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-init
+19m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+19m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container linkerd-proxy
+19m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container linkerd-proxy
+19m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:56:20 +0000 UTC: 1249a1049619390691329217af15fbe8911dcf2625b0be4f2a636ef6e9f99fb9
+19m         Normal    Pulling                 pod/podinfo-69c49997fd-w968n            Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+19m         Normal    Pulled                  pod/podinfo-69c49997fd-w968n            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.951617917s
+19m         Normal    Created                 pod/podinfo-69c49997fd-w968n            Created container podinfod
+19m         Normal    Started                 pod/podinfo-69c49997fd-w968n            Started container podinfod
+17m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-8c47cb554 to 1
+17m         Normal    SuccessfulCreate        replicaset/podinfo-primary-8c47cb554    Created pod: podinfo-primary-8c47cb554-9sf8c
+17m         Normal    Scheduled               pod/podinfo-primary-8c47cb554-9sf8c     Successfully assigned test/podinfo-primary-8c47cb554-9sf8c to k3d-k3s-default-server-0
+17m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+17m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-init
+17m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-init
+17m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+17m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container linkerd-proxy
+17m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container linkerd-proxy
+17m         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 20:58:20 +0000 UTC: 38ab3b8b3e5b2f5b05046854daf20b7de76be33c87e84b7be5d750d19569719e
+17m         Normal    Pulling                 pod/podinfo-primary-8c47cb554-9sf8c     Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+17m         Normal    Pulled                  pod/podinfo-primary-8c47cb554-9sf8c     Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 3.935557941s
+17m         Normal    Created                 pod/podinfo-primary-8c47cb554-9sf8c     Created container podinfod
+17m         Normal    Started                 pod/podinfo-primary-8c47cb554-9sf8c     Started container podinfod
+17m         Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-7b5496d9f6 to 0
+17m         Normal    SuccessfulDelete        replicaset/podinfo-primary-7b5496d9f6   Deleted pod: podinfo-primary-7b5496d9f6-7xnkx
+17m         Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container linkerd-proxy
+17m         Normal    Killing                 pod/podinfo-primary-7b5496d9f6-7xnkx    Stopping container podinfod
+17m         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-69c49997fd to 0
+17m         Normal    SuccessfulDelete        replicaset/podinfo-69c49997fd           Deleted pod: podinfo-69c49997fd-w968n
+17m         Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container linkerd-proxy
+17m         Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Liveness probe failed: Get "http://10.42.2.229:4191/live": dial tcp 10.42.2.229:4191: connect: connection refused
+17m         Warning   Unhealthy               pod/podinfo-69c49997fd-w968n            Readiness probe failed: Get "http://10.42.2.229:4191/ready": dial tcp 10.42.2.229:4191: connect: connection refused
+17m         Normal    Killing                 pod/podinfo-69c49997fd-w968n            Stopping container podinfod
+17m         Warning   FailedKillPod           pod/podinfo-69c49997fd-w968n            error killing pod: failed to "KillContainer" for "podinfod" with KillContainerError: "rpc error: code = NotFound desc = an error occurred when try to find container \"a0a96f76569946e93fbd0bdfd6e9228a2b7e56790e26081f9ce68b6e2ef8815c\": not found"
+7m48s       Normal    Synced                  canary/podinfo                          New revision detected! Scaling up podinfo.test
+7m48s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-7bfd46f477 to 1
+7m48s       Normal    SuccessfulCreate        replicaset/podinfo-7bfd46f477           Created pod: podinfo-7bfd46f477-rkj9m
+7m48s       Normal    Scheduled               pod/podinfo-7bfd46f477-rkj9m            Successfully assigned test/podinfo-7bfd46f477-rkj9m to k3d-k3s-default-agent-0
+7m47s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+7m47s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container linkerd-init
+7m47s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container linkerd-init
+7m47s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+7m46s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container linkerd-proxy
+7m46s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container linkerd-proxy
+7m46s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:08:20 +0000 UTC: 49fbffee18d8b756b344e4f4538beb3f29536cfcbf6a4a68e27206b70665ed5f
+7m46s       Normal    Pulled                  pod/podinfo-7bfd46f477-rkj9m            Container image "quay.io/stefanprodan/podinfo:1.7.0" already present on machine
+7m46s       Normal    Created                 pod/podinfo-7bfd46f477-rkj9m            Created container podinfod
+7m46s       Normal    Started                 pod/podinfo-7bfd46f477-rkj9m            Started container podinfod
+5m58s       Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-c56fd4756 to 1
+5m58s       Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+5m58s       Normal    SuccessfulCreate        replicaset/podinfo-primary-c56fd4756    Created pod: podinfo-primary-c56fd4756-fzmtg
+5m58s       Normal    Scheduled               pod/podinfo-primary-c56fd4756-fzmtg     Successfully assigned test/podinfo-primary-c56fd4756-fzmtg to k3d-k3s-default-agent-1
+5m57s       Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+5m57s       Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container linkerd-init
+5m57s       Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container linkerd-init
+5m57s       Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+5m57s       Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container linkerd-proxy
+5m57s       Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container linkerd-proxy
+5m57s       Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:10:09 +0000 UTC: e46bc9c452671ee31c7ca96e92c7da0eaed66393c31e1503645d54feebcbb495
+5m57s       Normal    Pulled                  pod/podinfo-primary-c56fd4756-fzmtg     Container image "quay.io/stefanprodan/podinfo:1.7.0" already present on machine
+5m57s       Normal    Created                 pod/podinfo-primary-c56fd4756-fzmtg     Created container podinfod
+5m57s       Normal    Started                 pod/podinfo-primary-c56fd4756-fzmtg     Started container podinfod
+5m55s       Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-8c47cb554 to 0
+5m55s       Normal    SuccessfulDelete        replicaset/podinfo-primary-8c47cb554    Deleted pod: podinfo-primary-8c47cb554-9sf8c
+5m55s       Normal    Killing                 pod/podinfo-primary-8c47cb554-9sf8c     Stopping container linkerd-proxy
+5m55s       Normal    Killing                 pod/podinfo-primary-8c47cb554-9sf8c     Stopping container podinfod
+5m38s       Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-7bfd46f477 to 0
+5m38s       Normal    SuccessfulDelete        replicaset/podinfo-7bfd46f477           Deleted pod: podinfo-7bfd46f477-rkj9m
+5m38s       Normal    Killing                 pod/podinfo-7bfd46f477-rkj9m            Stopping container linkerd-proxy
+5m38s       Normal    Killing                 pod/podinfo-7bfd46f477-rkj9m            Stopping container podinfod
+5m38s       Warning   Unhealthy               pod/podinfo-7bfd46f477-rkj9m            Liveness probe failed: Get "http://10.42.1.72:4191/live": dial tcp 10.42.1.72:4191: connect: connection refused
+5m38s       Warning   Unhealthy               pod/podinfo-7bfd46f477-rkj9m            Readiness probe failed: Get "http://10.42.1.72:4191/ready": dial tcp 10.42.1.72:4191: connect: connection refused
+18s         Normal    Synced                  canary/podinfo                          (combined from similar events): New revision detected! Scaling up podinfo.test
+18s         Normal    ScalingReplicaSet       deployment/podinfo                      Scaled up replica set podinfo-69c49997fd to 1
+18s         Normal    Injected                deployment/podinfo                      Linkerd sidecar proxy injected
+18s         Normal    SuccessfulCreate        replicaset/podinfo-69c49997fd           Created pod: podinfo-69c49997fd-njbbx
+18s         Normal    Scheduled               pod/podinfo-69c49997fd-njbbx            Successfully assigned test/podinfo-69c49997fd-njbbx to k3d-k3s-default-agent-0
+17s         Normal    Pulled                  pod/podinfo-69c49997fd-njbbx            Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+17s         Normal    Created                 pod/podinfo-69c49997fd-njbbx            Created container linkerd-init
+17s         Normal    Started                 pod/podinfo-69c49997fd-njbbx            Started container linkerd-init
+17s         Normal    Pulled                  pod/podinfo-69c49997fd-njbbx            Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+17s         Normal    Created                 pod/podinfo-69c49997fd-njbbx            Created container linkerd-proxy
+17s         Normal    Started                 pod/podinfo-69c49997fd-njbbx            Started container linkerd-proxy
+17s         Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:15:49 +0000 UTC: c7e6a8cee34900661190e141e33393455585a2b534437035255e68106c65d059
+17s         Normal    Pulling                 pod/podinfo-69c49997fd-njbbx            Pulling image "quay.io/stefanprodan/podinfo:1.7.1"
+12s         Normal    Pulled                  pod/podinfo-69c49997fd-njbbx            Successfully pulled image "quay.io/stefanprodan/podinfo:1.7.1" in 4.957358319s
+12s         Normal    Created                 pod/podinfo-69c49997fd-njbbx            Created container podinfod
+11s         Normal    Started                 pod/podinfo-69c49997fd-njbbx            Started container podinfod
+8s          Normal    Synced                  canary/podinfo                          Starting canary analysis for podinfo.test
+8s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    Updated                 trafficsplit/podinfo                    Updated Service Profile podinfo.test.svc.cluster.local
+0s          Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled up replica set podinfo-primary-6c7d4d8d5f to 1
+0s          Normal    Injected                deployment/podinfo-primary              Linkerd sidecar proxy injected
+0s          Normal    SuccessfulCreate        replicaset/podinfo-primary-6c7d4d8d5f   Created pod: podinfo-primary-6c7d4d8d5f-2482t
+0s          Normal    Scheduled               pod/podinfo-primary-6c7d4d8d5f-2482t    Successfully assigned test/podinfo-primary-6c7d4d8d5f-2482t to k3d-k3s-default-server-0
+0s          Normal    Pulled                  pod/podinfo-primary-6c7d4d8d5f-2482t    Container image "cr.l5d.io/linkerd/proxy-init:v2.0.0" already present on machine
+0s          Normal    Created                 pod/podinfo-primary-6c7d4d8d5f-2482t    Created container linkerd-init
+0s          Normal    Started                 pod/podinfo-primary-6c7d4d8d5f-2482t    Started container linkerd-init
+0s          Normal    Pulled                  pod/podinfo-primary-6c7d4d8d5f-2482t    Container image "cr.l5d.io/linkerd/proxy:stable-2.12.0" already present on machine
+0s          Normal    Created                 pod/podinfo-primary-6c7d4d8d5f-2482t    Created container linkerd-proxy
+0s          Normal    Started                 pod/podinfo-primary-6c7d4d8d5f-2482t    Started container linkerd-proxy
+0s          Normal    IssuedLeafCertificate   serviceaccount/default                  issued certificate for default.test.serviceaccount.identity.linkerd.cluster.local until 2022-08-29 21:17:49 +0000 UTC: 4db0b869141870a81f898b2e580d2789559ceb9007ed3646199245f3e8da26d9
+0s          Normal    Pulled                  pod/podinfo-primary-6c7d4d8d5f-2482t    Container image "quay.io/stefanprodan/podinfo:1.7.1" already present on machine
+0s          Normal    Created                 pod/podinfo-primary-6c7d4d8d5f-2482t    Created container podinfod
+0s          Normal    Started                 pod/podinfo-primary-6c7d4d8d5f-2482t    Started container podinfod
+0s          Normal    ScalingReplicaSet       deployment/podinfo-primary              Scaled down replica set podinfo-primary-c56fd4756 to 0
+0s          Normal    Killing                 pod/podinfo-primary-c56fd4756-fzmtg     Stopping container linkerd-proxy
+0s          Normal    SuccessfulDelete        replicaset/podinfo-primary-c56fd4756    Deleted pod: podinfo-primary-c56fd4756-fzmtg
+0s          Normal    Killing                 pod/podinfo-primary-c56fd4756-fzmtg     Stopping container podinfod
+0s          Normal    ScalingReplicaSet       deployment/podinfo                      Scaled down replica set podinfo-69c49997fd to 0
+0s          Normal    SuccessfulDelete        replicaset/podinfo-69c49997fd           Deleted pod: podinfo-69c49997fd-njbbx
+0s          Normal    Killing                 pod/podinfo-69c49997fd-njbbx            Stopping container linkerd-proxy
+0s          Normal    Killing                 pod/podinfo-69c49997fd-njbbx            Stopping container podinfod
+0s          Warning   Unhealthy               pod/podinfo-69c49997fd-njbbx            Liveness probe failed: Get "http://10.42.1.73:4191/live": dial tcp 10.42.1.73:4191: connect: connection refused
+0s          Warning   Unhealthy               pod/podinfo-69c49997fd-njbbx            Readiness probe failed: Get "http://10.42.1.73:4191/ready": dial tcp 10.42.1.73:4191: connect: connection refused
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ watch kubectl -n test get canary
+[?1049h[22;0;0t[1;44r(B[m[4l[?7h[H[2JEvery 2,0s: kubectl -n test get canary[1;165HEB8560w20: Mon Aug 29 00:19:00 2022[3;1HNAME[11GSTATUS[23GWEIGHT   LASTTRANSITIONTIME[4dpodinfo   Succeeded   0[4;32H2022-08-28T21:17:48Z[44;199H[1;194H2[44;199H[1;194H4[44;199H[1;194H6[44;199H[1;194H8[44;199H[1;193H10[44;199H[1;194H3[44;199H[44;1H[?1049l[23;0;0t[?1l>]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl -n test get trafficsplit podinfo -o yaml
+apiVersion: split.smi-spec.io/v1alpha2
+kind: TrafficSplit
+metadata:
+  creationTimestamp: "2022-08-28T20:51:18Z"
+  generation: 34
+  name: podinfo
+  namespace: test
+  ownerReferences:
+  - apiVersion: flagger.app/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: Canary
+    name: podinfo
+    uid: d84c1d9e-85f0-49ce-b464-c20554f42d9b
+  resourceVersion: "667032"
+  uid: 5624b166-bee6-411d-bdf7-e4367309ce90
+spec:
+  backends:
+  - service: podinfo-canary
+    weight: "0"
+  - service: podinfo-primary
+    weight: "100"
+  service: podinfo
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ watch linkerd viz -n test stat deploy --from deploy/load
+[?1049h[22;0;0t[1;44r(B[m[4l[?7h[H[2JEvery 2,0s: linkerd viz -n test stat deploy --from deploy/load[1;165HEB8560w20: Mon Aug 29 00:20:37 2022[3;1HNAME[3;19HMESHED   SUCCESS[42GRPS   LATENCY_P50   LATENCY_P95   LATENCY_P99   TCP_CONN[4dpodinfo[4;22H0/0[4;34H-[4;44H-[4;58H-[4;72H-[4;86H-[4;97H-[5dpodinfo-primary[22G1/1   100.00%   10.0rps[5;56H1ms[5;70H2ms[5;84H3ms[5;97H1[44;199H[1;193H40[44;199H[1;194H2[44;199H[1;194H5[5;84H2[44;199H[1;194H8[44;199H[44;1H[?1049l[23;0;0t[?1l>]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd viz dashboard
+Linkerd dashboard available at:
+http://localhost:50750
+Grafana dashboard available at:
+http://localhost:50750/grafana
+Opening Linkerd dashboard in the default browser
+Gtk-[1;32mMessage[0m: [34m00:21:23.317[0m: Failed to load module "canberra-gtk-module"
+Gtk-[1;32mMessage[0m: [34m00:21:23.324[0m: Failed to load module "canberra-gtk-module"
+Opening in existing browser session.
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi install | kubectl apply -f -
+namespace/linkerd-smi unchanged
+deployment.apps/smi-adaptor unchanged
+clusterrole.rbac.authorization.k8s.io/smi-adaptor unchanged
+clusterrolebinding.rbac.authorization.k8s.io/smi-adaptor unchanged
+serviceaccount/smi-adaptor unchanged
+customresourcedefinition.apiextensions.k8s.io/trafficsplits.split.smi-spec.io configured
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi check
+linkerd-smi
+-----------
+[32;1m√[0m linkerd-smi extension Namespace exists
+[32;1m√[0m SMI extension service account exists
+[32;1m√[0m SMI extension pods are injected
+[32;1m√[0m SMI extension pods are running
+[32;1m√[0m SMI extension proxies are healthy
+
+Status check results are [32;1m√[0m
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ linkerd smi checkinstall | kubectl apply -f -[19Pviz dashboard
+Linkerd dashboard available at:
+http://localhost:50750
+Grafana dashboard available at:
+http://localhost:50750/grafana
+Opening Linkerd dashboard in the default browser
+Gtk-[1;32mMessage[0m: [34m00:28:57.477[0m: Failed to load module "canberra-gtk-module"
+Gtk-[1;32mMessage[0m: [34m00:28:57.480[0m: Failed to load module "canberra-gtk-module"
+Opening in existing browser session.
+[514705:514705:0829/002857.635643:ERROR:broker_posix.cc(43)] Invalid node channel message
+[514700:514700:0100/000000.813864:ERROR:broker_posix.cc(43)] Invalid node channel message
+^C]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ watch linkerd viz -n test stat deploy --from deploy/load
+[?1049h[22;0;0t[1;44r(B[m[4l[?7h[H[2JEvery 2,0s: linkerd viz -n test stat deploy --from deploy/load[1;165HEB8560w20: Mon Aug 29 00:32:10 2022[3;1HNAME[3;19HMESHED   SUCCESS[42GRPS   LATENCY_P50   LATENCY_P95   LATENCY_P99   TCP_CONN[4dpodinfo-primary[22G1/1   100.00%   10.0rps[4;56H1ms[4;70H2ms[4;84H2ms[4;97H1[44;199H[1;194H3[44;199H[1;194H5[4;84H3[44;199H[1;194H8[44;199H[1;193H21[44;199H[1;194H4[44;199H[1;194H6[4;84H2[44;199H[1;194H9[44;199H[1;193H32[44;199H[1;194H5[44;199H[1;194H7[44;199H[44;1H[?1049l[23;0;0t[?1l>]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ curl http://localhost:8080
+{
+  "hostname": "podinfo-primary-6c7d4d8d5f-2482t",
+  "version": "1.7.1",
+  "revision": "c9dc78f29c5087e7c181e58a56667a75072e6196",
+  "color": "blue",
+  "message": "greetings from podinfo v1.7.1",
+  "goos": "linux",
+  "goarch": "amd64",
+  "runtime": "go1.11.12",
+  "num_goroutine": "7",
+  "num_cpu": "8"
+}]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ kubectl delete -k github.com/fluxcd/flagger/kustomize/linkerd && \
+>   kubectl delete ns test
+customresourcedefinition.apiextensions.k8s.io "alertproviders.flagger.app" deleted
+customresourcedefinition.apiextensions.k8s.io "canaries.flagger.app" deleted
+customresourcedefinition.apiextensions.k8s.io "metrictemplates.flagger.app" deleted
+serviceaccount "flagger" deleted
+clusterrole.rbac.authorization.k8s.io "flagger" deleted
+clusterrolebinding.rbac.authorization.k8s.io "flagger" deleted
+deployment.apps "flagger" deleted
+namespace "test" deleted
+
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ 
+]0;rvl@EB8560w20: ~/kod/kuber/parts/part5/e503[01;32mrvl@EB8560w20[00m:[01;34m~/kod/kuber/parts/part5/e503[00m$ exit
+
+Script done on 2022-08-29 00:36:59+03:00 [COMMAND_EXIT_CODE="0"]

@@ -1,7 +1,7 @@
 FROM denoland/deno:alpine-1.17.2
 
 # ENV PORT=${PORT}
-ENV PORT=8888
+ENV PORT=8080
 
 EXPOSE ${PORT}
 

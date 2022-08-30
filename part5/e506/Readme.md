@@ -25,5 +25,6 @@
 - Google Kubernetes Engine (GKE) : in part3
 - Rancher : k3s & k3d
 - k3s : for the selfhosted testing cluster
+- Knative : in part5.4
 
 [Possible logs](e506.txt)
